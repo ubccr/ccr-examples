@@ -6,11 +6,11 @@ This runs the full NiftyPET juptyer notebook demo in a slurm job.
 
 1. Download raw data files to your working directory:
 
-``
+```
 $ mkdir niftypet-demo
 $ cd niftypet-demo
 $ wget -O amyloidPET_FBP_TP0_extra.zip 'https://zenodo.org/records/1472951/files/amyloidPET_FBP_TP0.zip?download=1'
-``
+```
 
 2. Unzip data:
 
