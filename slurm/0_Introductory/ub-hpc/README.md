@@ -1,6 +1,6 @@
 # Example ub-hpc cluster job
 
-These are examplex of how to setup a slurm job on the debug and general-compute partitions of the ub-hpc cluster. Refer to our documentation on [requesting cores and nodes](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#requesting-cores-and-nodes) to understand these options.
+These are examples of how to setup a slurm job on the debug and general-compute partitions of the ub-hpc cluster. Refer to our documentation on [requesting cores and nodes](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#requesting-cores-and-nodes) to understand these options.
 
 ## How to use
 
