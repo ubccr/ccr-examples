@@ -25,7 +25,8 @@ Navigate to the directory with the example that you'd like to use and copy that 
 
 - Keep examples organized in respective per example directories
 - Do not include large data sets. Scripts should use ENV variables to specify
-  path to data/suppl files.
+  path to data/suppl files.  
+- Use $SLURM variables to specify Slurm specific (i.e. $SLURM_JOB_ID, $SLURM_NPROCS, $SLURM_NODEFILE, $SLURMTMPDIR, $SLURM_SUBMIT_DIR, etc )
 
 ## License
 
