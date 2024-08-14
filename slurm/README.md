@@ -11,7 +11,7 @@ At CCR you should use the bash shell for your Slurm scripts; you'll see this on 
 ## Navigating these directories  
 
 - `0_Introductory` - contains beginner batch scripts for the ub-hpc and faculty clusters  
-- `1_Advanced` - contains batch scripts for more complicated use cases such as job arrays and using the scavenger partition  
+- `1_Advanced` - contains batch scripts for more complicated use cases such as job arrays, parallel computing, and using the scavenger partition  
 - `2_ApplicationSpecific` - contains batch scripts for a variety of applications that have special setup requirements.  You will not find an example script for every piece of software installed on CCR's systems  
 
 
