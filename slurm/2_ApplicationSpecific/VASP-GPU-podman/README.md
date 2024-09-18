@@ -34,7 +34,7 @@ wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecifi
 wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/run_vasp.bash
 wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/run_vasp_shell.bash
 wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/sample_vasp_std.bash
-chmod 755 build_vasp.bash
+chmod 755 build_vasp.bash fix_nvhpc_.pc_files.bash
 ```
 
 Copy the vasp tarball to the Slurm temporary directory
