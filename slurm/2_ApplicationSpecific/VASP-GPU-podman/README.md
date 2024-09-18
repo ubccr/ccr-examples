@@ -28,13 +28,12 @@ Download the files to the Slurm temporary directory
 
 ```
 cd ${SLURMTMPDIR}
-wget -4 https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/Containerfile
-wget -4 https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/build_vasp.bash
-wget -4 https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/fix_nvhpc_.pc_files.bash
-wget -4 https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/run_vasp.bash
-wget -4 https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/run_vasp_shell.bash
-wget -4 https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/sample_vasp_std.bash
-
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/Containerfile
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/build_vasp.bash
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/fix_nvhpc_.pc_files.bash
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/run_vasp.bash
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/run_vasp_shell.bash
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/sample_vasp_std.bash
 ```
 
 Then run the script to build VASP for nvidia GPUs, with the two directories
