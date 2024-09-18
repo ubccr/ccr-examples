@@ -37,6 +37,13 @@ wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecifi
 chmod 755 build_vasp.bash
 ```
 
+Copy the vasp tarball to the Slurm temporary directory
+e.g.
+
+```
+cp /some/path/vasp.6.4.3.tgz ${SLURMTMPDIR}
+```
+
 Then run the script to build VASP for nvidia GPUs, with the two directories
 created earlier
 
