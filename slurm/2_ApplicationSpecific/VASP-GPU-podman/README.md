@@ -97,6 +97,6 @@ NOTE: the script runs "vasp_std"
 vasp_std
 ```
 
-the "vasp_std" line can bechamged to "vasp_gam" or "vasp_ncl" if you want
+the "vasp_std" line can be chamged to "vasp_gam" or "vasp_ncl" if you want
 to run them rather than "vasp_std"
 
