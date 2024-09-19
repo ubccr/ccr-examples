@@ -38,7 +38,7 @@ then
   then
     SLURM_JOB_USER="${PARENT_USER}"
   else
-    SLURM_JOB_USER="${LOGNAME}"
+    SLURM_JOB_USER="$(id -un)"
   fi
 fi  
 
