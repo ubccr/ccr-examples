@@ -142,3 +142,7 @@ echo
 echo "Run a shell in the Vasp container with:"
 echo "  ${bin_dir}/run_vasp_shell"
 echo
+echo
+echo "Example Slurm script:"
+echo "  ${bin_dir}/sample_vasp_std.bash"
+echo
