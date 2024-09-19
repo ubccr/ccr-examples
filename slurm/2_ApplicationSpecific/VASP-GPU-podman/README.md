@@ -6,9 +6,9 @@ This is how to build VASP for GPU use, with a sample Slurm script
 
 To build VASP with nvidia GPU support takes about 45 minutes on a debug node.
 
-Get an interactive job on a debug node
+Get an interactive job on a debug node.
 This example allcates a GPU to the job, but all tests are curenlty commented
-due to issues with useing nvidia GPUs with "podman build"
+due to issues with using nvidia GPUs with "podman build"
 
 ```
 salloc --partition=debug --qos=debug --nodes=1 --gpus-per-node=1 --cpus-per-task=1 --tasks-per-node=32 --exclusive
