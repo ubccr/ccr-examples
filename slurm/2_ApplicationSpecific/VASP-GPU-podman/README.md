@@ -11,7 +11,7 @@ This example allcates a GPU to the job, but all tests are curenlty commented
 due to issues with useing nvidia GPUs with "podman build"
 
 ```
-salloc --partition=debug --qos=debug --nodes=1 --gpus-per-node=1
+salloc --partition=debug --qos=debug --nodes=1 --gpus-per-node=1 --cpus-per-task=1 --tasks-per-node=32 --exclusive
 ```
 
 Create a directory for the podman image tarballs e.g.
