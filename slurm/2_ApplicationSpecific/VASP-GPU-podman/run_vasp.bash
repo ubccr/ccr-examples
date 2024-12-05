@@ -2,14 +2,20 @@
 
 ##############################################################################
 vasp_version=""
-image_tarball_dir=""
+oci_archive_dir=""
 ##############################################################################
+
+if ! which podman > /dev/null 2>&1
+then
+  echo "podman not found - bailing" >&2
+  exit 1
+fi
 
 if ! podman image exists "localhost/vasp-${vasp_version}-gpu-single-node"
 then
   # load the image on this node
   echo "Loading the VASP image from the tarball - this takes some time..."
-  podman load --input "${image_tarball_dir}/podman-image-vasp-${vasp_version}-gpu-single-node.tar"
+  podman load --input "${oci_archive_dir}/podman-image-vasp-${vasp_version}-gpu-single-node.tar"
 fi
 
 # Run one MPI task per GPU (with one task per GPU)

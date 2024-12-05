@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 # Slurm account
-#SBATCH --account="ccradmin"
+#SBATCH --account="ccrgroup"
 
 #SBATCH --clusters=ub-hpc
 #SBATCH --partition=general-compute --qos=general-compute
@@ -10,16 +10,14 @@
 #SBATCH --gpus-per-node=1
 #SBATCH --exclusive
 #SBATCH --output=%j.out
-# 30 minutes  walltime
+# 1 hour walltime
 #SBATCH --time=01:00:00
 
-# directory in which to write job output file [job_id].out:
-#SBATCH --chdir="/projects/academic/tonykew/tonykew/VASP"
+# Path to the vasp support scipts (you shouldn't need change this)
+bin_dir="/projects/academic/ccrgroup/VASP/bin"
 
-##############################################################################
-bin_dir="/vscratch/grp-tonykew/VASP/bin"
-data_dir="/projects/academic/tonykew/tonykew/VASP/data"
-##############################################################################
+# Configure the VASP data directory here:
+data_dir="/projects/academic/ccrgroup/ccruser/VASP/data"
 
 echo "-------------------------------------------------------------------------------"
 echo "Job info:"
@@ -72,11 +70,6 @@ if [ "${SLURM_NTASKS_PER_GPU}" != "" ]
 then
   echo "Tasks per GPU: ${SLURM_NTASKS_PER_GPU}"
 fi
-## Infiniband is not used, so the Slurm topology is irrelevant
-#if [ "{SLURM_TOPOLOGY_ADDR}"  != "" ]
-#then
-#  echo "SLURM topology: ${SLURM_TOPOLOGY_ADDR}"
-#fi
 echo
 echo "-------------------------------------------------------------------------------"
 echo

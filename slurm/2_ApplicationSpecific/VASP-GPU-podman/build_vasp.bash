@@ -2,18 +2,18 @@
 
 if [ "${1}" = "" ] || [ ! -d "${1}" ] || [ "${2}" = "" ] || [ ! -d "${2}" ]
 then
-  echo "usage: ${0} image_tarball_directory bin_directory" >&2
+  echo "usage: ${0} oci_image_archive_directory bin_directory" >&2
   echo "e.g." >&2
-  echo "${0} /projects/academic/mygroup/podman_images/ /projects/academic/mygroup/VASP/bin" >&2
+  echo "${0} /projects/academic/ccrgroup/podman_images/ /projects/academic/ccrgroup/VASP/bin" >&2
   exit 1
 fi
 
-tarball_dir="${1}"
+oci_archive_dir="${1}"
 bin_dir="${2}"
 
-if [ "${tarball_dir}" = "" ] || [ ! -d "${tarball_dir}" ]
+if [ "${oci_archive_dir}" = "" ] || [ ! -d "${oci_archive_dir}" ]
 then
-  echo "image_tarball_directory \"${tarball_dir}\" doesn't exist - bailing" >&2
+  echo "image_oci_archive_directory \"${oci_archive_dir}\" doesn't exist - bailing" >&2
   exit 1
 fi
 
@@ -66,10 +66,10 @@ then
   exit 1
 fi
 
-echo "Saving container tarball"
+echo "Saving container OCI image"
 podman save \
  --format=oci-archive \
- --output="${tarball_dir}/podman-image-vasp-${vasp_version}-gpu-single-node.tar" \
+ --output="${oci_archive_dir}/podman-image-vasp-${vasp_version}-gpu-single-node.tar" \
  "localhost/vasp-${vasp_version}-gpu-single-node"
 
 echo "copying the run scripts"
@@ -78,7 +78,7 @@ then
   for prog_name in vasp_gam vasp_ncl vasp_std
   do
     sed -E -e "s|^vasp_version=.*|vasp_version=\"${vasp_version}\"|" \
-     -e "s|^image_tarball_dir=.*|image_tarball_dir=\"${tarball_dir}\"|" \
+     -e "s|^oci_archive_dir=.*|oci_archive_dir=\"${oci_archive_dir}\"|" \
      -e "s|VASP_PROG_NAME|${prog_name}|" \
      "run_vasp.bash" > "${bin_dir}/${prog_name}-${vasp_version}.bash"
     chmod 755 "${bin_dir}/${prog_name}-${vasp_version}.bash"
@@ -90,7 +90,7 @@ fi
 if [ -f "run_vasp_shell.bash" ]
 then
   sed -E -e "s|^vasp_version=.*|vasp_version=\"${vasp_version}\"|" \
-   -e "s|^image_tarball_dir=.*|image_tarball_dir=\"${tarball_dir}\"|" \
+   -e "s|^oci_archive_dir=.*|oci_archive_dir=\"${oci_archive_dir}\"|" \
    "run_vasp_shell.bash" > "${bin_dir}/run_vasp_shell-${vasp_version}.bash"
   chmod 755 "${bin_dir}/run_vasp_shell-${vasp_version}.bash"
   ln -sf "${bin_dir}/run_vasp_shell-${vasp_version}.bash" "${bin_dir}/run_vasp_shell"
@@ -98,8 +98,14 @@ else
   echo "script \"run_vasp_shell.bash\" missing?" >&2
 fi
 # Provide a sample Slurm script
-if [ -f sample_vasp_std.bash ]
+if [ -f sample_SLURM_vasp_std.bash ]
 then
+  default_acct="$(sacctmgr -rnp show User "$(id -un)" | awk -F'|' '{print $2}')"
+  sed -E -i -e "/#SBATCH[[:space:]]+--account=/s|\".*\"|\"${default_acct}\"|" \
+   -e "/#SBATCH[[:space:]]+--chdir=/s|\".*\"|\"${base_dir}\"|" \
+   -e "s|^bin_dir=.*|bin_dir=\"${bin_dir}\"|" \
+   "sample_SLURM_vasp_std.bash"
+  # try to provide a reasonable data dir path
   grp_group="$(groups | sed 's/ /\n/g' | grep ^grp- | head -1 | sed 's/^grp-//')"
   if [ "${grp_group}" != "" ]
   then
@@ -112,16 +118,13 @@ then
         base_dir="/projects/rpci/${grp_group}/$(id -un)/VASP"
       fi
       default_acct="$(sacctmgr -rnp show User "$(id -un)" | awk -F'|' '{print $2}')"
-      sed -E -i -e "/#SBATCH[[:space:]]+--account=/s|\".*\"|\"${default_acct}\"|" \
-       -e "/#SBATCH[[:space:]]+--chdir=/s|\".*\"|\"${base_dir}\"|" \
-       -e "s|^bin_dir=.*|bin_dir=\"${bin_dir}\"|" \
-       -e "s|^data_dir=.*|data_dir=\"${base_dir}/data\"|" \
-       "sample_vasp_std.bash"
+      sed -E -i -e "s|^data_dir=.*|data_dir=\"${base_dir}/data\"|" \
+       "sample_SLURM_vasp_std.bash"
     fi
   fi
-  cp "sample_vasp_std.bash" "${bin_dir}/sample_vasp_std.bash"
+  cp "sample_SLURM_vasp_std.bash" "${bin_dir}/sample_SLURM_vasp_std.bash"
 else
-  echo "sample script \"sample_vasp_std.bash\" missing?" >&2
+  echo "sample script \"sample_SLURM_vasp_std.bash\" missing?" >&2
 fi
 echo
 
@@ -144,5 +147,5 @@ echo "  ${bin_dir}/run_vasp_shell"
 echo
 echo
 echo "Example Slurm script:"
-echo "  ${bin_dir}/sample_vasp_std.bash"
+echo "  ${bin_dir}/sample_SLURM_vasp_std.bash"
 echo

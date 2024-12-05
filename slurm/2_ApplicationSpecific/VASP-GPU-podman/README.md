@@ -6,7 +6,7 @@ This is how to build VASP for GPU use, with a sample Slurm script
 
 To build VASP with nvidia GPU support takes about 45 minutes on a debug node.
 
-Get an interactive job on a debug node.
+Start an interactive job on a debug node.
 This example allcates a GPU to the job, but all tests are curenlty commented
 due to issues with using nvidia GPUs with "podman build"
 
@@ -14,14 +14,14 @@ due to issues with using nvidia GPUs with "podman build"
 salloc --partition=debug --qos=debug --nodes=1 --gpus-per-node=1 --cpus-per-task=1 --tasks-per-node=32 --exclusive
 ```
 
-Create a directory for the podman image tarballs e.g.
+Create a directory for the podman OCI images e.g.
 ```
-mkdir -p /projects/academic/group/podman/images
+mkdir -p /projects/academic/ccrgroup/oci_archive_dir
 ```
 
 Create a directory for the podman scripts e.g.
 ```
-mkdir -p /projects/academic/group/VASP/bin
+mkdir -p /projects/academic/ccrgroup/VASP/bin
 ```
 
 Download the files to the Slurm temporary directory
@@ -33,7 +33,7 @@ wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecifi
 wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/fix_nvhpc_.pc_files.bash
 wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/run_vasp.bash
 wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/run_vasp_shell.bash
-wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/sample_vasp_std.bash
+wget https://github.com/tonykew/ccr-examples/raw/main/slurm/2_ApplicationSpecific/VASP-GPU-podman/sample_SLURM_vasp_std.bash
 chmod 755 build_vasp.bash fix_nvhpc_.pc_files.bash
 ```
 
@@ -51,26 +51,26 @@ Usage for the build script:
 
 ```
 ./build_vasp.bash 
-usage: ./build_vasp.bash image_tarball_directory bin_directory
+usage: ./build_vasp.bash oci_image_archive_directory bin_directory
 e.g.
-./build_vasp.bash /projects/academic/mygroup/podman_images/ /projects/academic/mygroup/VASP/bin
+./build_vasp.bash /projects/academic/ccrgroup/oci_archive_dir/ /projects/academic/ccrgroup/VASP/bin
 ```
 
 ...so, using the two directories created earlier:
 
 ```
-./build_vasp.bash /projects/academic/group/podman/images /projects/academic/group/VASP/bin
+./build_vasp.bash /projects/academic/ccrgroup/oci_archive_dir /projects/academic/ccrgroup/VASP/bin
 ```
 
 
 ## How to use
 
-There is a sample Slurm script in the scripts directory you
+There is a sample SLURM script in the scripts directory you
 provided for the build.
 e.g.
 
 ```
-/projects/academic/group/VASP/bin/sample_vasp_std.bash
+/projects/academic/ccrgroup/VASP/bin/sample_SLURM_vasp_std.bash
 ```
 
 copy the script, and change the "data_dir=" line to the directory with
@@ -78,7 +78,7 @@ your data files in (i.e. "INCAR" etc.)
 e.g.
 
 ```
-data_dir="/projects/academic/group/username/data"
+data_dir="/projects/academic/ccrgroup/username/data"
 ```
 
 Make any other changes you might need to the #SBATCH options
