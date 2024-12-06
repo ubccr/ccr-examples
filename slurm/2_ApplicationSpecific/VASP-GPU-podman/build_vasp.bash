@@ -109,15 +109,9 @@ then
   grp_group="$(groups | sed 's/ /\n/g' | grep ^grp- | head -1 | sed 's/^grp-//')"
   if [ "${grp_group}" != "" ]
   then
-    if [ -d "/projects/academic/${grp_group}" ] || [ -d "/projects/rpci/${grp_group}" ]
+    if [ -d "/projects/academic/${grp_group}" ]
     then
-      if [ -d "/projects/academic/${grp_group}" ]
-      then
-        base_dir="/projects/academic/${grp_group}/$(id -un)/VASP"
-      else
-        base_dir="/projects/rpci/${grp_group}/$(id -un)/VASP"
-      fi
-      default_acct="$(sacctmgr -rnp show User "$(id -un)" | awk -F'|' '{print $2}')"
+      base_dir="/projects/academic/${grp_group}/$(id -un)/VASP"
       sed -E -i -e "s|^data_dir=.*|data_dir=\"${base_dir}/data\"|" \
        "sample_SLURM_vasp_std.bash"
     fi
