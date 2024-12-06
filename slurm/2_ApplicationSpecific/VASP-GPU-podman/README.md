@@ -83,16 +83,7 @@ data_dir="/projects/academic/ccrgroup/username/data"
 ##############################################################################
 ```
 
-Make any other changes you might need to the #SBATCH options
-such as cluster, queue and qos names, run time etc.
-then submit the job
-
-e.g.
-```
-sbatch my_script.bash
-```
-
-NOTE: the script runs "vasp_std"
+The sample SLURMscript runs "vasp_std"
 
 ```
 ##############################################################################
@@ -106,3 +97,11 @@ vasp_std
 comment the "vasp_std" line and uncomment the "vasp_gam" or "vasp_ncl" line
 as needed
 
+Make any other changes you might need to the #SBATCH options
+such as cluster, queue and qos names, run time etc.
+then submit the job
+
+e.g.
+```
+sbatch my_script.bash
+```
