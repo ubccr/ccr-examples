@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 # Slurm account
-#SBATCH --account="ccrgroup"
+#SBATCH --account="[YourGroupName]"
 
 #SBATCH --clusters=ub-hpc
 #SBATCH --partition=general-compute --qos=general-compute
@@ -14,11 +14,11 @@
 #SBATCH --time=01:00:00
 
 # Path to the vasp support scipts (you shouldn't need change this)
-bin_dir="/projects/academic/ccrgroup/VASP/bin"
+bin_dir="/projects/academic/[YourGroupName]/VASP/bin"
 
 ##############################################################################
 # Configure the VASP data directory here:
-data_dir="/projects/academic/ccrgroup/ccruser/VASP/data"
+data_dir="/projects/academic/[YourGroupName]/[CCRusername]/VASP/data"
 ##############################################################################
 
 echo "-------------------------------------------------------------------------------"

@@ -16,12 +16,12 @@ salloc --partition=debug --qos=debug --nodes=1 --gpus-per-node=1 --cpus-per-task
 
 Create a directory for the podman OCI images e.g.
 ```
-mkdir -p /projects/academic/ccrgroup/oci_archive_dir
+mkdir -p /projects/academic/[YourGroupName]/oci_archive_dir
 ```
 
 Create a directory for the podman scripts e.g.
 ```
-mkdir -p /projects/academic/ccrgroup/VASP/bin
+mkdir -p /projects/academic/[YourGroupName]/VASP/bin
 ```
 
 Download the files to the Slurm temporary directory
@@ -53,13 +53,13 @@ Usage for the build script:
 ./build_vasp.bash 
 usage: ./build_vasp.bash oci_image_archive_directory bin_directory
 e.g.
-./build_vasp.bash /projects/academic/ccrgroup/oci_archive_dir/ /projects/academic/ccrgroup/VASP/bin
+./build_vasp.bash /projects/academic/[YourGroupName]/oci_archive_dir/ /projects/academic/[YourGroupName]/VASP/bin
 ```
 
 ...so, using the two directories created earlier:
 
 ```
-./build_vasp.bash /projects/academic/ccrgroup/oci_archive_dir /projects/academic/ccrgroup/VASP/bin
+./build_vasp.bash /projects/academic/[YourGroupName]/oci_archive_dir /projects/academic/[YourGroupName]/VASP/bin
 ```
 
 
@@ -70,7 +70,7 @@ provided for the build.
 e.g.
 
 ```
-/projects/academic/ccrgroup/VASP/bin/sample_SLURM_vasp_std.bash
+/projects/academic/[YourGroupName]/VASP/bin/sample_SLURM_vasp_std.bash
 ```
 
 copy the script, and change the "data_dir=" line to the directory with
@@ -79,7 +79,7 @@ e.g.
 
 ```
 ##############################################################################
-data_dir="/projects/academic/ccrgroup/username/data"
+data_dir="/projects/academic/[YourGroupName]/username/data"
 ##############################################################################
 ```
 

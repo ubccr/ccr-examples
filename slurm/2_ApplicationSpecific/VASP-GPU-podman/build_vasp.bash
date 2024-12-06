@@ -4,7 +4,7 @@ if [ "${1}" = "" ] || [ ! -d "${1}" ] || [ "${2}" = "" ] || [ ! -d "${2}" ]
 then
   echo "usage: ${0} oci_image_archive_directory bin_directory" >&2
   echo "e.g." >&2
-  echo "${0} /projects/academic/ccrgroup/podman_images/ /projects/academic/ccrgroup/VASP/bin" >&2
+  echo "${0} /projects/academic/[YourGroupName]/podman_images/ /projects/academic/[YourGroupName]/VASP/bin" >&2
   exit 1
 fi
 
