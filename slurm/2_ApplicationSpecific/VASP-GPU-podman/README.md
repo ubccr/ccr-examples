@@ -83,7 +83,7 @@ data_dir="/projects/academic/ccrgroup/username/data"
 ##############################################################################
 ```
 
-The sample SLURMscript runs "vasp_std"
+The script runs "vasp_std"
 
 ```
 ##############################################################################
