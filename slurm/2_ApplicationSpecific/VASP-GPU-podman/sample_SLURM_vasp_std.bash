@@ -16,63 +16,14 @@
 # Path to the vasp support scipts (you shouldn't need change this)
 bin_dir="/projects/academic/ccrgroup/VASP/bin"
 
+##############################################################################
 # Configure the VASP data directory here:
 data_dir="/projects/academic/ccrgroup/ccruser/VASP/data"
+##############################################################################
 
 echo "-------------------------------------------------------------------------------"
-echo "Job info:"
-echo "-------------------------------------------------------------------------------"
 echo "Job start: $(date "+%F %T")"
-echo "Cluster: ${SLURM_CLUSTER_NAME}"
-echo "Partition: ${SLURM_JOB_PARTITION}"
-echo "QOS: ${SLURM_JOB_QOS}"
-if [ "${SLURM_JOB_RESERVATION}" != "" ]
-then
-  echo "Reservation: ${SLURM_JOB_RESERVATION}"
-fi
-echo "Account: ${SLURM_JOB_ACCOUNT}"
-echo "Job ID: ${SLURM_JOB_ID}"
-echo "Nodes in SLURM job: ${SLURM_NODELIST}"
-if [ "${SLURM_NTASKS}" != "" ]
-then
-  echo "Number of Tasks: ${SLURM_NTASKS}"
-fi
-if [ "${SLURM_NTASKS_PER_NODE}" != "" ] && [ "${SLURM_NTASKS_PER_NODE}" != "${SLURM_NTASKS}" ]
-then
-  echo "Number of Tasks per Node: ${SLURM_NTASKS_PER_NODE}"
-else
-  if [ "${SLURM_TASKS_PER_NODE}" != "" ] && [ "${SLURM_TASKS_PER_NODE}" != "${SLURM_NTASKS}" ]
-  then
-    echo "Number of Tasks per node: ${SLURM_TASKS_PER_NODE}"
-  fi
-fi
-if [ "${SLURM_NTASKS_PER_CORE}" != "" ]
-then
-  echo "Tasks per Core: ${SLURM_NTASKS_PER_CORE}"
-fi
-if [ "${SLURM_NTASKS_PER_SOCKET}" != "" ]
-then
-  echo "Tasks per Socket: ${SLURM_NTASKS_PER_SOCKET}"
-fi
-if [ "${SLURM_JOB_GPUS}" != "" ]
-then
-  echo "Slurm job GPUs: ${SLURM_JOB_GPUS}"
-fi
-if [ "${SLURM_GPUS_PER_NODE}" != "" ]
-then
-  echo "Requested GPUs per node: ${SLURM_GPUS_PER_NODE}"
-fi
-if [ "${SLURM_GPUS_ON_NODE}" != "" ] && [ "${SLURM_GPUS_ON_NODE}" != "${SLURM_GPUS_PER_NODE}" ]
-then
-  echo "Physical GPUs on node: ${SLURM_GPUS_ON_NODE}"
-fi
-if [ "${SLURM_NTASKS_PER_GPU}" != "" ]
-then
-  echo "Tasks per GPU: ${SLURM_NTASKS_PER_GPU}"
-fi
-echo
 echo "-------------------------------------------------------------------------------"
-echo
 
 # Add the VASP bin directory to the path
 if [ -d "${bin_dir}" ]
@@ -92,17 +43,14 @@ then
   exit 1
 fi
 
-if [ ! -f "INCAR" ]
-then
-  echo "no \"INCAR\" file found - data directory wrong? - Bailing" >&2
-  exit 1
-fi
-
-# run vasp_std in the data directory
+##############################################################################
+# run vasp_std, vasp_gam or vasp_ncl in the data directory
 vasp_std
+#vasp_gam
+#vasp_ncl
+##############################################################################
 
 echo
 echo "-------------------------------------------------------------------------------"
 echo "Job end: $(date "+%F %T")"
 echo "-------------------------------------------------------------------------------"
-

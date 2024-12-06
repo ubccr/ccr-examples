@@ -127,25 +127,6 @@ else
   echo "sample script \"sample_SLURM_vasp_std.bash\" missing?" >&2
 fi
 echo
-
-echo "Run \"vasp_std\" in a container instance with:"
-echo "  ${bin_dir}/vasp_std"
-echo 
-echo "Run \"vasp_gam\" in a container instance with:"
-echo "  ${bin_dir}/vasp_gam"
-echo 
-echo "Run \"vasp_ncl\" in a container instance with:"
-echo "  ${bin_dir}/vasp_ncl"
-echo
-echo "Run a specific version of any of the above:"
-echo "e.g."
-echo "   ${bin_dir}/vasp_std-${vasp_version}.bash"
-echo
-echo
-echo "Run a shell in the Vasp container with:"
-echo "  ${bin_dir}/run_vasp_shell"
-echo
-echo
 echo "Example Slurm script:"
 echo "  ${bin_dir}/sample_SLURM_vasp_std.bash"
 echo
