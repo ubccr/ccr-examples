@@ -78,7 +78,9 @@ your data files in (i.e. "INCAR" etc.)
 e.g.
 
 ```
+##############################################################################
 data_dir="/projects/academic/ccrgroup/username/data"
+##############################################################################
 ```
 
 Make any other changes you might need to the #SBATCH options
@@ -93,10 +95,14 @@ sbatch my_script.bash
 NOTE: the script runs "vasp_std"
 
 ```
-# run vasp_std in the data directory
+##############################################################################
+# run vasp_std, vasp_gam or vasp_ncl in the data directory
 vasp_std
+#vasp_gam
+#vasp_ncl
+##############################################################################
 ```
 
-the "vasp_std" line can be changed to "vasp_gam" or "vasp_ncl" if you want
-to run them rather than "vasp_std"
+comment the "vasp_std" line and uncomment the "vasp_gam" or "vasp_ncl" line
+as needed
 
