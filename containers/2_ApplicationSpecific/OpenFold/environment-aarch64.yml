@@ -1,0 +1,35 @@
+name: openfold-env 
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - setuptools<80
+  - openmm
+  - pdbfixer
+  - biopython
+  # W&B Automations API is experimental and it is recommend pinning the package
+  # version to reduce the risk of disruption
+  - wandb==0.25.1
+  - modelcif
+  - awscli
+  - ml-collections
+  - aria2
+  - git
+  - bioconda::hmmer
+  # install libopenblas as a fix for https://github.com/bioconda/bioconda-recipes/issues/56856
+  - libopenblas
+  - libaio
+  - ucx
+  - bioconda::hhsuite
+  - bioconda::kalign2
+  - mmseqs2
+  # pytorch-lightning dependencies
+  - cpython
+  - cusparselt
+  - gmpy2
+  - mpc
+  - nccl
+  - nomkl
+  - sleef
+  - triton
