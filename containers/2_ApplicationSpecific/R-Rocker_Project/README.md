@@ -252,10 +252,12 @@ See the [EXAMPLES file](./EXAMPLES.md) for more info.
 Slurm script examples:
 
 ### x86_64 example
-[R example](https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/R-Rocker_Project/containers/2_ApplicationSpecific/R-Rocker_Project/slurm_example.bash)  
+[R x86_64 Slurm example script](https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/R-Rocker_Project/containers/2_ApplicationSpecific/R-Rocker_Project/slurm_example.bash)  
+[Docs for running the R x86_64 Slurm example script](./SLURM_EXAMPLE.md)  
 
 ### ARM64 example
-[R ARM64 example](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/R-Rocker_Project/containers/2_ApplicationSpecific/R-Rocker_Project/slurm_ARM64_example.bash)  
+[R ARM64 Slurm example script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/R-Rocker_Project/containers/2_ApplicationSpecific/R-Rocker_Project/slurm_ARM64_example.bash)  
+[Docs for running the R ARM64 Slurm example script](./SLURM_ARM64_EXAMPLE.md)  
 
 
 ## Documentation Resources
