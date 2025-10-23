@@ -1,0 +1,232 @@
+Bootstrap: docker
+From: ghcr.io/rocker-org/r-ver:4.5.1
+
+%post -c /bin/bash
+  # Set the timezone, if unset
+  test -h /etc/localtime || ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+
+  cp /etc/apt/sources.list /etc/apt/sources.list~
+  sed -E -i 's/^# deb-src /deb-src /' /etc/apt/sources.list
+  apt-get -y update
+
+  # Install man & man pages - this section can be removed if not needed
+  # NOTE: Do this before installing anything else so their man pages are installed
+  sed -e '\|/usr/share/man|s|^#*|#|g' -i /etc/dpkg/dpkg.cfg.d/excludes
+  DEBIAN_FRONTEND=noninteractive apt-get -y install apt-utils groff dialog man-db manpages manpages-posix manpages-dev
+  rm -f /usr/bin/man
+  dpkg-divert --quiet --remove --rename /usr/bin/man
+
+  # O/S package updates:
+  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+
+  DEBIAN_FRONTEND=noninteractive apt-get -y install \
+   bash-completion \
+   ca-certificates \
+   tzdata \
+   locales \
+   zip \
+   unzip \
+   wget \
+   git \
+   libgit2-dev \
+   subversion \
+   gawk \
+   file \
+   gnupg2 \
+   gpg \
+   gpg-agent \
+   libssh2-1-dev \
+   libsasl2-dev \
+   build-essential \
+   autoconf \
+   automake \
+   pkg-config \
+   cmake \
+   cmake-data \
+   cmake-extras \
+   cmake-format \
+   libclang-dev \
+   python3 \
+   python3-pip \
+   python3-setuptools \
+   python3-sphinx \
+   python3-sphinx-rtd-theme \
+   python3-dev \
+   python-is-python3 \
+   libpython3-dev \
+   devscripts \
+   perl \
+   zstd \
+   gnulib \
+   libicu-dev \
+   libssl-dev \
+   zlib1g-dev \
+   libzstd-dev \
+   libbz2-dev \
+   lbzip2 \
+   xz-utils \
+   libncurses5-dev \
+   libncursesw5-dev \
+   libreadline-dev \
+   liblzma-dev \
+   liblz4-tool \
+   libcurl4-gnutls-dev \
+   libdeflate-dev \
+   libx11-dev \
+   x11proto-core-dev \
+   xfonts-base \
+   xvfb \
+   xauth \
+   xtail \
+   xzdec \
+   libxt-dev \
+   libxt6 \
+   libxtst6 \
+   xorg-dev \
+   fonts-roboto \
+   fonts-texgyre \
+   gsfonts \
+   ghostscript \
+   libpng-dev \
+   libtiff5-dev \
+   libfreetype6-dev \
+   libjpeg-dev \
+   libjpeg-turbo8-dev \
+   libjq-dev \
+   liblzma-dev \
+   texinfo \
+   texlive \
+   texlive-base \
+   texlive-fonts-recommended \
+   texlive-fonts-extra \
+   texlive-font-utils \
+   texlive-lang-all \
+   texlive-extra-utils \
+   texlive-latex-recommended \
+   texlive-latex-extra \
+   libpcre2-posix3 \
+   libpcre2-dev \
+   openjdk-21-jdk-headless \
+   nvidia-cuda-dev \
+   nvidia-cuda-toolkit \
+   libxml2-dev \
+   libudunits2-dev \
+   libgdal-dev \
+   libharfbuzz-dev \
+   libfribidi-dev \
+   libmagick++-dev \
+   libgsl-dev \
+   libfftw3-dev \
+   libcairo2-dev \
+   libpango1.0-dev \
+   libgmp-dev \
+   tk-dev \
+   tcl-dev \
+   libmpfr-dev \
+   libnetcdf-dev \
+   libhdf4-alt-dev \
+   libhdf5-dev \
+   libhts3 \
+   libhts-dev \
+   libhtscodecs2 \
+   libhtscodecs-dev \
+   libopenblas64-0 \
+   libopenblas64-dev \
+   liblapack3 \
+   liblapack-dev \
+   liblapacke-dev \
+   libscalapack-openmpi-dev \
+   openmpi-bin \
+   openmpi-common \
+   libopenmpi-dev \
+   libpmix2t64 \
+   libpmix-dev \
+   libgl1-mesa-dev \
+   libglpk-dev \
+   libglu1-mesa-dev \
+   libgmp3-dev \
+   libgsl0-dev \
+   gdebi-core \
+   libgeos-dev \
+   libhunspell-dev \
+   libpq-dev \
+   libproj-dev \
+   libprotobuf-dev \
+   protobuf-compiler \
+   libsqlite3-dev \
+   unixodbc-dev \
+   sqlite3 \
+   libv8-dev \
+   libzmq3-dev \
+   postgis \
+   psmisc \
+   hugo \
+   swig \
+   curl \
+   jq \
+   nano \
+   vim \
+   less \
+   apt-file
+
+  # NOTE: apt-file is generally not needed to run, but can be useful during development
+  apt-file update
+
+  # These steps are necessary to configure Perl and can cause issues with Python if omitted
+  sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+  dpkg-reconfigure --frontend=noninteractive locales
+  update-locale LANG=en_US.UTF-8
+
+  # Libraries in /usr/local/lib
+  # Include files in /usr/local/include
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+  export CFLAGS="${CFLAGS} -I/usr/local/include"
+  export CPPFLAGS="${CPPFLAGS} -I/usr/local/include"
+  export CXXFLAGS="${CXXFLAGS} -I/usr/local/include"
+  export FFLAGS="${FFLAGS} -I/usr/local/include"
+  export LDFLAGS="${LDFLAGS} -L/usr/local/lib -Xlinker -rpath -Xlinker \"/usr/local/lib\""
+  export CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)"
+  pip_install_dir="$(python3 -c 'import sys; print("/usr/local/lib/python" + str(sys.version_info.major) + "." + str(sys.version_info.minor) + "/dist-packages")')"
+  export PYTHONPATH="${pip_install_dir}:${PYTHONPATH}"
+  export PATH="${PATH}:${pip_install_dir}/bin"
+
+  # distro from the Ubuntu package clashes with the one from pip
+  DEBIAN_FRONTEND=noninteractive apt-get -y remove python3-distro
+  pip install --prefix="/usr" distro setuptools
+
+  # make sure TMPDIR is on a local filesystem
+  export TMPDIR="${SLURMTMPDIR:-/var/tmp}"
+  # container setting required from some builds:
+  export container="oci"
+  # CUDA installed with Ubuntu packages, so set CUDA_HOME to /usr
+  export CUDA_HOME="/usr"
+
+  R --version
+
+###  # Sample code to add R packages from CRAN inside this container
+###  for package in \
+###    Rcpp \
+###    RcppEigen
+###  do
+###    R -e "install.packages(pkgs = \"${package}\", repos = \"https://cran.r-project.org\",
+###     lib = \"/usr/local/lib/R/library\", type = \"source\", dependencies = TRUE)"
+###  done
+
+%environment
+  # make sure TMPDIR is on a local filesystem
+  export TMPDIR="${SLURMTMPDIR:-/var/tmp}"
+  # container setting required from some builds:
+  export container="oci"
+  # CUDA installed with Ubuntu packages, so set CUDA_HOME to /usr
+  export CUDA_HOME="/usr"
+  export LANG=en_US.UTF-8 
+  export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/lib"
+  export PYTHONPATH="$(python3 -c 'import sys; print("/usr/local/lib/python" + str(sys.version_info.major) + "." + str(sys.version_info.minor) + "/dist-packages")'):${PYTHONPATH}"
+  export PATH="$(python3 -c 'import sys; print("/usr/local/lib/python" + str(sys.version_info.major) + "." + str(sys.version_info.minor) + "/dist-packages/bin")'):${PATH}"
+
+%runscript
+  #!/bin/bash
+  export PS1="rocker-R> "
+  # Exec passed command (required for Modal ENTRYPOINT compatibility)
+  exec "$@"
+
