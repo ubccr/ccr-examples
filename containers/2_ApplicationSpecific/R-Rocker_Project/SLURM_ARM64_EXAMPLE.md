@@ -52,7 +52,7 @@ abridged sample output:
 
 > ```
 > [...]
-#SBATCH --account="ccradmintest"
+> #SBATCH --account="ccradmintest"
 > [...]
 > ```
 

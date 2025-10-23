@@ -40,10 +40,10 @@ abridged sample output:
 
 > ```
 > [...]
-#SBATCH --cluster="ub-hpc"
-#SBATCH --partition="debug"
-#SBATCH --qos="debug"
-#SBATCH --account="ccradmintest"
+> #SBATCH --cluster="ub-hpc"
+> #SBATCH --partition="debug"
+> #SBATCH --qos="debug"
+> #SBATCH --account="ccradmintest"
 > [...]
 > ```
 
