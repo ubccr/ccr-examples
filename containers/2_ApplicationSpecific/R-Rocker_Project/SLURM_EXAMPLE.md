@@ -27,7 +27,7 @@ sample output:
 > ```
 
 Modify the Slurm script - change the cluster, partition, qos and account
-You can use the `slimits` command to see what accounts and QOS settings yoa
+You can use the `slimits` command to see what accounts and QOS settings you
 have access to.
 
 For example:

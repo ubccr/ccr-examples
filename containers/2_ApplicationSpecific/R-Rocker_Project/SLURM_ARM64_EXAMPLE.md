@@ -41,8 +41,8 @@ sample output:
 >     ub-hpc         ccradmintest   tkewtest                      	arm64,class,debug,eai-test,general-compute,industry,scavenger,viz
 > ```
 
-So my test account has access to the "arm64" partition using the account
-"ccradmintest"
+The second field in the Slurm account name, so my test account has access to
+the "arm64" partition using the account "ccradmintest"
 
 ```
 cat slurm_ARM64_example.bash
