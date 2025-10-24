@@ -10,19 +10,62 @@ reproducibility.
 ## Building the container
 
 A brief guide to building the R_rocker container follows:<br/>
-Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/) for more detailed information on building and using Apptainer.
+Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/) for more detailed information on
+building and using Apptainer.
 
 NOTE: for building on the ARM64 platform see [BUILD-ARM64.md](./BUILD-ARM64.md)
 
-1. Start an interactive job
+1. Start an interactive job in the "debug" partition
 
-Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
+Apptainer is not available on the CCR login nodes and the compile nodes may not
+provide enough resources for you to build a container.  We recommend requesting
+an interactive job on a compute node to conduct this build process.<br/>
 See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
+
+You can use the `slimits` command to see what accounts and QOS settings you
+have access to.
+For example, to find the Slurm accoun(s) you can use to run an interactive job
+in the "debug" partition:
+
+```
+slimits | grep "debug"
+```
+
+sample output:
+
+> ```
+>     ub-hpc         SlurmAccountName   CCRusername                      	arm64,debug,general-compute,scavenger,viz
+> ```
+
+The second field in the Slurm account name, so this example has access to the
+"debug" partition using the Slurm account "SlurmAccountName"
+
+Set the environment variable "SALLOC_ACCOUNT" to the Slurm account you want
+to use.
+e.g.
+
+```
+export SALLOC_ACCOUNT="SlurmAccountName"
+```
+
+The following variables will request exclusive use of a "debug" partition node
+for an hour with the salloc comand that follows
+
+```
+export SALLOC_CLUSTERS="ub-hpc"
+export SALLOC_PARTITION="debug"
+export SALLOC_QOS="debug"
+export SALLOC_EXCLUSIVE=""
+export SALLOC_MEM_PER_NODE="0"
+export SALLOC_TIMELIMIT="01:00:00"
+```
+
+You can now start an interactive job in the "debug" partition with the 
+following:
 
 ```
 tmp_file="$(mktemp)"
-salloc --cluster=ub-hpc --partition=debug --qos=debug --no-shell --exclusive \
- --account="[SlurmAccountName]" --mem=0 --time=1:00:00 2>&1 | tee "${tmp_file}"
+salloc --nodes=1 --no-shell 2>&1 | tee "${tmp_file}"
 SLURM_JOB_ID="$(head -1 "${tmp_file}" | awk '{print $NF}')"
 rm "${tmp_file}"
 srun --jobid="${SLURM_JOB_ID}" --export=HOME,TERM,SHELL --pty /bin/bash --login
@@ -123,22 +166,52 @@ sample output:
 > CCRusername@login1$ 
 > ```
 
-End the Slurm job
+End the Slurm job and remove the environment variables set for the job
 
 ```
 scancel "${SLURM_JOB_ID}"
 unset SLURM_JOB_ID
+eval $(set | grep ^SALLOC_ | awk -F= '{print "unset " $1}')
 ``` 
 
 4. Running the container
 
-Start an interactive job e.g.
+Start an interactive job - the following example uses the "general-compute"
+partition
+
+To find which Slurm account you can use to run an interactive job in the
+"general-compute" partition:
+
+```
+slimits | grep "general-compute"
+```
+
+sample output:
+
+> ```
+>     ub-hpc         SlurmAccountName   CCRusername                      	arm64,debug,general-compute,scavenger,viz
+> ```
+
+
+The second field in the Slurm account name, so this example has access to the
+"general-compute" partition using the Slurm account "SlurmAccountName"
+
+Set the environment variable "SALLOC_ACCOUNT" to the Slurm account you want
+to use.
+e.g.
+
+```
+export SALLOC_ACCOUNT="SlurmAccountName"
+```
+
+This example runs an interactive job in the "general-compute" partition, with
+64GB RAM and 6 cores on a single node for 5 hours:
 
 ```
 tmp_file="$(mktemp)"
 salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
- --no-shell --mem=128GB --nodes=1 --cpus-per-task=1 --tasks-per-node=12 \
- --account="[SlurmAccountName]" --time=5:00:00 2>&1 | tee "${tmp_file}"
+ --no-shell --mem=64GB --nodes=1 --cpus-per-task=1 --tasks-per-node=6 \
+ --time=5:00:00 2>&1 | tee "${tmp_file}"
 SLURM_JOB_ID="$(head -1 "${tmp_file}" | awk '{print $NF}')"
 rm "${tmp_file}"
 srun --jobid="${SLURM_JOB_ID}" --export=HOME,TERM,SHELL --pty /bin/bash --login
@@ -237,11 +310,11 @@ sample output:
 > CCRusername@login1$ 
 > ```
 
-End the Slurm job
+End the Slurm job and remove the environment variables set for the job
 
 ```
 scancel "${SLURM_JOB_ID}"
-unset SLURM_JOB_ID
+unset SLURM_JOB_ID SALLOC_ACCOUNT
 ```
 
 

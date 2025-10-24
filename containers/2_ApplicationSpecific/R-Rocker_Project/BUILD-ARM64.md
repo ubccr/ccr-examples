@@ -5,6 +5,36 @@
 
 1. Start an interactive job on an ARM64 node
 
+You can use the `slimits` command to see what accounts and QOS settings you
+have access to.
+
+To find which Slurm account you can use to run an interactive job in the "arm64"
+partition:
+
+```
+slimits | grep "arm64"
+```
+
+sample output:
+
+> ```
+>     ub-hpc         SlurmAccountName   CCRusername                      	arm64,debug,general-compute,scavenger,viz
+> ```
+
+The second field in the Slurm account name, so my test account has access to
+the "arm64" partition using the account "SlurmAccountName"
+
+Set the environment variable "SBATCH_ACCOUNT" to the Slurm account you want
+to use.
+e.g.
+
+```
+export SBATCH_ACCOUNT="SlurmAccountName"
+```
+
+You can now start an interactive job in the "arm64" partition with the 
+following:
+
 ```
 tmp_file="$(mktemp)"
 salloc --partition=arm64 --qos=arm64 --constraint=ARM64 --no-shell \
@@ -113,7 +143,7 @@ End the Slurm job
 
 ```
 scancel "${SLURM_JOB_ID}"
-unset SLURM_JOB_ID
+unset SLURM_JOB_ID SBATCH_ACCOUNT
 ``` 
 
 4. Running the container
@@ -129,6 +159,16 @@ Notes:
   If you use R packages that uses CUDA, add the Slurm directive to request
   GPU(s) e.g. "--gpus-per-node=1" and add tht "--nv" opion to apptainer so the
   requested GPU(s) are available inside the container.
+
+Set the Slurm account you want to use for this interactive job (see `slimits`
+for the account(s) you can use
+
+```
+export SBATCH_ACCOUNT="SlurmAccountName"
+```
+
+You can now start an interactive job in the "arm64" partition with the
+following:
 
 ```
 tmp_file="$(mktemp)"
@@ -238,6 +278,6 @@ End the Slurm job
 
 ```
 scancel "${SLURM_JOB_ID}"
-unset SLURM_JOB_ID
+unset SLURM_JOB_ID SBATCH_ACCOUNT
 ```
 

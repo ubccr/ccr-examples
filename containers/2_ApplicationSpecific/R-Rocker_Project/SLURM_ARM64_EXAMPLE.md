@@ -38,11 +38,11 @@ slimits | grep arm64
 sample output:
 
 > ```
->     ub-hpc         ccradmintest   tkewtest                      	arm64,class,debug,eai-test,general-compute,industry,scavenger,viz
+>     ub-hpc         SlurmAccountName   CCRusername                      	arm64,debug,general-compute,scavenger,viz
 > ```
 
-The second field in the Slurm account name, so my test account has access to
-the "arm64" partition using the account "ccradmintest"
+The second field in the Slurm account name, so this example has access to the
+"arm64" partition using the Slurm account "SlurmAccountName"
 
 ```
 cat slurm_ARM64_example.bash
@@ -52,7 +52,7 @@ abridged sample output:
 
 > ```
 > [...]
-> #SBATCH --account="ccradmintest"
+> #SBATCH --account="SlurmAccountName"
 > [...]
 > ```
 

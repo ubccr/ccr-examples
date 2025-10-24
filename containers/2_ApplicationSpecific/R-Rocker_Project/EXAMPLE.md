@@ -2,11 +2,41 @@
 
 Start an interactive job in the "debug" partition
 
+You can use the `slimits` command to see what accounts and QOS settings you
+have access to.
+
+To find which Slurm account you can use to run an interactive job in the debug
+partition:
+
+```
+slimits | grep "debug"
+```
+
+sample output:
+
+> ```
+>     ub-hpc         SlurmAccountName   CCRusername                      	arm64,debug,general-compute,scavenger,viz
+> ```
+
+The second field in the Slurm account name, so this example has access to the
+"debug" partition using the Slurm account "SlurmAccountName"
+
+Set the environment variable "SBATCH_ACCOUNT" to the Slurm account you want
+to use.
+e.g.
+
+```
+export SBATCH_ACCOUNT="SlurmAccountName"
+```
+
+You can now start an interactive job in the "debug" partition with the 
+following:
+
 ```
 tmp_file="$(mktemp)"
 salloc --cluster=ub-hpc --partition=debug --qos=debug --no-shell \
  --nodes=1 --cpus-per-task=1 --tasks-per-node=6 --mem=36GB \
- --account="[SlurmAccountName]" --time=1:00:00 2>&1 | tee "${tmp_file}"
+ --time=1:00:00 2>&1 | tee "${tmp_file}"
 SLURM_JOB_ID="$(head -1 "${tmp_file}" | awk '{print $NF}')"
 rm "${tmp_file}"
 srun --jobid="${SLURM_JOB_ID}" --export=HOME,TERM,SHELL --pty /bin/bash --login
@@ -97,6 +127,6 @@ End the Slurm job
 
 ```
 scancel "${SLURM_JOB_ID}"
-unset SLURM_JOB_ID
+unset SLURM_JOB_ID SBATCH_ACCOUNT
 ``` 
 
