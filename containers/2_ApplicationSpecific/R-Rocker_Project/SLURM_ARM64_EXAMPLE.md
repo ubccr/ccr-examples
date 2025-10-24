@@ -65,14 +65,14 @@ sbatch ./slurm_ARM64_example.bash
 sample output:
 
 > ```
-> Submitted batch job 22173297 on cluster ub-hpc
+> Submitted batch job 22179954 on cluster ub-hpc
 > ```
 
-The Slurm output file in this case is slurm-22173297.out
+The Slurm output file in this case is slurm-22179954.out
 Once this Slurm job completed:
 
 ```
-cat slurm-22173297.out
+cat slurm-22179954.out
 ```
 
 > ```

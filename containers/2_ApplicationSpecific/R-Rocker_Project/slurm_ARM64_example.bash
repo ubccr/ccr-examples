@@ -8,8 +8,10 @@
 #SBATCH --cluster="ub-hpc"
 #SBATCH --partition="arm64"
 #SBATCH --qos="arm64"
+## Make sure the x86_64 (head node) environment is not used on the ARM64 node
+#SBATCH --export=HOME,TERM,SHELL
 
-## Select an account that has access to the arm64 partition (see `slimits | grep arm64`)
+## Select an account that has access to the arm64 partition (see "slimits | grep arm64")
 #SBATCH --account="[SlurmAccountName]"
 
 ## Job runtime limit, the job will be canceled once this limit is reached. Format- dd-hh:mm:ss
