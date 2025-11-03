@@ -132,6 +132,8 @@ From: ghcr.io/rocker-org/r-ver:4.5.1
    libhtscodecs-dev \
    libopenblas64-0 \
    libopenblas64-dev \
+   libopenblas-dev \
+   libopenblas64-dev \
    liblapack3 \
    liblapack-dev \
    liblapacke-dev \
