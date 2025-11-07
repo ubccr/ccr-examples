@@ -17,12 +17,9 @@ structure.
 
 This was downloaded as follows:
 
-```bash
-https://www.rcsb.org
+Open a browser window to: https://www.rcsb.org
 Use the search bar top left to search for "1AKI"
 on the top left hand side of the window [Download Files] [Legacy PDB Format]
-```
-
 
 Delete the crystal water molecules (residue "HOH" in the PDB file)
 
@@ -93,11 +90,11 @@ sample truncated output:
 
 Type "1" then [Enter] to select the "CHARMM all-atom force field" option
 
-```bash
+```
 1
 ```
 
-Sample truncated output
+Sample truncated output:
 
 > ```
 > 
@@ -358,7 +355,7 @@ curl -L -o "ions.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/ions.mdp"
 
 ```bash
 mkdir -p "inputs"
-mv "ions.mdp" "./inputs"
+mv ions.mdp ./inputs/
 ```
 
 Generate an atomic-level input file (.tpr)
@@ -533,7 +530,752 @@ sample output:
 
 i.e. 8 water molecules have been replaced by CL ions
 
+Download the input parameter file "minim.mdp"
+
+```bash
+curl -L -o "minim.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/minim.mdp"
+```
+...and move the file to the inputs directory
+
+```bash
+mv minim.mdp ./inputs/
+```
+
+run the energy minimization
+
+```bash
+gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
+```
+
+sample output
+
+> ```
+>                       :-) GROMACS - gmx grompp, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Command line:
+>   gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
+> 
+> Ignoring obsolete mdp entry 'ns_type'
+> 
+> NOTE 1 [file inputs/minim.mdp]:
+>   With Verlet lists the optimal nstlist is >= 10, with GPUs >= 20. Note
+>   that with the Verlet scheme, nstlist has no effect on the accuracy of
+>   your simulation.
+> 
+> Setting the LD random seed to -67666049
+> 
+> Generated 167799 of the 167910 non-bonded parameter combinations
+> Generating 1-4 interactions: fudge = 1
+> 
+> Generated 117432 of the 167910 1-4 parameter combinations
+> 
+> Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
+> 
+> Excluding 2 bonded neighbours molecule type 'SOL'
+> 
+> Excluding 3 bonded neighbours molecule type 'CL'
+> Analysing residue names:
+> There are:   129    Protein residues
+> There are: 12589      Water residues
+> There are:     8        Ion residues
+> Analysing Protein...
+> Number of degrees of freedom in T-Coupling group rest is 81435.00
+> The integrator does not provide a ensemble temperature, there is no system ensemble temperature
+> 
+> The largest distance between excluded atoms is 0.443 nm between atom 1156 and 1405
+> Calculating fourier grid dimensions for X Y Z
+> Using a fourier grid of 64x64x64, spacing 0.116 0.116 0.116
+> 
+> Estimate for the relative computational load of the PME mesh part: 0.32
+> 
+> This run will generate roughly 3 Mb of data
+> 
+> There was 1 NOTE
+> [...]
+> ```
+
+This generates one file, "em.tpr" and updates mdout.mdp
+
+```bash
+ls -l em.tpr
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 1174552 Nov  6 10:26  em.tpr
+> ```
+
+Run the energy minimization
+
+```bash
+gmx mdrun -v -deffnm em
+```
+
+sample abridged output:
+
+> ```
+>                       :-) GROMACS - gmx mdrun, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Command line:
+>   gmx mdrun -v -deffnm em
+> 
+> Reading file em.tpr, VERSION 2025.3 (single precision)
+> Using 40 OpenMP threads 
+> 
+> 
+> Steepest Descents:
+>    Tolerance (Fmax)   =  1.00000e+03
+>    Number of steps    =        50000
+> Step=    0, Dmax= 1.0e-02 nm, Epot= -4.55681e+05 Fmax= 1.81034e+05, atom= 1891
+> Step=    1, Dmax= 1.0e-02 nm, Epot= -4.67710e+05 Fmax= 6.69947e+04, atom= 936
+> Step=    2, Dmax= 1.2e-02 nm, Epot= -4.81031e+05 Fmax= 2.92839e+04, atom= 19487
+> [...]
+> Step=  448, Dmax= 1.1e-02 nm, Epot= -6.22184e+05 Fmax= 8.05544e+03, atom= 567
+> Step=  449, Dmax= 1.3e-02 nm, Epot= -6.22194e+05 Fmax= 9.69387e+03, atom= 567
+> Step=  451, Dmax= 7.8e-03 nm, Epot= -6.22300e+05 Fmax= 9.55374e+02, atom= 567
+> 
+> writing lowest energy coordinates.
+> 
+> Steepest Descents converged to Fmax < 1000 in 452 steps
+> Potential Energy  = -6.2229994e+05
+> Maximum force     =  9.5537390e+02 on atom 567
+> Norm of force     =  2.5618381e+01
+> [...]
+> ```
+
+NOTE:
+  The "Potential Energy" E~pot~ should be negative, and (for a simple protein
+   in water) on the order of 10^5^-10^6^, depending on the system size and number
+   of water molecules.
+  The "Maximum force" F~max~ should be no greaterthan the target for which was
+   set in minim.mdp - "emtol = 1000.0" in this case, no greater than 1000 kJ mol^-1^ nm^-1^
+
+This generates four files:
+
+```bash
+ls -l em.log em.trr em.edr em.gro
+```
+
+sample output:
+
+```
+-rw-rw-r-- 1 [CCRusername] nogroup   72368 Nov  6 11:00 em.edr
+-rw-rw-r-- 1 [CCRusername] nogroup 1788130 Nov  6 11:00 em.gro
+-rw-rw-r-- 1 [CCRusername] nogroup  185004 Nov  6 11:00 em.log
+-rw-rw-r-- 1 [CCRusername] nogroup  476940 Nov  6 11:00 em.trr
+```
+
+Analyze the .edr file "em.edr"
+
+```bash
+gmx energy -f em.edr -o potential.xvg
+```
+
+sample truncated output:
+
+```
+                      :-) GROMACS - gmx energy, 2025.3 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+Command line:
+  gmx energy -f em.edr -o potential.xvg
+
+Opened em.edr as single precision energy file
+
+Select the terms you want from the following list by
+selecting either (part of) the name or the number or a combination.
+End your selection with an empty line or a zero.
+-------------------------------------------------------------------
+  1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih.
+  5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)
+  9  Coulomb-(SR)    10  Coul.-recip.    11  Potential       12  Pressure
+ 13  Vir-XX          14  Vir-XY          15  Vir-XZ          16  Vir-YX
+[...]
+ 29  Pres-ZY         30  Pres-ZZ         31  #Surf*SurfTen   32  T-rest
+
+```
+
+Type "11 0" then [Enter] to select Potential (11); zero (0) terminate input
+
+```
+11 0
+```
+
+sample output:
+
+> ```
+> Last energy frame read 357 time  451.000          
+> 
+> Statistics over 452 steps [ 0.0000 through 451.0000 ps ], 1 data sets
+> All statistics are over 358 points (frames)
+> 
+> Energy                      Average   Err.Est.       RMSD  Tot-Drift
+> -------------------------------------------------------------------------------
+> Potential                   -601933      10000    24177.7   -67043.2  (kJ/mol)
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l potential.xvg
+```
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 11033 Nov  6 11:21 potential.xvg
+> ```
+
+The data in potential.xvg can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with
+[xmgrace](https://plasma-gate.weizmann.ac.il/Grace/doc/UsersGuide.html#s3)
+
+Briefly:
+
+Launch a sesson in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) and connect
+to the desktop session
+[Applications] {Terminal Emulator]
+within the terminal window
+
+Change to your GROMACS directory
+
+```bash
+cd /projects/academic/[YourGroupName]/GROMACS
+```
+
+Run "xmgrace" with the "potential.xvg" file
+
+```bash
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ GROMACS-$(arch).sif \
+ xmgrace "potential.xvg"
+```
+
+This will display a plot that should look like this:  
+![GROMACS Energies](images/potential.png)
+
+Please exit the OnDemand session once you are done:
+[Applications] [Log Out] [Log Out]
+hen close the browser window
+
+
+...back on the "salloc" interactive terminal session
+
+```bash
+
+
+Equilibrate the solvent and ions around the protein:
+Phase 1 is conducted under an NVT ensemble (constant Number of particles,
+Volume, and Temperature.)
+
+Download the .mdp file for this example:
+
+```bash
+curl -L -o "nvt.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/nvt.mdp"
+```
+
+...and move the file to the inputs directory
+
+```bash
+mv nvt.mdp ./inputs/
+```
+
+```bash
+gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+```
+
+Sample output:
+
+> ```
+>                       :-) GROMACS - gmx grompp, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Command line:
+>   gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+> 
+> Ignoring obsolete mdp entry 'title'
+> Ignoring obsolete mdp entry 'ns_type'
+> Setting the LD random seed to -537190402
+> 
+> Generated 167799 of the 167910 non-bonded parameter combinations
+> Generating 1-4 interactions: fudge = 1
+> 
+> Generated 117432 of the 167910 1-4 parameter combinations
+> 
+> Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
+> 
+> turning H bonds into constraints...
+> 
+> Excluding 2 bonded neighbours molecule type 'SOL'
+> 
+> turning H bonds into constraints...
+> 
+> Excluding 3 bonded neighbours molecule type 'CL'
+> 
+> turning H bonds into constraints...
+> 
+> Setting gen_seed to -718772497
+> 
+> Velocities were taken from a Maxwell distribution at 300 K
+> Analysing residue names:
+> There are:   129    Protein residues
+> There are: 12589      Water residues
+> There are:     8        Ion residues
+> Analysing Protein...
+> Number of degrees of freedom in T-Coupling group Protein is 4920.82
+> Number of degrees of freedom in T-Coupling group non-Protein is 75555.18
+> 
+> The largest distance between excluded atoms is 0.440 nm between atom 1156 and 1405
+> 
+> Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+> 
+> Calculated rlist for 1x1 atom pair-list as 1.035 nm, buffer size 0.035 nm
+> 
+> Set rlist, assuming 4x4 atom pair-list, to 1.000 nm, buffer size 0.000 nm
+> 
+> Note that mdrun will redetermine rlist based on the actual pair-list setup
+> 
+> NOTE 1 [file inputs/nvt.mdp]:
+>   Removing center of mass motion in the presence of position restraints
+>   might cause artifacts. When you are using position restraints to
+>   equilibrate a macro-molecule, the artifacts are usually negligible.
+> 
+> Calculating fourier grid dimensions for X Y Z
+> Using a fourier grid of 48x48x48, spacing 0.154 0.154 0.154
+> 
+> Estimate for the relative computational load of the PME mesh part: 0.27
+> 
+> This run will generate roughly 95 Mb of data
+> 
+> There was 1 NOTE
+> [...]
+> ```
+
+This generates one file, "nvt.tpr" and updates mdout.mdp
+
+```bash
+ls -l nvt.tpr mdout.mdp
+```
+
+```
+-rw-rw-r-- 1 tkewtest nogroup   11031 Nov  6 14:36 mdout.mdp
+-rw-rw-r-- 1 tkewtest nogroup 1798084 Nov  6 14:36 nvt.tpr
+```
+
+There are several ways to run the NVT simulation, depending on the resources
+requested with the "salloc" command.
+
+Runnin on CPU cores only (no GPUs allocated) on this node in the apptainer
+container
+
+This takes a couple of minutes to run on a node with 40 cores allocated:
+
+```bash
+gmx mdrun -deffnm nvt
+```
+
+sample output:
+
+> ```
+>                       :-) GROMACS - gmx mdrun, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS/long
+> Command line:
+>   gmx mdrun -deffnm nvt
+> 
+> Reading file nvt.tpr, VERSION 2025.3 (single precision)
+> Changing nstlist from 10 to 50, rlist from 1 to 1.109
+> 
+> Using 40 OpenMP threads 
+> 
+> starting mdrun 'LYSOZYME in water'
+> 50000 steps,    100.0 ps.
+> 
+> Writing final coordinates.
+> 
+>                Core t (s)   Wall t (s)        (%)
+>        Time:     4497.593      112.444     3999.8
+>                  (ns/day)    (hour/ns)
+> Performance:       76.840        0.312
+> ```
+
+However, be aware that this can be run over mutiple nodes &/or can
+usilize a GPU if the "gmx" command is replaced with one to use the
+extra resources.
+
+Some examples:
+
+Use GPUs on the currecnt node:
+
+```bash
+gmx_cuda mdrun -deffnm nvt
+```
+
+For multiple node examples, see the Slurm example scripts
+
+This generates five files:
+
+```bash
+ls -l nvt.cpt nvt.gro nvt.edr nvt.trr nvt.log
+```
+
+Sample output:
+
+```
+-rw-rw-r-- 1 [CCRusername] nogroup   955616 Nov  6 17:53 nvt.cpt
+-rw-rw-r-- 1 [CCRusername] nogroup    60104 Nov  6 17:53 nvt.edr
+-rw-rw-r-- 1 [CCRusername] nogroup  2741770 Nov  6 17:53 nvt.gro
+-rw-rw-r-- 1 [CCRusername] nogroup    95213 Nov  6 17:53 nvt.log
+-rw-rw-r-- 1 [CCRusername] nogroup 96329760 Nov  6 17:53 nvt.trr
+```
+
+Analyze the temperature progression
+
+```bash
+gmx energy -f nvt.edr -o temperature.xvg
+```
+
+Sample abridged output:
+
+> ```
+>                       :-) GROMACS - gmx energy, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS/long
+> Command line:
+>   gmx energy -f nvt.edr -o temperature.xvg
+> 
+> Opened nvt.edr as single precision energy file
+> 
+> Select the terms you want from the following list by
+> selecting either (part of) the name or the number or a combination.
+> End your selection with an empty line or a zero.
+> -------------------------------------------------------------------
+>   1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
+>   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
+>   9  Disper.-corr.   10  Coulomb-(SR)    11  Coul.-recip.    12  Position-Rest.
+>  13  Potential       14  Kinetic-En.     15  Total-Energy    16  Conserved-En. 
+>  17  Temperature     18  Pres.-DC        19  Pressure        20  Constr.-rmsd  
+> [...]
+>  43  Lamb-non-Protein                  
+> 
+> ```
+
+Type "17 0" then [Enter] to select the temperature of the system (17); zero (0) terminate input
+
+```
+17 0
+```
+
+sample output:
+
+> ```
+> Last energy frame read 100 time  100.000          
+> 
+> Statistics over 50001 steps [ 0.0000 through 100.0000 ps ], 1 data sets
+> All statistics are over 501 points
+> 
+> Energy                      Average   Err.Est.       RMSD  Tot-Drift
+> -------------------------------------------------------------------------------
+> Temperature                 299.812       0.12    3.15203   0.904259  (K)
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l temperature.xvg
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 3176 Nov  6 18:02 temperature.xvg
+> ```
+
+The data in temperature.xvg  can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) as per
+the above example for potential.xvg
+
+e.g. in an OnDemand terminal window
+
+```bash
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ GROMACS-$(arch).sif \
+ xmgrace "temperature.xvg"
+```
+
+My test plot looks like this:
+![GROMACS Temperatures](images/temperature.png)
+
+Which is a little different to the sample output in the tutorial
+![GROMACS Temperatures](https://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_nvt_temperature.png)
+
+
+Equilibrate the solvent and ions around the protein:
+Phase 2 - Equilibration of pressure is conducted under an NPT ensemble where
+the Number of particles, Pressure, and Temperature are all constant
+
+Download the 500-ps NPT equilibration .mdp file "npt.mdp"
+
+```bash
+curl -L -o "npt.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/npt.mdp"
+```
+
+...and move the file to the inputs directory
+
+```bash
+mv npt.mdp ./inputs/
+```
+
+
+```bash
+gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
+```
+
+Sample output:
+
+> ```
+>                       :-) GROMACS - gmx grompp, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Command line:
+>   gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
+> 
+> Ignoring obsolete mdp entry 'title'
+> Ignoring obsolete mdp entry 'ns_type'
+> Setting the LD random seed to 1694439166
+> 
+> Generated 167799 of the 167910 non-bonded parameter combinations
+> Generating 1-4 interactions: fudge = 1
+> 
+> Generated 117432 of the 167910 1-4 parameter combinations
+> 
+> Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
+> 
+> turning H bonds into constraints...
+> 
+> Excluding 2 bonded neighbours molecule type 'SOL'
+> 
+> turning H bonds into constraints...
+> 
+> Excluding 3 bonded neighbours molecule type 'CL'
+> 
+> turning H bonds into constraints...
+> 
+> Taking velocities from 'nvt.gro'
+> 
+> NOTE 1 [file topol.top, line 18487]:
+>   You are combining position restraints with Parrinello-Rahman pressure
+>   coupling, which can lead to instabilities. If you really want to combine
+>   position restraints with pressure coupling, we suggest to use C-rescale
+>   pressure coupling instead.
+> 
+> Analysing residue names:
+> There are:   129    Protein residues
+> There are: 12589      Water residues
+> There are:     8        Ion residues
+> Analysing Protein...
+> Number of degrees of freedom in T-Coupling group Protein is 4920.82
+> Number of degrees of freedom in T-Coupling group non-Protein is 75555.18
+> 
+> The largest distance between excluded atoms is 0.446 nm between atom 1156 and 1405
+> 
+> Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+> 
+> Calculated rlist for 1x1 atom pair-list as 1.035 nm, buffer size 0.035 nm
+> 
+> Set rlist, assuming 4x4 atom pair-list, to 1.000 nm, buffer size 0.000 nm
+> 
+> Note that mdrun will redetermine rlist based on the actual pair-list setup
+> 
+>   rest:       	 3.689  3.718  3.705
+>   rest:       	 3.689  3.718  3.705
+> 
+> NOTE 2 [file inputs/npt.mdp]:
+>   Removing center of mass motion in the presence of position restraints
+>   might cause artifacts. When you are using position restraints to
+>   equilibrate a macro-molecule, the artifacts are usually negligible.
+> 
+> 
+> Reading Coordinates, Velocities and Box size from old trajectory
+> 
+> Will read whole trajectory
+> Last frame         -1 time  100.000   
+> 
+> Using frame at t = 100 ps
+> 
+> Starting time for run is 0 ps
+> Calculating fourier grid dimensions for X Y Z
+> Using a fourier grid of 48x48x48, spacing 0.154 0.154 0.154
+> 
+> Estimate for the relative computational load of the PME mesh part: 0.27
+> 
+> This run will generate roughly 95 Mb of data
+> 
+> There were 2 NOTEs
+> [...]
+> ```
+
+This generates one file, "npt.tpr" and updates mdout.mdp
+
+```bash
+ls -l npt.tpr mdout.mdp
+```
+
+Sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup   11071 Nov  6 18:15 mdout.mdp
+> -rw-rw-r-- 1 [CCRusername] nogroup 1798108 Nov  6 18:15 npt.tpr
+> ```
+
+Run he NPT simulation
+
+This takes a couple of minutes to run on a node with 40 cores allocated:
+
+
+```bash
+gmx mdrun -deffnm npt
+```
+
+sample output:
+
+> ```
+>                       :-) GROMACS - gmx mdrun, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Command line:
+>   gmx mdrun -deffnm npt
+> 
+> Reading file npt.tpr, VERSION 2025.3 (single precision)
+> Changing nstlist from 10 to 50, rlist from 1 to 1.109
+> 
+> Using 40 OpenMP threads 
+> 
+> starting mdrun 'LYSOZYME in water'
+> 50000 steps,    100.0 ps.
+> 
+> Writing final coordinates.
+> 
+>                Core t (s)   Wall t (s)        (%)
+>        Time:     4621.352      115.544     3999.7
+>                  (ns/day)    (hour/ns)
+> Performance:       74.778        0.321
+> [...]
+> ```
+
+Analyze the pressure progression
+
+```bash
+gmx energy -f npt.edr -o pressure.xvg
+```
+
+Sample abridged output:
+
+> ```
+>                       :-) GROMACS - gmx energy, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Command line:
+>   gmx energy -f npt.edr -o pressure.xvg
+> 
+> Opened npt.edr as single precision energy file
+> 
+> Select the terms you want from the following list by
+> selecting either (part of) the name or the number or a combination.
+> End your selection with an empty line or a zero.
+> -------------------------------------------------------------------
+>   1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
+>   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
+>   9  Disper.-corr.   10  Coulomb-(SR)    11  Coul.-recip.    12  Position-Rest.
+>  13  Potential       14  Kinetic-En.     15  Total-Energy    16  Conserved-En. 
+>  17  Temperature     18  Pres.-DC        19  Pressure        20  Constr.-rmsd  
+>  21  Box-X           22  Box-Y           23  Box-Z           24  Volume
+> [...]
+>  49  Box-Vel-ZZ      50  T-Protein       51  T-non-Protein   52  Lamb-Protein  
+>  53  Lamb-non-Protein                  
+> 
+> ```
+
+
+Type "19 0" then [Enter] to select the pressure of the system (19); zero (0) terminate input
+
+```
+19 0
+```
+
+sample output:
+
+> ```
+> Last energy frame read 100 time  100.000          
+> 
+> Statistics over 50001 steps [ 0.0000 through 100.0000 ps ], 1 data sets
+> All statistics are over 501 points
+> 
+> Energy                      Average   Err.Est.       RMSD  Tot-Drift
+> -------------------------------------------------------------------------------
+> Pressure                   -1.63286        3.7    176.657    19.8596  (bar)
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l pressure.xvg
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 3175 Nov  7 14:10 pressure.xvg
+> ```
+
+The data in pressure.xvg  can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with
+"xmgrace" 
+the above examples for potential.xvg and temperature.xvg
+
+e.g. in an OnDemand terminal window
+
+```bash
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ GROMACS-$(arch).sif \
+ xmgrace "s0 line type 0; s0 symbol 1" "pressure.xvg"
+```
+
+Add a 10th degree regression line:
+
+[Data] [Transformations] [Regresssion...] [10th Degree] [Accept]
+close the "Grace: Console" window and the "Regression" window
+
+My test plot looks like this:
+![GROMACS Pressures](images/temperature.png)
+
+Which is a little different to the sample output in the tutorial
+![GROMACS Pressures](https://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
+
 
 
 >>> TO DO <<<
 cleanup /vscratch dir references
+
