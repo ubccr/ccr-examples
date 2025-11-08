@@ -1271,7 +1271,7 @@ Add a 10th degree regression line:
 close the "Grace: Console" window and the "Regression" window
 
 My test plot looks like this:  
-![GROMACS Pressures](images/temperature.png)
+![GROMACS Pressures](images/pressure.png)
 
 Which is a little different to the sample output in the tutorial  
 ![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
