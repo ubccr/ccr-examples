@@ -762,7 +762,7 @@ apptainer run \
 This will display a plot that should look like this:  
 ![GROMACS Energies](images/potential.png)
 
-Which is a little different to the sample output in the tutorial
+Which is a little different to the sample output in the tutorial 
 ![GROMACS Energies](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_em_potential.png)
 
 Please exit the OnDemand session once you are done:
@@ -1021,10 +1021,10 @@ apptainer run \
  xmgrace "temperature.xvg"
 ```
 
-My test plot looks like this:
+My test plot looks like this: 
 ![GROMACS Temperatures](images/temperature.png)
 
-Which is a little different to the sample output in the tutorial
+Which is a little different to the sample output in the tutorial 
 ![GROMACS Temperatures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_nvt_temperature.png)
 
 
@@ -1254,8 +1254,7 @@ sample output:
 > ```
 
 The data in pressure.xvg  can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with
-"xmgrace" 
-the above examples for potential.xvg and temperature.xvg
+"xmgrace"
 
 e.g. in an OnDemand terminal window
 
@@ -1271,10 +1270,10 @@ Add a 10th degree regression line:
 [Data] [Transformations] [Regresssion...] [10th Degree] [Accept]
 close the "Grace: Console" window and the "Regression" window
 
-My test plot looks like this:
+My test plot looks like this: 
 ![GROMACS Pressures](images/temperature.png)
 
-Which is a little different to the sample output in the tutorial
+Which is a little different to the sample output in the tutorial 
 ![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
 
 
