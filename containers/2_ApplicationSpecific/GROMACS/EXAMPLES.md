@@ -1007,8 +1007,8 @@ sample output:
 > -rw-rw-r-- 1 [CCRusername] nogroup 3176 Nov  6 18:02 temperature.xvg
 > ```
 
-The data in temperature.xvg  can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) as per
-the above example for potential.xvg
+The data in temperature.xvg  can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) similar
+to the above example for potential.xvg
 
 e.g. in an OnDemand terminal window
 
@@ -1016,7 +1016,7 @@ e.g. in an OnDemand terminal window
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
- xmgrace "temperature.xvg"
+ xmgrace -pexec "s0 symbol 1" "temperature.xvg"
 ```
 
 My test plot looks like this:  
@@ -1260,7 +1260,7 @@ e.g. in an OnDemand terminal window
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
- xmgrace "s0 line type 0; s0 symbol 1" "pressure.xvg"
+ xmgrace -pexec "s0 line type 0; s0 symbol 1" "pressure.xvg"
 ```
 
 Add a 10th degree regression line:
