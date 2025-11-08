@@ -762,6 +762,9 @@ apptainer run \
 This will display a plot that should look like this:  
 ![GROMACS Energies](images/potential.png)
 
+Which is a little different to the sample output in the tutorial
+![GROMACS Energies](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_em_potential.png)
+
 Please exit the OnDemand session once you are done:
 [Applications] [Log Out] [Log Out]
 hen close the browser window
@@ -1022,7 +1025,7 @@ My test plot looks like this:
 ![GROMACS Temperatures](images/temperature.png)
 
 Which is a little different to the sample output in the tutorial
-![GROMACS Temperatures](https://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_nvt_temperature.png)
+![GROMACS Temperatures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_nvt_temperature.png)
 
 
 Equilibrate the solvent and ions around the protein:
@@ -1272,7 +1275,7 @@ My test plot looks like this:
 ![GROMACS Pressures](images/temperature.png)
 
 Which is a little different to the sample output in the tutorial
-![GROMACS Pressures](https://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
+![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
 
 
 
