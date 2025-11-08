@@ -772,8 +772,6 @@ hen close the browser window
 
 ...back on the "salloc" interactive terminal session
 
-```bash
-
 
 Equilibrate the solvent and ions around the protein:
 Phase 1 is conducted under an NVT ensemble (constant Number of particles,
