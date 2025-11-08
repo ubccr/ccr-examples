@@ -758,7 +758,7 @@ apptainer run \
  GROMACS-$(arch).sif \
  xmgrace "potential.xvg" \
  -pexec 'title "Potential Energy"; subtitle "1AKI, Minimization with CHARMM36"; legend off; yaxis label "Potential Energy (kJ/mol)"; xaxis label "EM Step (ps)"'
-``
+```
 
 This will display a plot that should look like this:  
 ![GROMACS Energies](images/potential.png)
@@ -768,7 +768,7 @@ Which is a little different to the sample output in the tutorial
 
 Please exit the OnDemand session once you are done:
 [Applications] [Log Out] [Log Out]
-hen close the browser window
+Then close the browser window
 
 
 ...back on the "salloc" interactive terminal session
