@@ -756,8 +756,9 @@ Run "xmgrace" with the "potential.xvg" file
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
- xmgrace "potential.xvg"
-```
+ xmgrace "potential.xvg" \
+ -pexec 'title "Potential Energy"; subtitle "1AKI, Minimization with CHARMM36"; legend off; yaxis label "Potential Energy (kJ/mol)"; xaxis label "EM Step (ps)"'
+``
 
 This will display a plot that should look like this:  
 ![GROMACS Energies](images/potential.png)
@@ -1016,7 +1017,8 @@ e.g. in an OnDemand terminal window
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
- xmgrace -pexec "s0 symbol 1" "temperature.xvg"
+ xmgrace "temperature.xvg" \
+ -pexec 'title "Temperature"; subtitle "1AKI, NVT Equilibration"; legend off; yaxis label "Temperature (K)"; s0 symbol 1'
 ```
 
 My test plot looks like this:  
@@ -1260,10 +1262,11 @@ e.g. in an OnDemand terminal window
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
- xmgrace -pexec "s0 line type 0; s0 symbol 1" "pressure.xvg"
+ xmgrace "pressure.xvg" \
+ -pexec 'title "Pressure"; subtitle "1AKI, NPT Equilibration"; legend off; yaxis label "Pressure (bar)"; s0 line type 0; s0 symbol 1'
 ```
 
-Add a 10th degree regression line:
+Add a 10th degree regression line with:
 
 [Data] [Transformations] [Regresssion...] [10th Degree] [Accept]
 close the "Grace: Console" window and the "Regression" window
