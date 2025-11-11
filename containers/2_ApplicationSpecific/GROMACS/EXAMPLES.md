@@ -651,11 +651,11 @@ sample abridged output:
 > ```
 
 NOTE:
-  The "Potential Energy" E~pot~ should be negative, and (for a simple protein
-   in water) on the order of 10^5^-10^6^, depending on the system size and number
+  The "Potential Energy" E<sub>pot</sub> should be negative, and (for a simple protein
+   in water) on the order of 10<sup>5</sup>-10<sup>6</sup>, depending on the system size and number
    of water molecules.
-  The "Maximum force" F~max~ should be no greaterthan the target for which was
-   set in minim.mdp - "emtol = 1000.0" in this case, no greater than 1000 kJ mol^-1^ nm^-1^
+  The "Maximum force" F<sub>max</sub> should be no greater than the target for which was
+   set in minim.mdp - "emtol = 1000.0" in this case, no greater than 1000 kJ mol<sup>-1</sup> nm<sup>-1</sup>
 
 This generates four files:
 
@@ -1373,10 +1373,10 @@ Type of Fit: [10th Degree]
 close the "Grace: Console" window and the "Regression" window  
 
 My test plot looks like this:  
-![GROMACS Pressures](images/density.png)
+![GROMACS Density](images/density.png)
 
 Which is a little different to the sample output in the tutorial
-![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_density.png)
+![GROMACS Density](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_density.png)
 
 
 Now the system is equilibrated, release the position restraints and run
