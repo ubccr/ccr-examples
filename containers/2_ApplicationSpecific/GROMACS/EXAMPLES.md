@@ -1809,13 +1809,13 @@ close the "Grace: Console" window and the "Regression" window
 
 Label the two regressions:
 
-[Plot] [Set Apprearance]
-select "G0.S2[2][101]"
-Legend Sring: "Ref: Equilibrated"
-[Apply]
-select "G0.S3[2][101]"
-Legend Sring: "Ref: Crystal"
-[Accept]
+[Plot] [Set Apprearance]  
+select "G0.S2[2][101]"  
+Legend Sring: "Ref: Equilibrated"  
+[Apply]  
+select "G0.S3[2][101]"  
+Legend Sring: "Ref: Crystal"  
+[Accept]  
 
 My test plot looks like this:  
 ![GROMACS Root-Mean-Square Deviation](images/rmsd_xtal.png)
