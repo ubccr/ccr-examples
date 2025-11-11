@@ -1799,7 +1799,7 @@ apptainer run \
  xmgrace "rmsd.xvg" "rmsd_xtal.xvg" \
  -pexec 'title "RMSD"; subtitle "1AKI, Backbone"; legend on; s0 line type 0; s0 symbol 1; s1 line type 0; s1 symbol 2'
 ```
-Add a 10th degree regression line with:
+Add 10th degree regression lines with:
 
 [Data] [Transformations] [Regresssion...]  
 click on "All sets"  
