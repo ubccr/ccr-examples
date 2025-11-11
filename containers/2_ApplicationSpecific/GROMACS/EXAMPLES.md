@@ -1268,10 +1268,10 @@ apptainer run \
 
 Add a 10th degree regression line with:
 
-[Data] [Transformations] [Regresssion...]
-Type of Fit: [10th Degree]
-[Accept]
-close the "Grace: Console" window and the "Regression" window
+[Data] [Transformations] [Regresssion...]  
+Type of Fit: [10th Degree]  
+[Accept]  
+close the "Grace: Console" window and the "Regression" window  
 
 
 My test plot looks like this:  
@@ -1367,11 +1367,12 @@ apptainer run \
 
 Add a 10th degree regression line with:
 
-[Data] [Transformations] [Regresssion...] 
-Type of Fit: [10th Degree]
-[Accept]
+[Data] [Transformations] [Regresssion...]  
+Type of Fit: [10th Degree]  
+[Accept]  
+close the "Grace: Console" window and the "Regression" window  
 
-My test plot looks like this:
+My test plot looks like this:  
 ![GROMACS Pressures](images/density.png)
 
 Which is a little different to the sample output in the tutorial
@@ -1521,18 +1522,18 @@ This generates six files:
 
 ```bash
 ls -l md_0_10.log md_0_10.xtc md_0_10.edr md_0_10.gro md_0_10_prev.cpt md_0_10.cpt
-``
+```
 
 sample output:
 
-```
--rw-rw-r-- 1 [CCRusername] nogroup   955976 Nov 11 15:40 md_0_10.cpt
--rw-rw-r-- 1 [CCRusername] nogroup    71140 Nov 11 15:40 md_0_10.edr
--rw-rw-r-- 1 [CCRusername] nogroup  2741770 Nov 11 15:40 md_0_10.gro
--rw-rw-r-- 1 [CCRusername] nogroup    92686 Nov 11 15:40 md_0_10.log
--rw-rw-r-- 1 [CCRusername] nogroup   955976 Nov 11 15:40 md_0_10_prev.cpt
--rw-rw-r-- 1 [CCRusername] nogroup 14426728 Nov 11 15:40 md_0_10.xtc
-```
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup   955976 Nov 11 15:40 md_0_10.cpt
+> -rw-rw-r-- 1 [CCRusername] nogroup    71140 Nov 11 15:40 md_0_10.edr
+> -rw-rw-r-- 1 [CCRusername] nogroup  2741770 Nov 11 15:40 md_0_10.gro
+> -rw-rw-r-- 1 [CCRusername] nogroup    92686 Nov 11 15:40 md_0_10.log
+> -rw-rw-r-- 1 [CCRusername] nogroup   955976 Nov 11 15:40 md_0_10_prev.cpt
+> -rw-rw-r-- 1 [CCRusername] nogroup 14426728 Nov 11 15:40 md_0_10.xtc
+> ```
 
 
 Correcting for Periodicity Effects
@@ -1800,11 +1801,11 @@ apptainer run \
 ```
 Add a 10th degree regression line with:
 
-[Data] [Transformations] [Regresssion...]
-click on "All sets"
-Type of Fit: [10th Degree]
-[Accept]
-close the "Grace: Console" window and the "Regression" window
+[Data] [Transformations] [Regresssion...]  
+click on "All sets"  
+Type of Fit: [10th Degree]  
+[Accept]  
+close the "Grace: Console" window and the "Regression" window  
 
 Label the two regressions:
 
@@ -1816,7 +1817,7 @@ select "G0.S3[2][101]"
 Legend Sring: "Ref: Crystal"
 [Accept]
 
-My test plot looks like this:
+My test plot looks like this:  
 ![GROMACS Root-Mean-Square Deviation](images/rmsd_xtal.png)
 
 Which is a little different to the sample output in the tutorial
