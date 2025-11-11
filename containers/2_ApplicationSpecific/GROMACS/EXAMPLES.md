@@ -757,7 +757,7 @@ apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
  xmgrace "potential.xvg" \
- -pexec 'title "Potential Energy"; subtitle "1AKI, Minimization with CHARMM36"; legend off; yaxis label "Potential Energy (kJ/mol)"; xaxis label "EM Step (ps)"'
+ -pexec 'title "Potential Energy"; subtitle "1AKI, Minimization with CHARMM36"; legend off; yaxis label "Potential Energy (kJ/mol\S-1\N)"; xaxis label "EM Step (ps)"'
 ```
 
 This will display a plot that should look like this:  
@@ -1362,7 +1362,7 @@ apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  GROMACS-$(arch).sif \
  xmgrace "density.xvg" \
- -pexec 'title "Density"; subtitle "1AKI, NPT Equilibration"; legend off; s0 line type 0; s0 symbol 1'
+ -pexec 'title "Density"; subtitle "1AKI, NPT Equilibration"; legend off; yaxis label "Density (kg m\S-3\N)";; s0 line type 0; s0 symbol 1'
 ```
 
 Add a 10th degree regression line with:
