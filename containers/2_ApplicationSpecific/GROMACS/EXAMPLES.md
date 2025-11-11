@@ -64,7 +64,7 @@ sample truncated output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx_mpi
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx_mpi pdb2gmx -f 1AKI_clean.pdb -o 1AKI_processed.gro -water tip3p
 > 
@@ -227,7 +227,7 @@ sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx editconf -f 1AKI_processed.gro -o 1AKI_newbox.gro -c -d 1.2 -bt cubic
 > 
@@ -274,7 +274,7 @@ sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
 > 
@@ -371,7 +371,7 @@ sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx grompp -f inputs/ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
 > 
@@ -446,7 +446,7 @@ sample abridged output:
 
 Executable:   /usr/local/gromacs/bin/gmx
 Data prefix:  /usr/local/gromacs
-Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+Working dir:  /projects/academic/[YourGroupName]/GROMACS
 Command line:
   gmx genion -s ions.tpr -o 1AKI_solv_ions.gro -p topol.top -pname NA -nname CL -neutral
 
@@ -554,7 +554,7 @@ sample output
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
 > 
@@ -622,7 +622,7 @@ sample abridged output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx mdrun -v -deffnm em
 > 
@@ -685,7 +685,7 @@ sample truncated output:
 
 Executable:   /usr/local/gromacs/bin/gmx
 Data prefix:  /usr/local/gromacs
-Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+Working dir:  /projects/academic/[YourGroupName]/GROMACS
 Command line:
   gmx energy -f em.edr -o potential.xvg
 
@@ -801,7 +801,7 @@ Sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
 > 
@@ -893,7 +893,7 @@ sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS/long
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx mdrun -deffnm nvt
 > 
@@ -956,7 +956,7 @@ Sample abridged output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS/long
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx energy -f nvt.edr -o temperature.xvg
 > 
@@ -1056,7 +1056,7 @@ Sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
 > 
@@ -1164,7 +1164,7 @@ sample output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx mdrun -deffnm npt
 > 
@@ -1198,7 +1198,7 @@ Sample abridged output:
 > 
 > Executable:   /usr/local/gromacs/bin/gmx
 > Data prefix:  /usr/local/gromacs
-> Working dir:  /vscratch/grp-ccradmintest/tkewtest/GROMACS
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
 >   gmx energy -f npt.edr -o pressure.xvg
 > 
@@ -1268,8 +1268,11 @@ apptainer run \
 
 Add a 10th degree regression line with:
 
-[Data] [Transformations] [Regresssion...] [10th Degree] [Accept]
+[Data] [Transformations] [Regresssion...]
+Type of Fit: [10th Degree]
+[Accept]
 close the "Grace: Console" window and the "Regression" window
+
 
 My test plot looks like this:  
 ![GROMACS Pressures](images/pressure.png)
@@ -1278,7 +1281,545 @@ Which is a little different to the sample output in the tutorial
 ![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
 
 
+...back on the "salloc" interactive terminal session
 
->>> TO DO <<<
-cleanup /vscratch dir references
+Examine the density using energy 
+
+```bash
+gmx energy -f npt.edr -o density.xvg
+```
+
+Sample abridged output:
+
+> ```
+>                       :-) GROMACS - gmx energy, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
+> Command line:
+>   gmx energy -f npt.edr -o density.xvg
+> 
+> Opened npt.edr as single precision energy file
+> 
+> Select the terms you want from the following list by
+> selecting either (part of) the name or the number or a combination.
+> End your selection with an empty line or a zero.
+> -------------------------------------------------------------------
+>   1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
+>   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
+>   9  Disper.-corr.   10  Coulomb-(SR)    11  Coul.-recip.    12  Position-Rest.
+>  13  Potential       14  Kinetic-En.     15  Total-Energy    16  Conserved-En. 
+>  17  Temperature     18  Pres.-DC        19  Pressure        20  Constr.-rmsd  
+>  21  Box-X           22  Box-Y           23  Box-Z           24  Volume        
+>  25  Density         26  pV              27  Enthalpy        28  Vir-XX        
+> [...]
+>  49  Box-Vel-ZZ      50  T-Protein       51  T-non-Protein   52  Lamb-Protein  
+>  53  Lamb-non-Protein                  
+> 
+> ```
+
+
+Type "25 0" then [Enter] to select the density of the system (25); zero (0) terminate input
+
+```
+25 0
+```
+
+sample output:
+
+> ```
+> Last energy frame read 100 time  100.000          
+> 
+> Statistics over 50001 steps [ 0.0000 through 100.0000 ps ], 1 data sets
+> All statistics are over 501 points
+> 
+> Energy                      Average   Err.Est.       RMSD  Tot-Drift
+> -------------------------------------------------------------------------------
+> Density                     1032.07       0.23    6.16167  -0.847232  (kg/m^3)
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l density.xvg
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 3278 Nov 11 09:57 density.xvg
+> ```
+
+The data in density.xvg can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with
+"xmgrace"
+
+e.g. in an OnDemand terminal window
+
+```bash
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ GROMACS-$(arch).sif \
+ xmgrace "density.xvg" \
+ -pexec 'title "Density"; subtitle "1AKI, NPT Equilibration"; legend off; s0 line type 0; s0 symbol 1'
+```
+
+Add a 10th degree regression line with:
+
+[Data] [Transformations] [Regresssion...] 
+Type of Fit: [10th Degree]
+[Accept]
+
+My test plot looks like this:
+![GROMACS Pressures](images/density.png)
+
+Which is a little different to the sample output in the tutorial
+![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_density.png)
+
+
+Now the system is equilibrated, release the position restraints and run
+production MD for data collection
+
+Download the 10-ns MD simulation file (md.mdp) file from
+http://www.mdtutorials.com/
+
+```bash
+curl -L -o "md.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/md.mdp"
+```
+
+...and move the file to an "inputs" direcory
+
+```bash
+mv md.mdp ./inputs/
+```
+
+Generate the .tpr file for this simulation:
+
+```bash
+gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
+```
+
+Sample output:
+
+> ```
+>                       :-) GROMACS - gmx grompp, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
+> Command line:
+>   gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
+> 
+> Ignoring obsolete mdp entry 'title'
+> Ignoring obsolete mdp entry 'ns_type'
+> Setting the LD random seed to -593003529
+> 
+> Generated 167799 of the 167910 non-bonded parameter combinations
+> Generating 1-4 interactions: fudge = 1
+> 
+> Generated 117432 of the 167910 1-4 parameter combinations
+> 
+> Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
+> 
+> turning H bonds into constraints...
+> 
+> Excluding 2 bonded neighbours molecule type 'SOL'
+> 
+> turning H bonds into constraints...
+> 
+> Excluding 3 bonded neighbours molecule type 'CL'
+> 
+> turning H bonds into constraints...
+> 
+> Taking velocities from 'npt.gro'
+> Analysing residue names:
+> There are:   129    Protein residues
+> There are: 12589      Water residues
+> There are:     8        Ion residues
+> Analysing Protein...
+> Number of degrees of freedom in T-Coupling group Protein is 4920.82
+> Number of degrees of freedom in T-Coupling group non-Protein is 75555.18
+> 
+> The largest distance between excluded atoms is 0.448 nm between atom 1156 and 1405
+> 
+> Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+> 
+> Calculated rlist for 1x1 atom pair-list as 1.035 nm, buffer size 0.035 nm
+> 
+> Set rlist, assuming 4x4 atom pair-list, to 1.000 nm, buffer size 0.000 nm
+> 
+> Note that mdrun will redetermine rlist based on the actual pair-list setup
+> 
+> Reading Coordinates, Velocities and Box size from old trajectory
+> 
+> Will read whole trajectory
+> Last frame         -1 time  100.000   
+> 
+> Using frame at t = 100 ps
+> 
+> Starting time for run is 0 ps
+> Calculating fourier grid dimensions for X Y Z
+> Using a fourier grid of 48x48x48, spacing 0.152 0.152 0.152
+> 
+> Estimate for the relative computational load of the PME mesh part: 0.27
+> 
+> This run will generate roughly 23 Mb of data
+> [...]
+> ```
+
+
+This generates one file, "md_0_10.tpr" and updates mdout.mdp
+
+```bash
+ls -l md_0_10.tpr
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 1690984 Nov 11 14:42 md_0_10.tpr
+> ```
+
+Run the 10-ns MD simulation:
+This takes about 20 minutes to run on a node with 40 cores allocated:
+
+```bash
+gmx mdrun -deffnm md_0_10
+```
+
+Sample output:
+
+> ```
+>                       :-) GROMACS - gmx mdrun, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
+> Command line:
+>   gmx mdrun -deffnm md_0_10
+> 
+> Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
+> Changing nstlist from 10 to 50, rlist from 1 to 1.111
+> 
+> Using 40 OpenMP threads 
+> 
+> starting mdrun 'LYSOZYME in water'
+> 500000 steps,   1000.0 ps.
+> 
+> Writing final coordinates.
+> 
+>                Core t (s)   Wall t (s)        (%)
+>                Core t (s)   Wall t (s)        (%)
+>        Time:    46079.940     1152.002     4000.0
+>                  (ns/day)    (hour/ns)
+> Performance:       75.000        0.320
+> [...]
+> ```
+
+This generates six files:
+
+```bash
+ls -l md_0_10.log md_0_10.xtc md_0_10.edr md_0_10.gro md_0_10_prev.cpt md_0_10.cpt
+``
+
+sample output:
+
+```
+-rw-rw-r-- 1 [CCRusername] nogroup   955976 Nov 11 15:40 md_0_10.cpt
+-rw-rw-r-- 1 [CCRusername] nogroup    71140 Nov 11 15:40 md_0_10.edr
+-rw-rw-r-- 1 [CCRusername] nogroup  2741770 Nov 11 15:40 md_0_10.gro
+-rw-rw-r-- 1 [CCRusername] nogroup    92686 Nov 11 15:40 md_0_10.log
+-rw-rw-r-- 1 [CCRusername] nogroup   955976 Nov 11 15:40 md_0_10_prev.cpt
+-rw-rw-r-- 1 [CCRusername] nogroup 14426728 Nov 11 15:40 md_0_10.xtc
+```
+
+
+Correcting for Periodicity Effects
+Reimage the trajectory
+
+
+```bash
+gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
+```
+
+Sample abridged output:
+
+> ```
+>                      :-) GROMACS - gmx trjconv, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
+> Command line:
+>   gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
+> 
+> Note that major changes are planned in future for trjconv, to improve usability and utility.
+> Will write xtc: Compressed trajectory (portable xdr format): xtc
+> Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
+> Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
+> Select group for centering
+> Group     0 (         System) has 39735 elements
+> Group     1 (        Protein) has  1960 elements
+> Group     2 (      Protein-H) has  1001 elements
+> [...]
+> Group    15 (            Ion) has     8 elements
+> Group    16 ( Water_and_ions) has 37775 elements
+> Select a group: 
+> ```
+
+Type "1" then [Enter] to select "Protein" at the "Select a group:" prompt
+
+```
+1
+```
+
+Sample abridged output:
+
+> ```
+> Selected 1: 'Protein'
+> Select group for output
+> Group     0 (         System) has 39735 elements
+> Group     1 (        Protein) has  1960 elements
+> Group     2 (      Protein-H) has  1001 elements
+> [...]
+> Group    15 (            Ion) has     8 elements
+> Group    16 ( Water_and_ions) has 37775 elements
+> Select a group: 
+> ```
+
+Type "0" then [Enter] to select "System" for the output at the
+"Select a group:" prompt
+
+
+```
+0
+```
+
+Sample output:
+
+> ```
+> Selected 0: 'System'
+> Reading frame       0 time    0.000   
+> Precision of md_0_10.xtc is 0.001 (nm)
+> Using output precision of 0.001 (nm)
+> Last frame        100 time 1000.000    ->  frame     99 time  990.000      
+>  ->  frame    100 time 1000.000      
+> Last written: frame    100 time 1000.000
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l md_0_10_noPBC.xtc
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 14426744 Nov 11 16:16 md_0_10_noPBC.xtc
+> ```
+
+
+Root-Mean-Square Deviation
+
+```bash
+gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
+```
+
+
+Sample abriged output:
+
+> ```
+>                        :-) GROMACS - gmx rms, 2025.3 (-:
+> 
+> Executable:   /usr/local/gromacs/bin/gmx
+> Data prefix:  /usr/local/gromacs
+> Working dir:  /projects/academic/[YourGroupName]/GROMACS
+> Command line:
+>   gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
+> 
+> Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
+> Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
+> Select group for least squares fit
+> Group     0 (         System) has 39735 elements
+> Group     1 (        Protein) has  1960 elements
+> Group     2 (      Protein-H) has  1001 elements
+> Group     3 (        C-alpha) has   129 elements
+> Group     4 (       Backbone) has   387 elements
+> Group     5 (      MainChain) has   515 elements
+> [...]
+> Group    15 (            Ion) has     8 elements
+> Group    16 ( Water_and_ions) has 37775 elements
+> Select a group: 
+> ```
+
+
+Type "4" then [Enter] to select "Backbone" for the least-squares fit at the
+"Select a group:" prompt
+
+```
+4
+```
+
+Sample abriged output:
+
+> ```
+> Selected 4: 'Backbone'
+> Select group for RMSD calculation
+> Group     0 (         System) has 39735 elements
+> Group     1 (        Protein) has  1960 elements
+> Group     2 (      Protein-H) has  1001 elements
+> Group     3 (        C-alpha) has   129 elements
+> Group     4 (       Backbone) has   387 elements
+> Group     5 (      MainChain) has   515 elements
+> [...]
+> Group    15 (            Ion) has     8 elements
+> Group    16 ( Water_and_ions) has 37775 elements
+> Select a group: 
+> ```
+
+Type "4" then [Enter] to select "Backbone" for the group for RMSD calculation
+"Select a group:" prompt
+
+```
+4
+```
+
+Sample output:
+
+> ```
+> Selected 4: 'Backbone'
+> Last frame        100 time    1.000
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l rmsd.xvg
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 3207 Nov 11 16:35 rmsd.xvg
+> ```
+
+The data in this .xvg file, and the one that follows, can be can be plotted,
+in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with "xmgrace"
+
+
+Calculate RMSD relative to the crystal structure
+
+```bash
+gmx rms -s em.tpr -f md_0_10_noPBC.xtc -o rmsd_xtal.xvg -tu ns
+```
+
+Sample abridged output:
+
+> ```
+> [...]
+> Reading file em.tpr, VERSION 2025.3 (single precision)
+> Reading file em.tpr, VERSION 2025.3 (single precision)
+> Select group for least squares fit
+> Group     0 (         System) has 39735 elements
+> Group     1 (        Protein) has  1960 elements
+> Group     2 (      Protein-H) has  1001 elements
+> Group     3 (        C-alpha) has   129 elements
+> Group     4 (       Backbone) has   387 elements
+> Group     5 (      MainChain) has   515 elements
+> [...]
+> Group    16 ( Water_and_ions) has 37775 elements
+> Select a group: 
+> ```
+
+Type "4" then [Enter] to select "Backbone" for the least-squares fit at the
+"Select a group:" prompt
+
+```
+4
+```
+
+Sample abriged output:
+
+> ```
+> Selected 4: 'Backbone'
+> Select group for RMSD calculation
+> Group     0 (         System) has 39735 elements
+> Group     1 (        Protein) has  1960 elements
+> Group     2 (      Protein-H) has  1001 elements
+> Group     3 (        C-alpha) has   129 elements
+> Group     4 (       Backbone) has   387 elements
+> Group     5 (      MainChain) has   515 elements
+> [...]
+> Group    16 ( Water_and_ions) has 37775 elements
+> Select a group: 
+> ```
+
+Type "4" then [Enter] to select "Backbone" for the group for RMSD calculation
+"Select a group:" prompt
+
+```
+4
+```
+
+Sample output:
+
+> ```
+> Selected 4: 'Backbone'
+> Last frame        100 time    1.000
+> [...]
+> ```
+
+This generates one file
+
+```bash
+ls -l rmsd_xtal.xvg
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup 3197 Nov 11 16:52 rmsd_xtal.xvg
+> ```
+
+
+The data in this .xvg file, and the prior one (rmsd.xvg), can be can be
+plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with "xmgrace"
+
+e.g. in an OnDemand terminal window
+
+```bash
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ GROMACS-$(arch).sif \
+ xmgrace "rmsd.xvg" "rmsd_xtal.xvg" \
+ -pexec 'title "RMSD"; subtitle "1AKI, Backbone"; legend on; s0 line type 0; s0 symbol 1; s1 line type 0; s1 symbol 2'
+```
+Add a 10th degree regression line with:
+
+[Data] [Transformations] [Regresssion...]
+click on "All sets"
+Type of Fit: [10th Degree]
+[Accept]
+close the "Grace: Console" window and the "Regression" window
+
+Label the two regressions:
+
+[Plot] [Set Apprearance]
+select "G0.S2[2][101]"
+Legend Sring: "Ref: Equilibrated"
+[Apply]
+select "G0.S3[2][101]"
+Legend Sring: "Ref: Crystal"
+[Accept]
+
+My test plot looks like this:
+![GROMACS Root-Mean-Square Deviation](images/rmsd_xtal.png)
+
+Which is a little different to the sample output in the tutorial
+![GROMACS Root-Mean-Square Deviation](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_md_rmsd.png)
+
 
