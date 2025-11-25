@@ -60,6 +60,8 @@ From: ubuntu:24.04
    r-bioc-rhtslib \
    libopenblas64-0 \
    libopenblas64-dev \
+   libopenblas-dev \
+   libopenblas64-dev \
    liblapack3 \
    liblapack-dev \
    liblapacke-dev \
@@ -77,13 +79,6 @@ From: ubuntu:24.04
 
   # NOTE: apt-file is generally not needed to run, but can be useful during development
   apt-file update
-
-  # No idea why these links don't exist by default!
-  cd /usr/lib/$(arch)-linux-gnu/
-  ln -s libopenblas64.a libopenblas.a
-  ln -s libopenblas64.so libopenblas.so
-  ln -s libopenblas64.so.0 libopenblas.so.0
-  cd ${HOME}
 
   # These steps are necessary to configure Perl and can cause issues with Python if omitted
   sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen

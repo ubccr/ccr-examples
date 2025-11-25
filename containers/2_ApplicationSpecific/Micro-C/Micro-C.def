@@ -49,18 +49,13 @@ From: ubuntu:latest
    r-bioc-rhtslib \
    libopenblas64-0 \
    libopenblas64-dev \
+   libopenblas-dev \
+   libopenblas64-dev \
    liblapack3 \
    liblapack-dev \
    liblapacke-dev \
    nano \
    vim
-
-  # No idea why these links don't exist by default!
-  cd /usr/lib/$(arch)-linux-gnu/
-  ln -s libopenblas64.a libopenblas.a
-  ln -s libopenblas64.so libopenblas.so
-  ln -s libopenblas64.so.0 libopenblas.so.0
-  cd ${HOME}
 
   # Install man & man pages
   sed -e '\|/usr/share/man|s|^#*|#|g' -i /etc/dpkg/dpkg.cfg.d/excludes
@@ -190,7 +185,9 @@ From: ubuntu:latest
   automake --add-missing
   autoconf
   cd ../..
-  ./configure --enable-hts CPPFLAGS="${CPPFLAGS} -I/usr/include/htslib"
+  # Note: added g++ flag "-fpermissive" as a work round for build error:
+  # src/lc_extrap.cpp:142:36: error: invalid conversion from 'const char**' to 'char**
+  ./configure --enable-hts CPPFLAGS="${CPPFLAGS} -I/usr/include/htslib" CXXFLAGS="${CXXFLAGS} -fpermissive"
   make -j $(nproc)
   make install
 

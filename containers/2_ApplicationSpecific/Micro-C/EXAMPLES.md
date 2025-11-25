@@ -9,7 +9,7 @@ $ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --ex
 ...and started the container like this:
 
 ```
-$ apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects Micro-C-$(arch).sif
+$ apptainer shell -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects Micro-C-$(arch).sif
 Apptainer>
 ```
 
