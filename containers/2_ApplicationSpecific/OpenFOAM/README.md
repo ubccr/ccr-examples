@@ -71,7 +71,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --mem=
 
 ```
 cd /projects/academic/[YourGroupName]/OpenFOAM
-apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects OpenFOAM-13-$(arch).sif
+apptainer shell -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects OpenFOAM-13-$(arch).sif
 ```
 
 sample output:

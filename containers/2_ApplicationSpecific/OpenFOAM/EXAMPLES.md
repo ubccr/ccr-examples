@@ -15,7 +15,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --mem=
 
 ```
 cd /projects/academic/[YourGroupName]/OpenFOAM
-apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects OpenFOAM-13-$(arch).sif
+apptainer shell -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects OpenFOAM-13-$(arch).sif
 ```
 
 sample output:
@@ -235,8 +235,9 @@ NOTE: This is NOT the same command as above, there are added bind mounts that
  are necessary to run paraFoam in CCR's OnDemand
 
 ```
-apptainer shell -B /util:/util -B /scratch:/scratch -B /projects:/projects \
- -B ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR} -B /cvmfs:/cvmfs ./OpenFOAM-13-$(arch).sif
+apptainer shell -B /util:/util -B /scratch:/scratch -B /vscratch:/vscratch \
+ -B /projects:/projects -B ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR} \
+ -B /cvmfs:/cvmfs ./OpenFOAM-13-$(arch).sif
 ```
 
 sample output:

@@ -25,7 +25,7 @@ See the [Abaqus documentation](https://docs.software.vt.edu/abaqusv2024/English/
 apptainer exec -B /scratch:/scratch,/projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] /[path-to-container]/abaqus-2024.sif abaqus [options]
 ```
 
-A Slurm script [`abaqus-test.sh`](./abaqus-test.sh) is provided with all necessary configuration for running Abaqus as a batch job. Update the file paths and resource requests according to your needs and add the Abaqus options you need to use at the end of the Apptainer command line.
+A Slurm script [`abaqus-test.bash`](./abaqus-test.bash) is provided with all necessary configuration for running Abaqus as a batch job. Update the file paths and resource requests according to your needs and add the Abaqus options you need to use at the end of the Apptainer command line.
 
 ## Abaqus GUI
 

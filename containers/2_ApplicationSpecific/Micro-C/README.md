@@ -56,7 +56,7 @@ $ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --me
 
 ```
 CCRusername@cpn-q06-35-02:~$ cd /projects/academic/[YourGroupName]/[CCRusername]
-CCRusername@cpn-q06-35-02:~$ apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects Micro-C-$(arch).sif
+CCRusername@cpn-q06-35-02:~$ apptainer shell -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects Micro-C-$(arch).sif
 Apptainer>  
 ```
 

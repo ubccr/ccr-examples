@@ -6,7 +6,7 @@ At CCR, we use Singularity/Apptainer which allows you to execute software withou
 
 ## Getting Started ([0_Introductory/](./0_Introductory/README.md))
 
-Coming Soon
+Here we present a minimalist example of container usage in CCR's HPC environment. Python is used as an example due to it being a common software that benefits from containerization.
 
 ## Advanced Topics ([1_Advanced/](./1_Advanced/README.md))
 

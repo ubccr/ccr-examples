@@ -17,7 +17,7 @@ In this example, `~/myjob.sas` is a SAS script in your home directory and `~/sas
 apptainer exec -B /scratch:/scratch,/projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] /[path-to-container]/sas94.sif /usr/local/SASHome/SASFoundation/9.4/sas ~/myjob.sas -log ~/sasoutput.log
 ```
 
-A Slurm script [`sas-test.sh`](./sas-test.sh) is provided with all necessary configuration for running SAS in a batch script. Update the file paths, resource requests, and SAS options according to your needs.
+A Slurm script [`sas-test.bash`](./sas-test.bash) is provided with all necessary configuration for running SAS in a batch script. Update the file paths, resource requests, and SAS options according to your needs.
 
 ## SAS GUI
 

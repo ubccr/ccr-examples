@@ -20,10 +20,13 @@ Portions of the example batch scripts which must be changed for the script to fu
 | `[partition]`           | general-compute, debug, industry, scavenger, ub-laser, [other available options](https://docs.ccr.buffalo.edu/en/latest/hpc/clusters/#ub-hpc-compute-cluster) |
 | `[qos]`                 | Typically the same as `[partition]` - refer to [CCR docs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos) for more information. |
 | `[SlurmAccountName]`    | Use the `slimits` command to see what accounts you have access to. If not specified, your default account will be used.  |
+| `[CCRUserName]`             | Your CCR username |
+| `[JobID]`             | Slurm JobID |
+| `[YourGroupName]`             | The name of your group |
 
 ## Getting Started ([0_Introductory/](./0_Introductory/README.md))
 
-This directory is designed to introduce new users to the fundamentals of submitting jobs on CCR's HPC clusters using Slurm. It provides simple, well-documented examples to help users understand key Slurm concepts and serves as a foundation before progressing to more advanced workflows. The example Slurm script [BasicExample.sh](./0_Introductory/BasicExample.sh) provides a minimalist template for submitting a job in an HPC environment. It demonstrates essential Slurm directives, such as cluster, partition, memory requirements, and more.
+This directory is designed to introduce new users to the fundamentals of submitting jobs on CCR's HPC clusters using Slurm. It provides simple, well-documented examples to help users understand key Slurm concepts and serves as a foundation before progressing to more advanced workflows. The example Slurm script [BasicExample.bash](./0_Introductory/BasicExample.bash) provides a minimalist template for submitting a job in an HPC environment. It demonstrates essential Slurm directives, such as cluster, partition, memory requirements, and more.
 
 ## Advanced Slurm Examples ([1_Advanced/](./1_Advanced/README.md))
 

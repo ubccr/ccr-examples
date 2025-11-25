@@ -4,7 +4,7 @@ In an effort to maximize the use of all available cores within our center, we pr
 
 When a user with access to the partition submits a job requesting resources, any jobs running in the scavenger partition are stopped and re-queued. This means if you're running a job in the scavenger partition on the industry cluster and an industry user submits a job requiring the resources you're consuming, your job will be stopped.
 
-An example Scavenger script, [ScavengerExample.sh](./ScavengerExample.sh) is provided for reference. Be sure to modify parts of the script to suit your specific needs. For more details, refer to the [Advanced README](../README.md).
+An example Scavenger script, [ScavengerExample.bash](./ScavengerExample.bash) is provided for reference. Be sure to modify parts of the script to suit your specific needs. For more details, refer to the [Advanced README](../README.md).
 
 ## Requirements for using the Scavenger Partitions:
 
