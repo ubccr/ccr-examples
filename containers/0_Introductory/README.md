@@ -7,7 +7,7 @@ This example demonstrates how to download a Python Docker container, convert it 
 
 Please refer to our [container documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/) for more information on using containers.
 
-## Using a Python Docker image with Apptainer
+## Pulling the container 
 1. Start an interactive job
 
 Request a job allocation from a login node:
@@ -23,7 +23,7 @@ salloc: job [JobID] queued and waiting for resources
 salloc: job [JobID] has been allocated resources
 salloc: Granted job allocation [JobID]
 salloc: Waiting for resource configuration
-salloc: Nodes cpn-d01-06 are ready for job
+salloc: Nodes [NodeID] are ready for job
 ```
 
 Once the requested node is available, use the `srun` command to login to the compute node:
@@ -31,7 +31,7 @@ Once the requested node is available, use the `srun` command to login to the com
 srun --jobid=[JobID] --export=HOME,TERM,SHELL --pty /bin/bash --login
 ```
 
-After connecting, you should notice your command prompt has changed from `CCRRusername@login1:~$` to `CCRRusername@cpn-d01-06:~$`, indicating you're now on the compute node allocated to you.
+After connecting, you should notice your command prompt has changed from `CCRRusername@login1:~$` to `CCRRusername@[NodeID]:~$`, indicating you're now on the compute node allocated to you.
 
 > [!NOTE]
 > Refer to the CCR documentation for more information on [running interactive jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) and [pulling containers](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#pulling-images).
@@ -45,7 +45,7 @@ mkdir cache
 export APPTAINER_CACHEDIR=/projects/academic/[YourGroupName]/[CCRUsername]/cache
 ```
    
-4. Pull the specified Docker Python Image 
+3. Pull the specified Docker Python Image 
    
 Use the `apptainer pull` command, specifying the target container file to be `python.sif`. The specified Python image is stored at `docker://python:3`.
 
@@ -53,9 +53,9 @@ Use the `apptainer pull` command, specifying the target container file to be `py
 apptainer pull python.sif docker://python:3
 ```
 
-5. Run script in container
+## Running the Container image
 
-In this example, we are using [`print_version.py`](./print_version.py), a Python script that simply prints the version of Python. Ensure you've copied the `print_version.py` file to your build directory.
+In this example, we are using [`print_version.py`](./print_version.py), a Python script that simply prints the version of Python. Ensure you are on a compute node and that you have copied the `print_version.py` file to your build directory. 
 
 Run the following command:
 ```
@@ -63,8 +63,6 @@ apptainer exec python.sif python print_version.py
 ```
 
 Your output will look similar to: `3.14.0 (main, Oct 21 2025, 11:44:31) [GCC 14.2.0]`
-
-6. Cancel the job
 
 Once you're done with the node, use the `exit` command. Then, release your job's allocated resources by running  `scancel [JobID]`, where `[JobID]` can be obtained by the command `squeue --me`, which lists your currently running jobs.
 

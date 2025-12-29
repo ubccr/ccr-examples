@@ -2,9 +2,9 @@
 
 ##   This file is intended to serve as a template to be downloaded and modified for your use case.
 ##   For more information, refer to the following resources whenever referenced in the script-
-##   README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
+##   README- https://github.com/ubccr/ccr-examples/tree/main/README.md
 ##   DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
-##   GPU DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/software/modules/#alphafold
+##   GPU DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos
 
 ##   Select a cluster, partition, qos and account that is appropriate for your use case
 ##   Available options and more details are provided in README
@@ -28,7 +28,7 @@
 #SBATCH --mem=64000
 
 ##   Number of GPUs required. Specify the GPU node with the constraint option (A100, V100). 
-##   See GPU DOCUMENTATION for more info (CCR Staff: Info needs to be confirmed)
+##   See GPU DOCUMENTATION for more info
 #SBATCH --gpus-per-node=2
 #SBATCH --constraint=A100
 

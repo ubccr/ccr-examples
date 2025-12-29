@@ -2,7 +2,7 @@
 
 ##   This file is intended to serve as a template to be downloaded and modified for your use case.
 ##   For more information, refer to the following resources whenever referenced in the script-
-##   README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
+##   README- https://github.com/ubccr/ccr-examples/tree/main/README.md
 ##   DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
 ##   Select a cluster, partition, qos and account that is appropriate for your use case
@@ -30,32 +30,18 @@
 #SBATCH --mem=64000
 
 module load ansys
-module load intel
 export LSTC_LICENSE=ansys
-. $EBROOTIMPI/mpi/latest/env/vars.sh
+echo $SLURM_NPROCS
 
-##  Replace with your model file name
+##   Replace with your model file name
 MODEL=ball_and_plate.k
 
-##  Construct a Slurm nodefile
-SLURM_NODEFILE=my_slurm_nodes.$$
-mpiexec hostname -s | sort > $SLURM_NODEFILE
+##   For single precision use this
+$EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_sp.e ncpus=$SLURM_NPROCS i=$MODEL
 
-##  Calculate number of processors
-np=`cat $SLURM_NODEFILE | wc -l`
-nnodes=`cat $SLURM_NODEFILE | sort -u | wc -l`
-ppn=`expr $np / $nnodes`
-nodelist=`cat $SLURM_NODEFILE | sort -u | tr '\n' ' '`
-
-export OMP_NUM_THREADS=$np
-
-##  For single precision use this
-mpiexec -n $SLURM_NPROCS $EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_sp_mpp.e ncpus=$SLURM_NPROCS i=$MODEL
-
-##  For double precision use this, uncommenting the next line and commenting out the line above
-#mpiexec -n $SLURM_NPROCS $EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_dp_mpp.e ncpus=$SLURM_NPROCS i=$MODEL
+##   For double precision use this, uncommenting the next line and commenting out the line above
+#$EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_dp.e ncpus=$SLURM_NPROCS i=$MODEL
 
 echo 'all done'
 exit
-
 
