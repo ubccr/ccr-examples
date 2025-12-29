@@ -31,28 +31,28 @@ As shown in [job-array-example.bash](./job-array-example.bash), the environment 
 ##  Output files format
 #SBATCH --output="slurm-%A_%a.out"
 ```
-If this job array was run as job 12345678 this formatting would generate the output files:
-- `"slurm-12345678_0.out"`
-- `"slurm-12345678_1.out"`
-- `"slurm-12345678_2.out"`
-- `"slurm-12345678_3.out"`
+The above job array with this formatting would generate the following output files if [JobID] was the ID of the job you ran:
+- `"slurm-[JobID]_0.out"`
+- `"slurm-[JobID]_1.out"`
+- `"slurm-[JobID]_2.out"`
+- `"slurm-[JobID]_3.out"`
 
 An example of running this job, then checking the file outputs:
 ```
-$ sbatch job-array-example.bash
-Submitted batch job 22244918
+sbatch job-array-example.bash
+Submitted batch job [JobID]
 
-$ cat slurm-22244918_0.out
-Hello World from job 22244918, task 0 on node:cpn-h23-36.core.ccr.buffalo.edu
+cat slurm-[JobID]_0.out
+Hello World from job [JobID], task 0 on node:[NodeID].core.ccr.buffalo.edu
 
-$ cat slurm-22244918_1.out
-Hello World from job 22244918, task 1 on node:cpn-h23-36.core.ccr.buffalo.edu
+cat slurm-[JobID]_1.out
+Hello World from job [JobID], task 1 on node:[NodeID].core.ccr.buffalo.edu
 
-$ cat slurm-22244918_2.out
-Hello World from job 22244918, task 2 on node:cpn-h23-36.core.ccr.buffalo.edu
+cat slurm-[JobID]_2.out
+Hello World from job [JobID], task 2 on node:[NodeID].core.ccr.buffalo.edu
 
-$ cat slurm-22244918_3.out
-Hello World from job 22244918, task 3 on node:cpn-h23-36.core.ccr.buffalo.edu
+cat slurm-[JobID]_3.out
+Hello World from job [JobID], task 3 on node:[NodeID].core.ccr.buffalo.edu
 ```
 
 

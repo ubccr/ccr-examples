@@ -6,11 +6,11 @@ This directory includes examples of a serial Python job, with mutlithreaded and 
 
 A serial Python job is one that requires only a single CPU-core.
 
-Provided is an example of a serial Python program (`fibonacci.py`) with the corresponding Slurm script (`python-sp.sh`) that can be modified to run a serial Python job.
+Provided is an example of a serial Python program [fibonacci.py](./serial/fibonacci.py) with the corresponding Slurm script [python-sp.bash](./serial/python-sp.bash) that can be modified to run a serial Python job.
 
 To run the Python script, simply submit the job to the scheduler from a login node with the following command:
 ```
-$ sbatch python-sp.sh
+sbatch python-sp.bash
 ```
 
 ## Parallel Python Tutorial

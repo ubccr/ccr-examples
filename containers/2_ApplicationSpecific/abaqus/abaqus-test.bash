@@ -12,7 +12,7 @@
 #SBATCH --qos=[qos]
 #SBATCH --account=[SlurmAccountName]
 
-##   Job runtime limit, the job will be canceled once this limit is reached. Format- dd:hh:mm
+##   Job runtime limit, the job will be canceled once this limit is reached. Format- dd-hh:mm:ss
 #SBATCH --time=00:30:00
 
 ##   Refer to DOCUMENTATION for details on the next two directives

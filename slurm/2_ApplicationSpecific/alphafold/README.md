@@ -1,6 +1,6 @@
 # Example AlphaFold job
 
-Provided is an example AlphaFold Slurm batch job ([`alpha-fold-test.sh`](./alpha-fold-test.sh)) and example protein sequence data ([`T11050.fasta`](./T1050.fasta)) for validation and testing.
+Provided is an example AlphaFold Slurm batch job [alpha-fold-test.bash](./alpha-fold-test.bash) and example protein sequence data [T11050.fasta](./T1050.fasta) for validation and testing.
 
 Notes on running AlphaFold:
 

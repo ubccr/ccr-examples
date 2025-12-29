@@ -12,7 +12,7 @@ more details, refer to the [Advanced README](../README.md).
 
 If you need more than the default, you can specify hardware requirements using the Slurm `--constraint` directive in the batch script. Supported GPU types include `A16`, `A40`, `A100`, `H100`, `GH200`, and `V100`.
 
-For an example, see the [slurm-options.sh](../../slurm-options.sh) file. For additional options and details refer to our [documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos).
+For an example, see the [slurm-options.bash](../../slurm-options.bash) file. For additional options and details refer to our [documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos).
 
 ## Monitoring GPU Usage
 
