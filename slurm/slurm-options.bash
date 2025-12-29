@@ -52,6 +52,9 @@
 ## QOS usually matches partition name but some users have access to priority boost QOS values.
 #SBATCH --qos=[qos]
 
+## Specify the Slurm account you want to use. Use the slimits command to see what accounts you have access to. If not specified, your default account will be used.
+#SBATCH --account=[SlurmAccountName]
+
 ## Request exclusive access of the node you're assigned, even if you haven't requested all of the node's resources.
 ## This prevents other users' jobs from running on the same node as you.  Only recommended if you're having trouble
 ## with network bandwidth and sharing the node is causing problems for your job.  
