@@ -55,7 +55,7 @@
 
 #SBATCH --nodes=2
 ## One MPI task per core on each node
-#SBATCH --ntasks-per-node=64
+#SBATCH --ntasks-per-node=40
 #SBATCH --cpus-per-task=1
 #SBATCH --exclusive
 
