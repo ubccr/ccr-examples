@@ -1,0 +1,159 @@
+Bootstrap: docker
+From: nvidia/cuda:12.6.3-base-ubuntu24.04
+
+%labels
+  org.opencontainers.image.source https://github.com/cytokineking/FreeBindCraft
+  org.opencontainers.image.description FreeBindCraft GPU (no PyRosetta)
+  org.opencontainers.image.licenses MIT
+
+%files
+  docker-entrypoint.sh /usr/local/bin/bindcraft-entrypoint.sh
+
+%post -c /bin/bash
+  # Set the timezone, if unset
+  test -h /etc/localtime || ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+
+  # fix perms on the bindcraft-entrypoint.sh script
+  chmod 755 /usr/local/bin/bindcraft-entrypoint.sh
+
+  cp /etc/apt/sources.list /etc/apt/sources.list~
+  sed -E -i 's/^# deb-src /deb-src /' /etc/apt/sources.list
+  apt-get -y update
+
+  # Install man & man pages - this section can be removed if not needed
+  # NOTE: Do this before installing anything else so their man pages are installed
+  sed -e '\|/usr/share/man|s|^#*|#|g' -i /etc/dpkg/dpkg.cfg.d/excludes
+  DEBIAN_FRONTEND=noninteractive apt-get -y install apt-utils groff dialog man-db manpages manpages-posix manpages-dev
+  rm -f /usr/bin/man
+  dpkg-divert --quiet --remove --rename /usr/bin/man
+
+  # O/S package updates:
+  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+
+  DEBIAN_FRONTEND=noninteractive apt-get -y install \
+   tzdata \
+   locales \
+   unzip \
+   wget \
+   git \
+   rsync \
+   curl \
+   tmux \
+   build-essential \
+   pkg-config \
+   procps \
+   jq \
+   nano \
+   vim \
+   apt-file
+
+  # NOTE: apt-file is generally not needed to run, but can be useful during development
+  apt-file update
+
+  # These steps are necessary to configure Perl and can cause issues with Python if omitted
+  sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+  dpkg-reconfigure --frontend=noninteractive locales
+  update-locale LANG=en_US.UTF-8
+
+  export CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)"
+
+  # Install OpenCL ICD loader and tools; register NVIDIA OpenCL ICD
+  apt-get update && apt-get -y install ocl-icd-libopencl1 clinfo
+  mkdir -p /etc/OpenCL/vendors
+  echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+
+  # Install Miniforge (Conda) at /miniforge3
+  export CONDA_DIR=/miniforge3
+
+  # set up Miniforge
+  wget -P /tmp \
+   -O /tmp/miniforge.sh \
+   "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh"
+  bash /tmp/miniforge.sh -b -p ${CONDA_DIR}
+  rm -f /tmp/miniforge.sh
+
+  # add conda to the head of the PATH
+  export PATH="${CONDA_DIR}/bin:${PATH}"
+
+  # Improve conda robustness and cleanup
+  conda config --set channel_priority strict
+  conda config --set always_yes yes
+  conda update -n base -c conda-forge conda
+  conda clean -afy
+
+  # Create workdir and copy project
+  mkdir -p /app
+  cd /app
+  git clone https://github.com/cytokineking/FreeBindCraft.git .
+
+  # Ensure helper binaries are executable (also handled by installer)
+  chmod 755 /app/functions/dssp ||:
+  chmod 755 /app/functions/sc ||:
+
+  # To add PyRosetta support change the following line and the
+  # similar line in the %environment section below.
+  # NOTE: you must agree to the PyRosetta licensing terms - see:
+  #   https://els2.comotion.uw.edu/product/pyrosetta
+  #   https://github.com/RosettaCommons/rosetta/blob/main/LICENSE.md#rosetta-software-non-commercial-license-agreement
+  export WITH_PYROSETTA=true
+
+  # Build environment with PyRosetta
+  # Match CUDA to base image; installer pins jax/jaxlib=0.6.0
+  source ${CONDA_DIR}/etc/profile.d/conda.sh
+  EXTRA=""
+  if [ "${WITH_PYROSETTA}" != "true" ]
+  then
+    EXTRA="--no-pyrosetta"
+  fi
+###  # fix tar extraction inside the container build
+###  sed -E -i.old 's/(^|[[:space:]])tar[[:space:]]+-xvf/\1tar --no-same-owner -xvf/' /app/install_bindcraft.sh
+  # comment all the Alphafold 2 params download (bind mount the params
+  # on /app/params at runtime)
+  sed -E -i '/(params_file|params_model_)/s/^/###/' /app/install_bindcraft.sh
+  # 
+  bash /app/install_bindcraft.sh --pkg_manager conda --cuda 12.6 ${EXTRA}
+
+  # Need to make "DAlphaBall.gcc" executable or "apptainer run" will complain
+  # about a "Read-only file system" error trying to fix the perms
+  chmod 755 /app/functions/DAlphaBall.gcc
+
+  # do NOT force /app to be the default directory
+  sed -E -i '/^[[:space:]]*cd[[:space:]]/s/^/#/' docker-entrypoint.sh /usr/local/bin/bindcraft-entrypoint.sh
+
+  # Create the input & output directories (bind mount them at runtime)
+  mkdir -p /work/input/ /work/output/
+  # ..and create links to the poor path choices in the GitHub examples:
+  ln -s /work/input/ /work/in
+  ln -s /work/output/ /work/out
+
+  # fix paths in the PDL1.json file
+  sed -E -i -e "/\"design_path\"/s|:.*$|: \"/work/output/\",|" \
+   -e "/\"starting_pdb\"/s|\./|/app/|" /app/settings_target/PDL1.json
+
+%environment
+  export WITH_PYROSETTA=true
+  export LANG=en_US.UTF-8
+  export PYTHONPATH="/app"
+  export PYTHONUNBUFFERED=1
+  export BINDCRAFT_HOME="/app"
+  export LD_LIBRARY_PATH="/miniforge3/envs/BindCraft/lib:${LD_LIBRARY_PATH}"
+  echo
+  if ! which nvidia-smi >/dev/null 2>&1
+  then
+    # Running on an non GPU node
+    echo "No GPU detected!!!"
+  else
+    echo "GPU info:"
+    LD_LIBRARY_PATH=/.singularity.d/libs nvidia-smi -L
+  fi
+  echo
+
+%runscript
+  #!/bin/bash
+  export CONDA_DIR=/miniforge3
+  export PATH="${CONDA_DIR}/bin:${PATH}"
+  source "/miniforge3/etc/profile.d/conda.sh"
+  conda activate BindCraft
+  export PS1="BindCraft> "
+  source /usr/local/bin/bindcraft-entrypoint.sh
+
