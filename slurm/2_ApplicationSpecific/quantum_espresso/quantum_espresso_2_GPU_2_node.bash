@@ -24,22 +24,22 @@
 ## Infiniband with ccrsoft/2023.01 :-
 ##   [ICE-LAKE-IB|CASCADE-LAKE-IB]
 ## 
-## Same GPU type on both nodes :-
-##   [A16|A40|A100|GH200|H100|L40S|V100]
+## Similar tested GPUs on both nodes :-
+##   [A16|A40|A100]
 ## 
 ## CUDA version of Quantum ESPRESSO only (currenlty) built for AVX512 :-
 ##   AVX512
 ##
 ## The constraint should be:
-##   --constraint="[ICE-LAKE-IB|CASCADE-LAKE-IB]&[A16|A40|A100|GH200|H100|L40S|V100]&AVX512]"
+##   --constraint="[ICE-LAKE-IB|CASCADE-LAKE-IB]&[A16|A40|A100]&AVX512]"
 ##
 ## ...but multiple square bracket "exclusive or" sections are not supported
 ##
 ## The ICE-LAKE-IB nodes with a GPU are all A100
 ## The CASCADE-LAKE-IB nodes with a GPU are all V100
-## hence the following is sufficient to guarantee wwe get two Infiniband
-## connected nodes with similar GPUs:
-#SBATCH --constraint="[ICE-LAKE-IB|CASCADE-LAKE-IB]&AVX512"
+## The V100 does not work with Quantum ESPRESSO, hence we can use the following 
+## for two nodes with similar tested GPUs:
+#SBATCH --constraint="ICE-LAKE-IB&[A16|A40|A100]&AVX512"
 ##
 ###############################################################################
 
@@ -50,13 +50,13 @@
 ## Infiniband
 ##   IB
 ##
-## Same GPU type on both nodes :-
-##   [A16|A40|A100|GH200|H100|L40S|V100]
+## Similar tested GPUs on both nodes :-
+##   [A2|A40|A100]
 ##
 ## CUDA version of Quantum ESPRESSO only (currenlty) built for AVX512 :-
 ##   AVX512
 ##
-##SBATCH --constraint="IB&[A16|A40|A100|GH200|H100|L40S|V100]&AVX512"
+##SBATCH --constraint="IB&[A2|A40|A100]&AVX512"
 ##
 ###############################################################################
 

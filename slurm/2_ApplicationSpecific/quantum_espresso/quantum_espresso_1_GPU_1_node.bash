@@ -16,13 +16,40 @@
 #SBATCH --account="[SlurmAccountName]"
 
 #SBATCH --time=01:00:00
+
+###############################################################################
+## "ub-hpc" cluster constraints
+###############################################################################
+##
+## Similar tested GPUs on both nodes :-
+##   [A16|A40|A100]
+##
+## CUDA version of Quantum ESPRESSO only (currenlty) built for AVX512 :-
+##   AVX512
+##
+#SBATCH --constraint="[A16|A40|A100]&AVX512"
+##
+###############################################################################
+
+###############################################################################
+## "faculty" cluster constraints
+###############################################################################
+##
+## Similar tested GPUs on both nodes :-
+##   [A2|A40|A100]
+##
+## CUDA version of Quantum ESPRESSO only (currenlty) built for AVX512 :-
+##   AVX512
+##
+##SBATCH --constraint="[A2|A40|A100]&AVX512"
+##
+###############################################################################
+
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 ## One MPI task per GPU
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=40
-## CUDA version of Quantum ESPRESSO only (currenlty) built for AVX512
-#SBATCH --constraint="AVX512"
 #SBATCH --exclusive
 
 module load ccrsoft/2023.01
