@@ -31,7 +31,7 @@
 ##   AVX512
 ##
 ## The constraint should be:
-##   --constraint="[ICE-LAKE-IB|CASCADE-LAKE-IB]&[A16|A40|A100]&AVX512]"
+##   --constraint="[ICE-LAKE-IB|CASCADE-LAKE-IB]&[A16|A40|A100]&AVX512"
 ##
 ## ...but multiple square bracket "exclusive or" sections are not supported
 ##
