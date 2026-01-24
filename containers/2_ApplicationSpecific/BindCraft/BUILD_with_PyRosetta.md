@@ -37,8 +37,8 @@ cd /projects/academic/[YourGroupName]/BindCraft
 Download the BindCraft build files, [FreeBindCraft_with_PyRosetta.def](./FreeBindCraft_with_PyRosetta.def) and [docker-entrypoint.sh](./docker-entrypoint.sh) to this directory
 
 ```
-curl -L -o FreeBindCraft_with_PyRosetta.def https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/BindCraft/containers/2_ApplicationSpecific/BindCraft/FreeBindCraft_with_PyRosetta.def
-curl -L -o docker-entrypoint.sh https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/BindCraft/containers/2_ApplicationSpecific/BindCraft/docker-entrypoint.sh
+curl -L -o FreeBindCraft_with_PyRosetta.def https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/BindCraft/FreeBindCraft_with_PyRosetta.def
+curl -L -o docker-entrypoint.sh https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/BindCraft/docker-entrypoint.sh
 ```
 
 Sample output:

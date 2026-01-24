@@ -133,7 +133,7 @@ ls -l ./output/relax_test_openmm*
 Sample output:
 
 > ```
-> -rw-rw-r-- 1 [CCRusername] grp-ccradmintest 150101 Sep  9 15:43 relax_test_openmm.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 150101 Sep  9 15:43 relax_test_openmm.pdb
 > ```
 
 Exit the container

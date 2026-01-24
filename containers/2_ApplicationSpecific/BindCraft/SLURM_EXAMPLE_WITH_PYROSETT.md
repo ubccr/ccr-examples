@@ -227,37 +227,37 @@ Sample output:
 > ```
 > output/pdl1/:
 > total 2091
-> drwxrwsr-x 2 tkewtest grp-ccradmintest    4096 Sep 15 15:28 .
-> drwxrwsr-x 2 tkewtest grp-ccradmintest    4096 Sep 15 15:27 ..
-> drwxrwsr-x 2 tkewtest grp-ccradmintest    4096 Sep 19 19:12 Accepted
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest    1144 Sep 19 19:28 failure_csv.csv
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest  154700 Sep 19 19:28 final_design_stats.csv
-> drwxrwsr-x 2 tkewtest grp-ccradmintest    4096 Sep 19 19:28 MPNN
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 1150297 Sep 19 19:28 mpnn_design_stats.csv
-> drwxrwsr-x 2 tkewtest grp-ccradmintest    4096 Sep 19 19:28 Rejected
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest  726597 Sep 19 19:28 rejected_mpnn_full_stats.csv
-> drwxrwsr-x 2 tkewtest grp-ccradmintest    4096 Sep 19 19:29 Trajectory
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest  106598 Sep 19 19:08 trajectory_stats.csv
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]    4096 Sep 15 15:28 .
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]    4096 Sep 15 15:27 ..
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]    4096 Sep 19 19:12 Accepted
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName]    1144 Sep 19 19:28 failure_csv.csv
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName]  154700 Sep 19 19:28 final_design_stats.csv
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]    4096 Sep 19 19:28 MPNN
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 1150297 Sep 19 19:28 mpnn_design_stats.csv
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]    4096 Sep 19 19:28 Rejected
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName]  726597 Sep 19 19:28 rejected_mpnn_full_stats.csv
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]    4096 Sep 19 19:29 Trajectory
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName]  106598 Sep 19 19:08 trajectory_stats.csv
 > 
 > output/pdl1/Accepted:
 > total 29602
-> drwxrwsr-x 2 tkewtest grp-ccradmintest   4096 Sep 19 19:12 .
-> drwxrwsr-x 2 tkewtest grp-ccradmintest   4096 Sep 15 15:28 ..
-> drwxrwsr-x 2 tkewtest grp-ccradmintest   4096 Sep 19 19:12 Animation
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 291114 Sep 16 12:56 PDL1_l103_s466116_mpnn1_model2.pdb
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 292167 Sep 16 13:02 PDL1_l103_s466116_mpnn9_model2.pdb
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 292815 Sep 17 03:40 PDL1_l103_s530314_mpnn3_model1.pdb
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]   4096 Sep 19 19:12 .
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]   4096 Sep 15 15:28 ..
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]   4096 Sep 19 19:12 Animation
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 291114 Sep 16 12:56 PDL1_l103_s466116_mpnn1_model2.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 292167 Sep 16 13:02 PDL1_l103_s466116_mpnn9_model2.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 292815 Sep 17 03:40 PDL1_l103_s530314_mpnn3_model1.pdb
 > [...]
 > output/pdl1/Trajectory/Relaxed:
 > total 49282
-> drwxrwsr-x 2 tkewtest grp-ccradmintest   4096 Sep 19 19:07 .
-> drwxrwsr-x 2 tkewtest grp-ccradmintest   4096 Sep 19 19:29 ..
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 281880 Sep 17 11:44 PDL1_l100_s775462.pdb
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 289899 Sep 17 10:29 PDL1_l101_s615526.pdb
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 284796 Sep 17 19:04 PDL1_l101_s96790.pdb
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]   4096 Sep 19 19:07 .
+> drwxrwsr-x 2 [CCRusername] [YourGroupName]   4096 Sep 19 19:29 ..
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 281880 Sep 17 11:44 PDL1_l100_s775462.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 289899 Sep 17 10:29 PDL1_l101_s615526.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 284796 Sep 17 19:04 PDL1_l101_s96790.pdb
 > [...]
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 281394 Sep 18 08:09 PDL1_l98_s487657.pdb
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 280260 Sep 16 11:58 PDL1_l98_s617776.pdb
-> -rw-rw-r-- 1 tkewtest grp-ccradmintest 281637 Sep 16 01:27 PDL1_l98_s684300.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 281394 Sep 18 08:09 PDL1_l98_s487657.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 280260 Sep 16 11:58 PDL1_l98_s617776.pdb
+> -rw-rw-r-- 1 [CCRusername] [YourGroupName] 281637 Sep 16 01:27 PDL1_l98_s684300.pdb
 > ```
 
