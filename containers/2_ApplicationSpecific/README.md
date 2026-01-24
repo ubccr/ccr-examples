@@ -11,6 +11,8 @@ Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/
 | Topic                                | Description |
 |--------------------------------------|------------------------|
 | [Abaqus](./abaqus)                   | Guide to running Abaqus with Apptainer via Slurm batch script, command line, GUI access, and GPU support |
+| [AlphaFold 3](./AlphaFold-3)         | AlphaFold 3 container with steps for building and running a Data Pipeline and Inference via Apptainer and Slurm |
+| [BindCraft](./BindCraft)             | Free BindCraft container with steps for building and running with or without PyRosetta via Apptainer and Slurm |
 | [CONDA](./conda)                     | Example CONDA container with steps for building and running via Apptainer |
 | [Juicer](./juicer)                   | Example of running the containerized version of Juicer at CCR using Apptainer |
 | [Micro-C](./Micro-C)                 | Micro-C Pipeline container with steps for building and running via Apptainer |
