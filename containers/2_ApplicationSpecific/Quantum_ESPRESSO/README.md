@@ -10,16 +10,16 @@ These Slurm scripts are templates.
 You will have to provide cluster, partition, qos, account information,
 and possibly "cpus-per-task" depending on the nodes you wish to use.
 
-There are many "--constraint=" line examples in each Slurm script.
-There must be only one "--constraint=" line starting with "#SBATCH"
+There are many "--constraint=" line examples in each Slurm script.  
+There must be only one "--constraint=" line starting with "#SBATCH"  
 If you use multiple "#SBATCH --constraint=" lines, only the last one
 will be used to constrain the job.
 
 e.g.
 
-> ```
-> #SBATCH --constraint="EMERALD-RAPIDS-IB&H100"
-> ```
+```
+#SBATCH --constraint="EMERALD-RAPIDS-IB&H100"
+```
 
 This example requests an H100 GPU node connected to the "EMERALD-RAPIDS-IB"
 Infiniband network."
@@ -27,15 +27,15 @@ Infiniband network."
 
 For the single node examples, update the "BASE_DIR=" line:
 
-> ```
-> BASE_DIR="/projects/academic/[CCRgroupname]/QE"
-> ```
+```
+BASE_DIR="/projects/academic/[CCRgroupname]/QE"
+```
 
 For the multi node examples also update the "GS" Global Scratch line:
 
-> ```
-> GS="/vscratch/[CCRgroupname]/QE/${TIMESTAMP}"
-> ```
+```
+GS="/vscratch/[CCRgroupname]/QE/${TIMESTAMP}"
+```
 
 ## Quantum ESPRESSO Slurm script examples
 
