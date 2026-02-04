@@ -25,13 +25,14 @@ This example requests an H100 GPU node connected to the "EMERALD-RAPIDS-IB"
 Infiniband network."
 
 
-For the single node examples, update the "BASE_DIR=" line:
+For the single node examples, replace "[CCRgroupname]" in the "BASE_DIR=" line:
 
 ```
 BASE_DIR="/projects/academic/[CCRgroupname]/QE"
 ```
 
-For the multi node examples also update the "GS" Global Scratch line:
+For the multi node examples ALSO replace "[CCRgroupname]" in the
+"GS" Global Scratch line:
 
 ```
 GS="/vscratch/[CCRgroupname]/QE/${TIMESTAMP}"
