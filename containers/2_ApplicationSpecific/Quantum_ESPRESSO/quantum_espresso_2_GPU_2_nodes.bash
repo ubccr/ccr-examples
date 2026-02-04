@@ -143,8 +143,25 @@ cd "benchmarks/AUSURF112"
 OUTFILE="${SLURM_SUBMIT_DIR}/${BASE}_${TIMESTAMP}.out"
 echo "OUTFILE=${OUTFILE}"
 
+## Set the output directory "outdir" to the Global Scratch directory "${GS}"
 mkdir -p "${GS}"
 sed -E -i "/^[[:space:]]*outdir/s|^([[:space:]]*).*$|\1outdir = '${GS}'|" "${INFILE}"
+
+## Optional:
+##
+## Set "wfcdir" the directory to store per process files (*.wfc{N}, *.igk{N}, etc.)
+## to ${SLURMTMPDIR} (local scratch on each node)
+##
+## Note: You probably don't want to do this if you are planning to use "restart"
+##       or you need to perform further calculations using these files
+if grep -E -q '^[[:space:]]*wfcdir([[:space:]]|=)' "${INFILE}"
+then
+  # modify "wfcdir" setting
+  sed -E -i "/^[[:space:]]*wfcdir/s|^([[:space:]]*).*$|\1wfcdir = '${SLURMTMPDIR}'|" "${INFILE}"
+else
+  # add "wfcdir" setting
+  sed -E -i "/^[[:space:]]*outdir/a \  wfcdir = '${SLURMTMPDIR}'" "${INFILE}"
+fi
 
 ## There are several options to save data file and the charge density files to
 ## disk - in this case the files will be written to the scratch space defined above
