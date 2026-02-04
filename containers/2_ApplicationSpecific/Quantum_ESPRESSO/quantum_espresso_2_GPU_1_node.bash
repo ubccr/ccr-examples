@@ -5,8 +5,6 @@
 ## README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
 ## DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
-## NOTE: This Slurm script was tested with the ccrsoft/2024.04 software release
-
 ## Select a cluster, partition, qos and account that is appropriate for your use case
 ## Available options and more details are provided in CCR's documentation:
 ##   https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos
@@ -67,7 +65,7 @@ then
 fi
 popd > /dev/null
 
-## report the GPU in the job
+## report the GPUs in the job
 nvidia-smi -L
 echo
 
@@ -91,6 +89,7 @@ echo "OUTFILE=${OUTFILE}"
 
 ## Use ${SLURMTMPDIR} for run files
 sed -E -i "/^[[:space:]]*outdir/s|^([[:space:]]*).*$|\1outdir = '${SLURMTMPDIR}'|" "${INFILE}"
+sed -E -i "/^[[:space:]]*wfcdir([[:space:]]|=)/d" "${INFILE}"
 
 ## There are several options to save data file and the charge density files to
 ## disk - in this case the files will be written to the scratch space defined above

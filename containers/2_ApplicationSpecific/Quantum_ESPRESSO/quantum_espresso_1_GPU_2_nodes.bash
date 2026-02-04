@@ -5,8 +5,6 @@
 ## README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
 ## DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
-## NOTE: This Slurm script was tested with the ccrsoft/2024.04 software release
-
 ## Select a cluster, partition, qos and account that is appropriate for your use case
 ## Available options and more details are provided in CCR's documentation:
 ##   https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos

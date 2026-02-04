@@ -5,53 +5,20 @@
 ## README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
 ## DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
-## Select a cluster, partition, qos and account that is appropriate for your use case
+## Select an account that is appropriate for your use case
 ## Available options and more details are provided in CCR's documentation:
 ##   https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos
-#SBATCH --cluster="[cluster]"
-#SBATCH --partition="[partition]"
-#SBATCH --qos="[qos]"
 #SBATCH --account="[SlurmAccountName]"
 
+#SBATCH --cluster="ub-hpc"
+#SBATCH --partition="arm64"
+#SBATCH --qos="arm64"
+#SBATCH --export=HOME,TERM,SHELL
+#SBATCH --constraint="GH200"
 #SBATCH --time=01:00:00
-
-##
-## Note: This example requires about 21000 MiB of GPU RAM
-##
-## The following GPUs types requuire more than one GPU to run this example:
-##
-##  GPU     GPU RAM
-##  A2     15356 MiB ==> 2 GPUs
-##  A16    15356 MiB ==> 2 GPUs
-##  P4000   8192 MiB ==> 3 GPUs
-##  T4     15360 MiB ==> 2 GPUs
-##
-
-###############################################################################
-## "ub-hpc" cluster constraints
-###############################################################################
-##
-## Note: The Quantum ESPRESSO container verison 7.3.1 does not support L40S
-##       GPU - this may be resolved in newer versions compiled with "-gpu=cc89"
-##
-#SBATCH --constraint="[A40|A100|GH200|H100|V100]"
-##
-###############################################################################
-
-###############################################################################
-## "faculty" cluster constraints
-###############################################################################
-##
-## Note: The Quantum ESPRESSO container verison 7.3.1 does not support L40S
-##       GPU - this may be resolved in newer versions compiled with "-gpu=cc89"
-##
-##SBATCH --constraint="[A40|A100|H100|V100]"
-##
-###############################################################################
-
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --gpus-per-node=1
-## One MPI task per GPU
+## One MPI task per GPU on each node
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=40
 ## Note: Use "--exclusive" for shared memory/shared namespace with apptainer
@@ -59,6 +26,11 @@
 
 ## BASE_DIR == directory with the Quantum ESPRESSO container image
 BASE_DIR="/projects/academic/[CCRgroupname]/QE"
+
+TIMESTAMP="$(date "+%F_%T")"
+
+## use Global Scratch for run files
+GS="/vscratch/[CCRgroupname]/QE/${TIMESTAMP}"
 
 qe_version="7.3.1"
 
@@ -73,8 +45,14 @@ then
 fi
 popd > /dev/null
 
-## report the GPU in the job
-nvidia-smi -L
+## Use the OpenMPI UCX Point-to-point Messaging Layer
+export OMPI_MCA_pml=ucx
+
+## requerted MPIx environment variables for authentication (or srun can fail)
+export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
+
+## report the GPUs in the job
+srun --export=ALL --ntasks-per-node=1 --nodes="${SLURM_JOB_NUM_NODES}" -- bash -c 'printf "hostname: %s\n%s\n\n" "$(hostname -s)" "$(nvidia-smi -L)"'
 echo
 
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
@@ -90,14 +68,28 @@ fi
 
 cd "benchmarks/AUSURF112"
 
-TIMESTAMP="$(date "+%F_%T")"
-
 OUTFILE="${SLURM_SUBMIT_DIR}/${BASE}_${TIMESTAMP}.out"
 echo "OUTFILE=${OUTFILE}"
 
-## Use ${SLURMTMPDIR} for run files
-sed -E -i "/^[[:space:]]*outdir/s|^([[:space:]]*).*$|\1outdir = '${SLURMTMPDIR}'|" "${INFILE}"
-sed -E -i "/^[[:space:]]*wfcdir([[:space:]]|=)/d" "${INFILE}"
+## Set the output directory "outdir" to the Global Scratch directory "${GS}"
+mkdir -p "${GS}"
+sed -E -i "/^[[:space:]]*outdir/s|^([[:space:]]*).*$|\1outdir = '${GS}'|" "${INFILE}"
+
+## Optional:
+##
+## Set "wfcdir" the directory to store per process files (*.wfc{N}, *.igk{N}, etc.)
+## to ${SLURMTMPDIR} (local scratch on each node)
+##
+## Note: You probably don't want to do this if you are planning to use "restart"
+##       or you need to perform further calculations using these files
+if grep -E -q '^[[:space:]]*wfcdir([[:space:]]|=)' "${INFILE}"
+then
+  # modify "wfcdir" setting
+  sed -E -i "/^[[:space:]]*wfcdir/s|^([[:space:]]*).*$|\1wfcdir = '${SLURMTMPDIR}'|" "${INFILE}"
+else
+  # add "wfcdir" setting
+  sed -E -i "/^[[:space:]]*outdir/a \  wfcdir = '${SLURMTMPDIR}'" "${INFILE}"
+fi
 
 ## There are several options to save data file and the charge density files to
 ## disk - in this case the files will be written to the scratch space defined above
@@ -122,12 +114,6 @@ else
   sed -E -i "/^[[:space:]]*disk_io/s|^([[:space:]]*).*$|\1disk_io = 'low'|" "${INFILE}"
 fi
 
-## Use the OpenMPI UCX Point-to-point Messaging Layer
-export OMPI_MCA_pml=ucx
-
-## requerted MPIx environment variables for authentication (or srun can fail)
-export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
-
 ## Run Quantum ESPRESSO
 srun --mpi=pmix \
  --export=ALL \
@@ -144,5 +130,11 @@ srun --mpi=pmix \
 if test -d "${SLURMTMPDIR}/${BASE}.save"
 then
   mv "${SLURMTMPDIR}/${BASE}.save" "${SLURM_SUBMIT_DIR}/${BASE}_${TIMESTAMP}.save"
+fi
+
+## Cleanup - Remove run files
+if [ -d "${GS}" ]
+then
+  rm -rf "${GS}"
 fi
 

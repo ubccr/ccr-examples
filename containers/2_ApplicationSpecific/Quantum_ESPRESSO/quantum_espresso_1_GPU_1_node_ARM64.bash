@@ -5,50 +5,17 @@
 ## README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
 ## DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
-## Select a cluster, partition, qos and account that is appropriate for your use case
+## Select an account that is appropriate for your use case
 ## Available options and more details are provided in CCR's documentation:
 ##   https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos
-#SBATCH --cluster="[cluster]"
-#SBATCH --partition="[partition]"
-#SBATCH --qos="[qos]"
 #SBATCH --account="[SlurmAccountName]"
 
+#SBATCH --cluster="ub-hpc"
+#SBATCH --partition="arm64"
+#SBATCH --qos="arm64"
+#SBATCH --export=HOME,TERM,SHELL
+#SBATCH --constraint="GH200"
 #SBATCH --time=01:00:00
-
-##
-## Note: This example requires about 21000 MiB of GPU RAM
-##
-## The following GPUs types requuire more than one GPU to run this example:
-##
-##  GPU     GPU RAM
-##  A2     15356 MiB ==> 2 GPUs
-##  A16    15356 MiB ==> 2 GPUs
-##  P4000   8192 MiB ==> 3 GPUs
-##  T4     15360 MiB ==> 2 GPUs
-##
-
-###############################################################################
-## "ub-hpc" cluster constraints
-###############################################################################
-##
-## Note: The Quantum ESPRESSO container verison 7.3.1 does not support L40S
-##       GPU - this may be resolved in newer versions compiled with "-gpu=cc89"
-##
-#SBATCH --constraint="[A40|A100|GH200|H100|V100]"
-##
-###############################################################################
-
-###############################################################################
-## "faculty" cluster constraints
-###############################################################################
-##
-## Note: The Quantum ESPRESSO container verison 7.3.1 does not support L40S
-##       GPU - this may be resolved in newer versions compiled with "-gpu=cc89"
-##
-##SBATCH --constraint="[A40|A100|H100|V100]"
-##
-###############################################################################
-
 #SBATCH --nodes=1
 #SBATCH --gpus-per-node=1
 ## One MPI task per GPU

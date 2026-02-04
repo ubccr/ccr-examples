@@ -40,15 +40,28 @@ GS="/vscratch/[CCRgroupname]/QE/${TIMESTAMP}"
 
 ## Quantum ESPRESSO Slurm script examples
 
-One node scripts:
+### One node scripts
+
+x86_64
 
 [QE 1 GPU 1 node Slurm Script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/Quantum_ESPRESSO/quantum_espresso_1_GPU_1_node.bash)  
 [QE 2 GPUs 1 node Slurm Script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/Quantum_ESPRESSO/quantum_espresso_2_GPU_1_node.bash)
 
-Two node scripts:
+ARM64
+
+[QE 1 GPU 1 ARM64 node Slurm Script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/Quantum_ESPRESSO/quantum_espresso_1_GPU_1_node_ARM64.bash)  
+
+
+### Two node scripts:
+
+x86_64
 
 [QE 1 GPU 2 node Slurm Script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/Quantum_ESPRESSO/quantum_espresso_1_GPU_2_nodes.bash)  
 [QE 2 GPU 2 node Slurm Script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/Quantum_ESPRESSO/quantum_espresso_2_GPU_2_nodes.bash)
+
+ARM64
+
+[QE 1 GPU 2 ARM64 node Slurm Script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/Quantum_ESPRESSO/quantum_espresso_1_GPU_2_nodes_ARM64.bash)
 
 
 See the [Quantum ESPRESSO website](https://www.quantum-espresso.org) and [Quantum ESPRESSO Documentation](https://www.quantum-espresso.org/documentation/) for more information on Quantum ESPRESSO.  
