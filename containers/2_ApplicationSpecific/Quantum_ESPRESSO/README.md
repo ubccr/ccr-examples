@@ -25,10 +25,10 @@ This example requests an H100 GPU node connected to the "EMERALD-RAPIDS-IB"
 Infiniband network."
 
 
-For the single node examples, replace "[CCRgroupname]" in the "BASE_DIR=" line:
+For the single node examples, replace "[CCRgroupname]" in the "CONTAINER_DIR=" line:
 
 ```
-BASE_DIR="/projects/academic/[CCRgroupname]/QE"
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/QE"
 ```
 
 For the multi node examples ALSO replace "[CCRgroupname]" in the

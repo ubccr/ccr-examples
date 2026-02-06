@@ -24,8 +24,8 @@
 ## Note: Use "--exclusive" for shared memory/shared namespace with apptainer
 #SBATCH --exclusive
 
-## BASE_DIR == directory with the Quantum ESPRESSO container image
-BASE_DIR="/projects/academic/[CCRgroupname]/QE"
+## CONTAINER_DIR == directory with the Quantum ESPRESSO container image
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/QE"
 
 TIMESTAMP="$(date "+%F_%T")"
 
@@ -38,7 +38,7 @@ qe_version="7.3.1"
 qe_url="docker://nvcr.io/hpc/quantum_espresso:qe-${qe_version}"
 container_image="quantum_espresso-${qe_version}-$(arch).sif"
 ## Fetch the Quantum ESPRESSO container, if necessary
-pushd "${BASE_DIR}" > /dev/null
+pushd "${CONTAINER_DIR}" > /dev/null
 if ! test -f "${container_image}"
 then
   apptainer pull "${container_image}" "${qe_url}"
@@ -121,7 +121,7 @@ srun --mpi=pmix \
   -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  --sharens \
  --nv \
- "${BASE_DIR}/${container_image}" \
+ "${CONTAINER_DIR}/${container_image}" \
  pw.x -in "${INFILE}" > "${OUTFILE}"
 
 ## Optional:
