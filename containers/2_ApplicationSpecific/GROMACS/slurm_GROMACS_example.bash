@@ -22,13 +22,13 @@
 ## Refer to DOCUMENTATION for details on the following Slurm directives
 ## This example uses two nodes with thirty cores on each node
 #SBATCH --nodes=2
-#SBATCH --cpus-per-task=1
-#SBATCH --tasks-per-node=30
+#SBATCH --gpus-per-node=2
+#SBATCH --tasks-per-node=2
+#SBATCH --cpus-per-task=14
 ## Using conainer shared namespace, so ask for the whole node (security measure)
 #SBATCH --exclusive
-
-## Specify memory required per node.
-#SBATCH --mem=100GB
+## Use all the memory onm the node.
+#SBATCH --mem=0
 
 ## Use the OpenMPI UCX Point-to-point Messaging Layer
 export OMPI_MCA_pml=ucx
