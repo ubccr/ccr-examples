@@ -5,10 +5,29 @@
 Ref: http://www.mdtutorials.com/gmx/lysozyme/01_pdb2gmx.html
 
 
-Start an interactive Slurm job, then change to your GROMACS directory e,g,
+Start an interactive Slurm job with a GPU, then change to your GROMACS directory e,g,
 
 ```bash
 cd /projects/academic/[YourGroupName]/GROMACS
+```
+
+Set the directory for container images
+
+```bash
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+```
+
+Set environment variables to run the container
+
+```bash
+GROMACS_TAG="2023.2"
+container_image="gromacs-${GROMACS_TAG}-$(arch).sif"
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-$((${SLURM_JOB_CPUS_PER_NODE} / ${SLURM_GPUS_ON_NODE}))}"
+#export OMPI_MCA_pml=ucx
+#export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
+export CUDA_CACHE_PATH="${SLURMTMPDIR:-/var/tmp}/nv_$(id -nu)"
+mkdir -p "${CUDA_CACHE_PATH}"
+export GMX_ENABLE_DIRECT_GPU_COMM=1
 ```
 
 This example uses the hen egg white lysozyme - PDB code 1AKI
@@ -52,9 +71,14 @@ Use "gmx pdb2gmx" to generate three files:
   A position restraint file.
   A post-processed structure file.
 
+Note: "gmx mdrun" is the only gmx command run in parallel
 
 ```bash
-gmx pdb2gmx -f 1AKI_clean.pdb -o 1AKI_processed.gro -water tip3p 
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx pdb2gmx -f 1AKI_clean.pdb -o 1AKI_processed.gro -water tip3p 
 ```
 
 sample truncated output:
@@ -217,7 +241,11 @@ Sample output:
 Define the box dimensions using the editconf module.
 
 ```bash
-gmx editconf -f 1AKI_processed.gro -o 1AKI_newbox.gro -c -d 1.2 -bt cubic
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx editconf -f 1AKI_processed.gro -o 1AKI_newbox.gro -c -d 1.2 -bt cubic
 ```
 
 sample output:
@@ -264,7 +292,11 @@ sample output:
 Fill the box with solvent (water) using the solvate module 
 
 ```bash
-gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
 ```
 
 sample output:
@@ -361,7 +393,11 @@ mv ions.mdp ./inputs/
 Generate an atomic-level input file (.tpr)
 
 ```bash
-gmx grompp -f inputs/ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx grompp -f inputs/ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
 ```
 
 sample output:
@@ -436,7 +472,11 @@ sample output:
 Replace water molecules with the ions
 
 ```bash
-gmx genion -s ions.tpr -o 1AKI_solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx genion -s ions.tpr -o 1AKI_solv_ions.gro -p topol.top -pname NA -nname CL -neutral
 ```
 
 sample abridged output:
@@ -544,7 +584,11 @@ mv minim.mdp ./inputs/
 run the energy minimization
 
 ```bash
-gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
 ```
 
 sample output
@@ -612,7 +656,15 @@ sample output:
 Run the energy minimization
 
 ```bash
-gmx mdrun -v -deffnm em
+srun --mpi=pmix \
+ --nodes=${SLURM_NNODES} \
+ --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+ apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --sharens \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx mdrun -v -deffnm em
 ```
 
 sample abridged output:
@@ -675,7 +727,11 @@ sample output:
 Analyze the .edr file "em.edr"
 
 ```bash
-gmx energy -f em.edr -o potential.xvg
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx energy -f em.edr -o potential.xvg
 ```
 
 sample truncated output:
@@ -791,7 +847,11 @@ mv nvt.mdp ./inputs/
 ```
 
 ```bash
-gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
 ```
 
 Sample output:
@@ -874,16 +934,18 @@ ls -l nvt.tpr mdout.mdp
 -rw-rw-r-- 1 tkewtest nogroup 1798084 Nov  6 14:36 nvt.tpr
 ```
 
-There are several ways to run the NVT simulation, depending on the resources
-requested with the "salloc" command.
-
-Runnin on CPU cores only (no GPUs allocated) on this node in the apptainer
-container
-
-This takes a couple of minutes to run on a node with 40 cores allocated:
+Run the NVT simulation
 
 ```bash
-gmx mdrun -deffnm nvt
+srun --mpi=pmix \
+ --nodes=${SLURM_NNODES} \
+ --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+ apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --sharens \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx mdrun -deffnm nvt
 ```
 
 sample output:
@@ -913,20 +975,6 @@ sample output:
 > Performance:       76.840        0.312
 > ```
 
-However, be aware that this can be run over mutiple nodes &/or can
-usilize a GPU if the "gmx" command is replaced with one to use the
-extra resources.
-
-Some examples:
-
-Use GPUs on the currecnt node:
-
-```bash
-gmx_cuda mdrun -deffnm nvt
-```
-
-For multiple node examples, see the Slurm example scripts
-
 This generates five files:
 
 ```bash
@@ -946,7 +994,11 @@ Sample output:
 Analyze the temperature progression
 
 ```bash
-gmx energy -f nvt.edr -o temperature.xvg
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx energy -f nvt.edr -o temperature.xvg
 ```
 
 Sample abridged output:
@@ -1046,7 +1098,11 @@ mv npt.mdp ./inputs/
 
 
 ```bash
-gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
 ```
 
 Sample output:
@@ -1148,13 +1204,21 @@ Sample output:
 > -rw-rw-r-- 1 [CCRusername] nogroup 1798108 Nov  6 18:15 npt.tpr
 > ```
 
-Run he NPT simulation
+Run the NPT simulation
 
 This takes a couple of minutes to run on a node with 40 cores allocated:
 
 
 ```bash
-gmx mdrun -deffnm npt
+srun --mpi=pmix \
+ --nodes=${SLURM_NNODES} \
+ --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+ apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --sharens \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx mdrun -deffnm npt
 ```
 
 sample output:
@@ -1188,7 +1252,11 @@ sample output:
 Analyze the pressure progression
 
 ```bash
-gmx energy -f npt.edr -o pressure.xvg
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx energy -f npt.edr -o pressure.xvg
 ```
 
 Sample abridged output:
@@ -1286,7 +1354,11 @@ Which is a little different to the sample output in the tutorial
 Examine the density using energy 
 
 ```bash
-gmx energy -f npt.edr -o density.xvg
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx energy -f npt.edr -o density.xvg
 ```
 
 Sample abridged output:
@@ -1398,7 +1470,11 @@ mv md.mdp ./inputs/
 Generate the .tpr file for this simulation:
 
 ```bash
-gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
 ```
 
 Sample output:
@@ -1486,7 +1562,15 @@ Run the 10-ns MD simulation:
 This takes about 20 minutes to run on a node with 40 cores allocated:
 
 ```bash
-gmx mdrun -deffnm md_0_10
+srun --mpi=pmix \
+ --nodes=${SLURM_NNODES} \
+ --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
+ apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --sharens \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx mdrun -deffnm md_0_10
 ```
 
 Sample output:
@@ -1541,7 +1625,11 @@ Reimage the trajectory
 
 
 ```bash
-gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
 ```
 
 Sample abridged output:
@@ -1626,7 +1714,11 @@ sample output:
 Root-Mean-Square Deviation
 
 ```bash
-gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
 ```
 
 
@@ -1715,7 +1807,11 @@ in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with "xmgrace"
 Calculate RMSD relative to the crystal structure
 
 ```bash
-gmx rms -s em.tpr -f md_0_10_noPBC.xtc -o rmsd_xtal.xvg -tu ns
+apptainer run \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}" \
+ gmx rms -s em.tpr -f md_0_10_noPBC.xtc -o rmsd_xtal.xvg -tu ns
 ```
 
 Sample abridged output:

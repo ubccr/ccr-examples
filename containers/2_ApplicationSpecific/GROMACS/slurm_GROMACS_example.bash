@@ -13,10 +13,6 @@
 #SBATCH --qos=[qos]
 #SBATCH --account=[SlurmAccountName]
 
-## NOTE: This is tested with the ccrsoft/2024.04 software release
-##       The ccrsoft/2023.01 software release needs several work-rounds and will not
-##       run on the emerald rapids or sapphire rapids nodes over Infiniband 
-
 ## Request Inifinband nodes
 #SBATCH --constraint="[EMERALD-RAPIDS-IB|SAPPHIRE-RAPIDS-IB|ICE-LAKE-IB|CASCADE-LAKE-IB]"
 
@@ -34,17 +30,47 @@
 ## Specify memory required per node.
 #SBATCH --mem=100GB
 
-## Use Infiniband
-export OMPI_MCA_pml="ucx"
-export OMPI_MCA_btl="self,vader,ofi"
+## Use the OpenMPI UCX Point-to-point Messaging Layer
+export OMPI_MCA_pml=ucx
 
-## Avoid possible auth & gds issues:
-export PMIX_MCA_psec="native"
-export PMIX_MCA_gds="hash"
+## requerted MPIx environment variables for authentication (or srun can fail)
+export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
 
 # Change the nvidia cache dir from ~/.nv/ComputeCache
 export CUDA_CACHE_PATH="${SLURMTMPDIR:-/var/tmp}/nv_$(id -nu)"
 mkdir -p "${CUDA_CACHE_PATH}"
+
+## Enable the direct GPU communication capabilities of MPI
+export GMX_ENABLE_DIRECT_GPU_COMM=1
+
+
+## CONTAINER_DIR == directory with the Quantum ESPRESSO container image
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+
+# For the latest version of the GROMACS container see:
+#   https://catalog.ngc.nvidia.com/orgs/hpc/containers/gromacs
+gromacs_container_version="2023.2"
+
+container_image="gromacs-${gromacs_container_version}-$(arch).sif"
+
+# Fetch the nvidia GROMACS container, if necessary
+gromacs_url="docker://nvcr.io/hpc/gromacs:${gromacs_container_version}"
+test ! -d "${CONTAINER_DIR}" && mkdir "${CONTAINER_DIR}"
+pushd "${CONTAINER_DIR}" > /dev/null
+if ! test -f "${container_image}"
+then
+  apptainer pull "${container_image}" "${gromacs_url}"
+fi
+popd > /dev/null
+
+## Note: "gmx grompp" does NOT run in parallel
+## example to run "gmx grompp"
+#apptainer run \
+# -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+# --nv \
+# /path/to/GROMACS-$(arch).sif \
+# gmx grompp [...]
+
 
 ## Run GROMACS Equilibration first phase under an NVT ensemble with multiple
 ## nodes over Infiniband
@@ -52,9 +78,10 @@ mkdir -p "${CUDA_CACHE_PATH}"
 srun --mpi=pmix \
  --nodes=${SLURM_NNODES} \
  --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
- apptainer exec \
+ apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  --sharens \
+ --nv \
  /path/to/GROMACS-$(arch).sif \
  gmx_mpi mdrun -deffnm nvt
 
