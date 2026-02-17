@@ -5,13 +5,13 @@
 Ref: http://www.mdtutorials.com/gmx/lysozyme/01_pdb2gmx.html
 
 
-Start an interactive Slurm job with a GPU, then change to your GROMACS directory e,g,
+Start an interactive Slurm job on a single node with a GPU, then change to your GROMACS directory e,g,
 
 ```bash
 cd /projects/academic/[YourGroupName]/GROMACS
 ```
 
-Set the directory for container images
+Set the directory for container images e.g.
 
 ```bash
 CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
@@ -23,8 +23,6 @@ Set environment variables to run the container
 GROMACS_TAG="2023.2"
 container_image="gromacs-${GROMACS_TAG}-$(arch).sif"
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-$((${SLURM_JOB_CPUS_PER_NODE} / ${SLURM_GPUS_ON_NODE}))}"
-export OMPI_MCA_pml=ucx
-export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
 export CUDA_CACHE_PATH="${SLURMTMPDIR:-/var/tmp}/nv_$(id -nu)"
 mkdir -p "${CUDA_CACHE_PATH}"
 export GMX_ENABLE_DIRECT_GPU_COMM=1
@@ -70,8 +68,6 @@ Use "gmx pdb2gmx" to generate three files:
   The topology for the molecule.
   A position restraint file.
   A post-processed structure file.
-
-Note: "gmx mdrun" is the only gmx command run in parallel
 
 ```bash
 apptainer run \
@@ -656,15 +652,12 @@ sample output:
 Run the energy minimization
 
 ```bash
-srun --mpi=pmix \
- --nodes=${SLURM_NNODES} \
- --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
- apptainer run \
+apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -v -deffnm em
+ gmx mdrun -v -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm em
 ```
 
 sample abridged output:
@@ -676,7 +669,7 @@ sample abridged output:
 > Data prefix:  /usr/local/gromacs
 > Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
->   gmx mdrun -v -deffnm em
+>   gmx mdrun -v -ntmpi 2 -deffnm em
 > 
 > Reading file em.tpr, VERSION 2025.3 (single precision)
 > Using 40 OpenMP threads 
@@ -806,12 +799,18 @@ Change to your GROMACS directory
 cd /projects/academic/[YourGroupName]/GROMACS
 ```
 
+Set the directory for container images e.g.
+
+```bash
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+```
+
 Run "xmgrace" with the "potential.xvg" file
 
 ```bash
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- GROMACS-$(arch).sif \
+ "${CONTAINER_DIR}/grace-$(arch).sif" \
  xmgrace "potential.xvg" \
  -pexec 'title "Potential Energy"; subtitle "1AKI, Minimization with CHARMM36"; legend off; yaxis label "Potential Energy (kJ/mol\S-1\N)"; xaxis label "EM Step (ps)"'
 ```
@@ -937,15 +936,12 @@ ls -l nvt.tpr mdout.mdp
 Run the NVT simulation
 
 ```bash
-srun --mpi=pmix \
- --nodes=${SLURM_NNODES} \
- --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
- apptainer run \
+apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -deffnm nvt
+ gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm nvt
 ```
 
 sample output:
@@ -957,7 +953,7 @@ sample output:
 > Data prefix:  /usr/local/gromacs
 > Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
->   gmx mdrun -deffnm nvt
+>   gmx mdrun -ntmpi 2 -deffnm nvt
 > 
 > Reading file nvt.tpr, VERSION 2025.3 (single precision)
 > Changing nstlist from 10 to 50, rlist from 1 to 1.109
@@ -1065,10 +1061,18 @@ to the above example for potential.xvg
 
 e.g. in an OnDemand terminal window
 
+Set the directory for container images e.g.
+
+```bash
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+```
+
+then
+
 ```bash
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- GROMACS-$(arch).sif \
+ "${CONTAINER_DIR}/grace-$(arch).sif" \
  xmgrace "temperature.xvg" \
  -pexec 'title "Temperature"; subtitle "1AKI, NVT Equilibration"; legend off; yaxis label "Temperature (K)"; s0 symbol 1'
 ```
@@ -1210,15 +1214,12 @@ This takes a couple of minutes to run on a node with 40 cores allocated:
 
 
 ```bash
-srun --mpi=pmix \
- --nodes=${SLURM_NNODES} \
- --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
- apptainer run \
+apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -deffnm npt
+ gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm npt
 ```
 
 sample output:
@@ -1230,7 +1231,7 @@ sample output:
 > Data prefix:  /usr/local/gromacs
 > Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
->   gmx mdrun -deffnm npt
+>   gmx mdrun -ntmpi 2 -deffnm npt
 > 
 > Reading file npt.tpr, VERSION 2025.3 (single precision)
 > Changing nstlist from 10 to 50, rlist from 1 to 1.109
@@ -1326,10 +1327,18 @@ The data in pressure.xvg  can be plotted, in CCR's [OnDemand portal](https://ond
 
 e.g. in an OnDemand terminal window
 
+Set the directory for container images e.g.
+
+```bash
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+```
+
+then
+
 ```bash
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- GROMACS-$(arch).sif \
+ "${CONTAINER_DIR}/grace-$(arch).sif" \
  xmgrace "pressure.xvg" \
  -pexec 'title "Pressure"; subtitle "1AKI, NPT Equilibration"; legend off; yaxis label "Pressure (bar)"; s0 line type 0; s0 symbol 1'
 ```
@@ -1429,10 +1438,18 @@ The data in density.xvg can be plotted, in CCR's [OnDemand portal](https://ondem
 
 e.g. in an OnDemand terminal window
 
+Set the directory for container images e.g.
+
+```bash
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+```
+
+then
+
 ```bash
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- GROMACS-$(arch).sif \
+ "${CONTAINER_DIR}/grace-$(arch).sif" \
  xmgrace "density.xvg" \
  -pexec 'title "Density"; subtitle "1AKI, NPT Equilibration"; legend off; yaxis label "Density (kg m\S-3\N)";; s0 line type 0; s0 symbol 1'
 ```
@@ -1562,15 +1579,12 @@ Run the 10-ns MD simulation:
 This takes about 20 minutes to run on a node with 40 cores allocated:
 
 ```bash
-srun --mpi=pmix \
- --nodes=${SLURM_NNODES} \
- --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
- apptainer run \
+apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -deffnm md_0_10
+ gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm md_0_10
 ```
 
 Sample output:
@@ -1582,7 +1596,7 @@ Sample output:
 > Data prefix:  /usr/local/gromacs
 > Working dir:  /projects/academic/[YourGroupName]/GROMACS
 > Command line:
->   gmx mdrun -deffnm md_0_10
+>   gmx mdrun -ntmpi 2 -deffnm md_0_10
 > 
 > Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
 > Changing nstlist from 10 to 50, rlist from 1 to 1.111
@@ -1888,10 +1902,18 @@ plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with "xmgr
 
 e.g. in an OnDemand terminal window
 
+Set the directory for container images e.g.
+
+```bash
+CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
+```
+
+then
+
 ```bash
 apptainer run \
  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- GROMACS-$(arch).sif \
+ "${CONTAINER_DIR}/grace-$(arch).sif" \
  xmgrace "rmsd.xvg" "rmsd_xtal.xvg" \
  -pexec 'title "RMSD"; subtitle "1AKI, Backbone"; legend on; s0 line type 0; s0 symbol 1; s1 line type 0; s1 symbol 2'
 ```
