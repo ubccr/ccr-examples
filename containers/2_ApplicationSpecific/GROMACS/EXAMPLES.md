@@ -23,8 +23,8 @@ Set environment variables to run the container
 GROMACS_TAG="2023.2"
 container_image="gromacs-${GROMACS_TAG}-$(arch).sif"
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-$((${SLURM_JOB_CPUS_PER_NODE} / ${SLURM_GPUS_ON_NODE}))}"
-#export OMPI_MCA_pml=ucx
-#export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
+export OMPI_MCA_pml=ucx
+export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
 export CUDA_CACHE_PATH="${SLURMTMPDIR:-/var/tmp}/nv_$(id -nu)"
 mkdir -p "${CUDA_CACHE_PATH}"
 export GMX_ENABLE_DIRECT_GPU_COMM=1
