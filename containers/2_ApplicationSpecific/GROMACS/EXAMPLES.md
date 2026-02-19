@@ -41,7 +41,7 @@ on the top left hand side of the window [Download Files] [Legacy PDB Format]
 Delete the crystal water molecules (residue "HOH" in the PDB file)
 
 ```bash
-grep -v HOH 1AKI.pdb > 1AKI_clean.pdb
+grep -v "HOH" "1AKI.pdb" > "1AKI_clean.pdb"
 ```
 
 Verify thtat there a no entries listed under the comment MISSING
@@ -49,7 +49,7 @@ Incomplete internal sequences or any amino acid residues that have missing
 atoms will cause pdb2gmx to fail
 
 ```bash
-grep MISSING 1AKI_clean.pdb
+grep "MISSING" "1AKI_clean.pdb"
 ```
 
 No output expected

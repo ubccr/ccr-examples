@@ -5,13 +5,17 @@
 ## README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
 ##  DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
-## Select a cluster, partition, qos and account that is appropriate for your use case
+## Select a Slurm account that is appropriate for your use case
 ## Available options and more details are provided in CCR's documentation:
 ##   https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos
-#SBATCH --cluster=[cluster]
-#SBATCH --partition=[partition]
-#SBATCH --qos=[qos]
+#SBATCH --cluster=ub-hpc
+#SBATCH --partition=arm64
+#SBATCH --qos=arm64
 #SBATCH --account=[SlurmAccountName]
+
+#SBATCH --constraint=ARM64
+## NOTE: this line is requred to avoid odd X86_64 errors
+#SBATCH --export=HOME,TERM,SHELL
 
 ## Job runtime limit, the job will be canceled once this limit is reached. Format- dd-hh:mm:ss
 #SBATCH --time=01:00:00

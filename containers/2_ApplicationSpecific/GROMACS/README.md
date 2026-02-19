@@ -50,13 +50,13 @@ export APPTAINER_CACHEDIR="${APPTAINER_CACHEDIR:-${SLURMTMPDIR}/apptainer}"
 Download the .def file
 
 ```bash
-curl -L -o grace.def https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/GROMACS/grace.def 
+curl -L -o "grace.def" "https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/GROMACS/grace.def"
 ```
 
 Build the grace container image
 
 ```bash
-apptainer build "${CONTAINER_DIR}/grace-$(arch).sif" grace.def
+apptainer build "${CONTAINER_DIR}/grace-$(arch).sif" "grace.def"
 ```
 
 Verify that the build was successful
@@ -92,18 +92,26 @@ Sample output:
 > All Rights Reserved
 
 
-
-
 ## Example Scripts
 
 Provided in this repository are a couple of example GROMACS Slurm jobs.
 
 ### Short Slurm example
 
+x86_64  
 [slurm_nvidia_GROMACS_short_example.bash](./slurm_nvidia_GROMACS_short_example.bash
+
+ARM64  
+[slurm_ARM64_nvidia_GROMACS_short_example.bash](./slurm_ARM64_nvidia_GROMACS_short_example.bash)
+
 
 ### Long Slurm example
 
-This aexample does all the computations from the [Lysozyme in Water GROMACS tutorial](http://www.mdtutorials.com/gmx/lysozyme/01_pdb2gmx.html)
+This example does all the computations from the [Lysozyme in Water GROMACS tutorial](http://www.mdtutorials.com/gmx/lysozyme/01_pdb2gmx.html)
+
+x86_64  
 [slurm_nvidia_GROMACS_long_example.bash](./slurm_nvidia_GROMACS_long_example.bash)[
+
+ARM64  
+[slurm_ARM64_nvidia_GROMACS_long_example.bash](./slurm_ARM64_nvidia_GROMACS_long_example.bash)
 
