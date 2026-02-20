@@ -99,7 +99,7 @@ Provided in this repository are a couple of example GROMACS Slurm jobs.
 ### Short Slurm example
 
 x86_64  
-[slurm_nvidia_GROMACS_short_example.bash](./slurm_nvidia_GROMACS_short_example.bash
+[slurm_nvidia_GROMACS_short_example.bash](./slurm_nvidia_GROMACS_short_example.bash)
 
 ARM64  
 [slurm_ARM64_nvidia_GROMACS_short_example.bash](./slurm_ARM64_nvidia_GROMACS_short_example.bash)
@@ -110,7 +110,7 @@ ARM64
 This example does all the computations from the [Lysozyme in Water GROMACS tutorial](http://www.mdtutorials.com/gmx/lysozyme/01_pdb2gmx.html)
 
 x86_64  
-[slurm_nvidia_GROMACS_long_example.bash](./slurm_nvidia_GROMACS_long_example.bash)[
+[slurm_nvidia_GROMACS_long_example.bash](./slurm_nvidia_GROMACS_long_example.bash)
 
 ARM64  
 [slurm_ARM64_nvidia_GROMACS_long_example.bash](./slurm_ARM64_nvidia_GROMACS_long_example.bash)
