@@ -52,6 +52,7 @@ mkdir -p "${APPTAINER_CACHEDIR}"
 Download the .def file
 
 ```bash
+#curl -L -o "grace.def" "https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/GROMACS/containers/2_ApplicationSpecific/GROMACS/grace.def"
 curl -L -o "grace.def" "https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/GROMACS/grace.def"
 ```
 
