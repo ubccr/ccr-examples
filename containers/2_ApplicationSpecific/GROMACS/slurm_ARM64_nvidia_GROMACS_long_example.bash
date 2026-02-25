@@ -58,6 +58,7 @@ container_image="gromacs-${GROMACS_TAG}-$(arch).sif"
 
 # make sure APPTAINER_TMPDIR is set to a sensible default
 export APPTAINER_TMPDIR="${APPTAINER_TMPDIR:-${SLURMTMPDIR}/apptainer/tmp}"
+mkdir -p "${APPTAINER_TMPDIR}"
 
 ## Fetch the nvidia GROMACS container, if necessary
 gromacs_url="docker://nvcr.io/hpc/gromacs:${GROMACS_TAG}"
@@ -66,6 +67,7 @@ pushd "${CONTAINER_DIR}" > /dev/null
 if ! test -f "${container_image}"
 then
   export APPTAINER_CACHEDIR="${APPTAINER_CACHEDIR:-${SLURMTMPDIR}/apptainer}"
+  mkdir -p "${APPTAINER_CACHEDIR}"
   echo "Fetching the nvidia GROMACS container..."
   apptainer --silent pull "${container_image}" "${gromacs_url}"
   if test ! -f "${container_image}"

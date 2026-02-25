@@ -44,7 +44,9 @@ variables are set to sensible values
 
 ```bash
 export APPTAINER_TMPDIR="${APPTAINER_TMPDIR:-${SLURMTMPDIR}/apptainer/tmp}"
+mkdir -p "${APPTAINER_TMPDIR}"
 export APPTAINER_CACHEDIR="${APPTAINER_CACHEDIR:-${SLURMTMPDIR}/apptainer}"
+mkdir -p "${APPTAINER_CACHEDIR}"
 ```
 
 Download the .def file

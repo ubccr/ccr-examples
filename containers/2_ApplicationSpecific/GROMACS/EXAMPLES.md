@@ -26,7 +26,66 @@ export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-$((${SLURM_JOB_CPUS_PER_NODE} / $
 export CUDA_CACHE_PATH="${SLURMTMPDIR:-/var/tmp}/nv_$(id -nu)"
 mkdir -p "${CUDA_CACHE_PATH}"
 export GMX_ENABLE_DIRECT_GPU_COMM=1
+export APPTAINER_TMPDIR="${APPTAINER_TMPDIR:-${SLURMTMPDIR}/apptainer/tmp}"
+mkdir -p "${APPTAINER_TMPDIR}"
 ```
+
+Fetch the input and data files for this exmaple from github:
+
+```bash
+if ! test -d "inputs"
+then
+  #git clone --depth 1 --single-branch --branch "GROMACS" https://github.com/tonykew/ccr-examples.git
+  git clone --depth 1 https://github.com/ubccr/ccr-examples.git
+  mv ./ccr-examples/containers/2_ApplicationSpecific/GROMACS/charmm36-jul2022.ff.tgz \
+   ./ccr-examples/containers/2_ApplicationSpecific/GROMACS/inputs .
+  rm -rf ccr-examples
+fi
+```
+
+Sample output:
+
+> ```bash
+> Cloning into 'ccr-examples'...
+> remote: Enumerating objects: 185, done.
+> remote: Counting objects: 100% (185/185), done.
+> remote: Compressing objects: 100% (155/155), done.
+> remote: Total 185 (delta 40), reused 115 (delta 24), pack-reused 0 (from 0)
+> Receiving objects: 100% (185/185), 1.34 MiB | 7.09 MiB/s, done.
+> Resolving deltas: 100% (40/40), done.
+> ```
+
+Start the container:
+
+```bash
+apptainer shell \
+ -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --nv \
+ "${CONTAINER_DIR}/${container_image}"
+```
+
+Expected output:
+
+> ```bash
+> Apptainer> 
+> ```
+
+
+All the commands from here, withing this terminal window, are run from the
+"Apptainer> " prompt
+
+Source the startup script to add "gmx" to the PATH
+
+```bash
+source /singularity 
+```
+
+Sample output:
+
+> ```bash
+> CCRusername@cpn-c04-33:/projects/academic/[YourGroupName]/GROMACS$ 
+> ```
+
 
 This example uses the hen egg white lysozyme - PDB code 1AKI
 The PDB text file was downloaded from the [RCSB](http://www.rcsb.org/pdb/home/home.do) website for the crystal
@@ -37,11 +96,12 @@ This was downloaded as follows:
 Open a browser window to: https://www.rcsb.org
 Use the search bar top left to search for "1AKI"
 on the top left hand side of the window [Download Files] [Legacy PDB Format]
+download this file to a (new) "inputs" subdirectory
 
 Delete the crystal water molecules (residue "HOH" in the PDB file)
 
 ```bash
-grep -v "HOH" "1AKI.pdb" > "1AKI_clean.pdb"
+grep -v "HOH" "./inputs/1AKI.pdb" > "./inputs/1AKI_clean.pdb"
 ```
 
 Verify thtat there a no entries listed under the comment MISSING
@@ -49,7 +109,7 @@ Incomplete internal sequences or any amino acid residues that have missing
 atoms will cause pdb2gmx to fail
 
 ```bash
-grep "MISSING" "1AKI_clean.pdb"
+grep "MISSING" "./inputs/1AKI_clean.pdb"
 ```
 
 No output expected
@@ -58,8 +118,11 @@ No output expected
 This example uses the CHARMM36 force field, downloaded from the
 [MacKerell lab website](http://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
 
+Note: The "curl" command is commented out, because the file is already
+downloaded from the github repo
+
 ```bash
-curl -L -o "charmm36-jul2022.ff.tgz" "https://mackerell.umaryland.edu/download.php?filename=CHARMM_ff_params_files/charmm36-jul2022.ff.tgz"
+#curl -L -o "charmm36-jul2022.ff.tgz" "https://mackerell.umaryland.edu/download.php?filename=CHARMM_ff_params_files/charmm36-jul2022.ff.tgz"
 tar xzvf "charmm36-jul2022.ff.tgz"
 ```
 
@@ -70,11 +133,7 @@ Use "gmx pdb2gmx" to generate three files:
   A post-processed structure file.
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx pdb2gmx -f 1AKI_clean.pdb -o 1AKI_processed.gro -water tip3p 
+gmx pdb2gmx -f ./inputs/1AKI_clean.pdb -o 1AKI_processed.gro -water tip3p 
 ```
 
 sample truncated output:
@@ -237,11 +296,7 @@ Sample output:
 Define the box dimensions using the editconf module.
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx editconf -f 1AKI_processed.gro -o 1AKI_newbox.gro -c -d 1.2 -bt cubic
+gmx editconf -f 1AKI_processed.gro -o 1AKI_newbox.gro -c -d 1.2 -bt cubic
 ```
 
 sample output:
@@ -288,11 +343,7 @@ sample output:
 Fill the box with solvent (water) using the solvate module 
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
+gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
 ```
 
 sample output:
@@ -375,25 +426,17 @@ i.e. the "LYSOZYME" linewas changed to "LYSOZYME in water" and the
 Download the example molecular dynamics parameter (.mdp) file from
 http://www.mdtutorials.com/
 
-```bash
-curl -L -o "ions.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/ions.mdp"
-```
-
-...and move the file to an "inputs" direcory
+Note: The "curl" command is commented out, because the file is already 
+downloaded from the github repo
 
 ```bash
-mkdir -p "inputs"
-mv ions.mdp ./inputs/
+#curl -L -o "./input/ions.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/ions.mdp"
 ```
 
 Generate an atomic-level input file (.tpr)
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx grompp -f inputs/ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
+gmx grompp -f inputs/ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
 ```
 
 sample output:
@@ -468,11 +511,7 @@ sample output:
 Replace water molecules with the ions
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx genion -s ions.tpr -o 1AKI_solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+gmx genion -s ions.tpr -o 1AKI_solv_ions.gro -p topol.top -pname NA -nname CL -neutral
 ```
 
 sample abridged output:
@@ -568,23 +607,17 @@ i.e. 8 water molecules have been replaced by CL ions
 
 Download the input parameter file "minim.mdp"
 
-```bash
-curl -L -o "minim.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/minim.mdp"
-```
-...and move the file to the inputs directory
+Note: The "curl" command is commented out, because the file is already 
+downloaded from the github repo
 
 ```bash
-mv minim.mdp ./inputs/
+#curl -L -o "./input/minim.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/minim.mdp"
 ```
 
 run the energy minimization
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
+gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
 ```
 
 sample output
@@ -640,24 +673,21 @@ sample output
 This generates one file, "em.tpr" and updates mdout.mdp
 
 ```bash
-ls -l em.tpr
+ls -l em.tpr mdout.mdp
 ```
 
 sample output:
 
 > ```
 > -rw-rw-r-- 1 [CCRusername] nogroup 1174552 Nov  6 10:26  em.tpr
+> -rw-rw-r-- 1 [CCRusername] nogroup   10614 Nov  6 10:26  mdout.mdp
 > ```
+
 
 Run the energy minimization
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --sharens \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -v -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm em
+gmx mdrun -v -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm em
 ```
 
 sample abridged output:
@@ -672,6 +702,7 @@ sample abridged output:
 >   gmx mdrun -v -ntmpi 2 -deffnm em
 > 
 > Reading file em.tpr, VERSION 2025.3 (single precision)
+> Using 1 MPI thread
 > Using 40 OpenMP threads 
 > 
 > 
@@ -720,11 +751,7 @@ sample output:
 Analyze the .edr file "em.edr"
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx energy -f em.edr -o potential.xvg
+gmx energy -f em.edr -o potential.xvg
 ```
 
 sample truncated output:
@@ -826,7 +853,7 @@ Please exit the OnDemand session once you are done:
 Then close the browser window
 
 
-...back on the "salloc" interactive terminal session
+...back on the "salloc" interactive terminal session at the "Apptainer> " prompt
 
 
 Equilibrate the solvent and ions around the protein:
@@ -835,22 +862,15 @@ Volume, and Temperature.)
 
 Download the .mdp file for this example:
 
-```bash
-curl -L -o "nvt.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/nvt.mdp"
-```
-
-...and move the file to the inputs directory
+Note: The "curl" command is commented out, because the file is already 
+downloaded from the github repo
 
 ```bash
-mv nvt.mdp ./inputs/
+#curl -L -o "./input/nvt.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/nvt.mdp"
 ```
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
 ```
 
 Sample output:
@@ -936,12 +956,7 @@ ls -l nvt.tpr mdout.mdp
 Run the NVT simulation
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --sharens \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm nvt
+gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm nvt
 ```
 
 sample output:
@@ -957,7 +972,7 @@ sample output:
 > 
 > Reading file nvt.tpr, VERSION 2025.3 (single precision)
 > Changing nstlist from 10 to 50, rlist from 1 to 1.109
-> 
+> Using 1 MPI thread
 > Using 40 OpenMP threads 
 > 
 > starting mdrun 'LYSOZYME in water'
@@ -990,11 +1005,7 @@ Sample output:
 Analyze the temperature progression
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx energy -f nvt.edr -o temperature.xvg
+gmx energy -f nvt.edr -o temperature.xvg
 ```
 
 Sample abridged output:
@@ -1015,19 +1026,18 @@ Sample abridged output:
 > End your selection with an empty line or a zero.
 > -------------------------------------------------------------------
 >   1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
->   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
->   9  Disper.-corr.   10  Coulomb-(SR)    11  Coul.-recip.    12  Position-Rest.
->  13  Potential       14  Kinetic-En.     15  Total-Energy    16  Conserved-En. 
->  17  Temperature     18  Pres.-DC        19  Pressure        20  Constr.-rmsd  
+>   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR) 
+>   9  Coulomb-(SR)    10  Coul.-recip.    11  Position-Rest.  12  Potential
+>  13  Kinetic-En.     14  Total-Energy    15  Conserved-En.   16  Temperature
 > [...]
->  43  Lamb-non-Protein                  
+>  37  #Surf*SurfTen   38  T-System        39  Lamb-System
 > 
 > ```
 
-Type "17 0" then [Enter] to select the temperature of the system (17); zero (0) terminate input
+Type "16 0" then [Enter] to select the temperature of the system (16); zero (0) terminate input
 
 ```
-17 0
+16 0
 ```
 
 sample output:
@@ -1083,6 +1093,13 @@ My test plot looks like this:
 Which is a little different to the sample output in the tutorial  
 ![GROMACS Temperatures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_nvt_temperature.png)
 
+Please exit the OnDemand session once you are done:
+[Applications] [Log Out] [Log Out]
+Then close the browser window
+
+
+...back on the "salloc" interactive terminal session at the "Apptainer> " prompt
+
 
 Equilibrate the solvent and ions around the protein:
 Phase 2 - Equilibration of pressure is conducted under an NPT ensemble where
@@ -1090,23 +1107,15 @@ the Number of particles, Pressure, and Temperature are all constant
 
 Download the 500-ps NPT equilibration .mdp file "npt.mdp"
 
+Note: The "curl" command is commented out, because the file is already 
+downloaded from the github repo
+
 ```bash
-curl -L -o "npt.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/npt.mdp"
+#curl -L -o "./input/npt.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/npt.mdp"
 ```
 
-...and move the file to the inputs directory
-
 ```bash
-mv npt.mdp ./inputs/
-```
-
-
-```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
+gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
 ```
 
 Sample output:
@@ -1214,12 +1223,7 @@ This takes a couple of minutes to run on a node with 40 cores allocated:
 
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --sharens \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm npt
+gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm npt
 ```
 
 sample output:
@@ -1235,7 +1239,7 @@ sample output:
 > 
 > Reading file npt.tpr, VERSION 2025.3 (single precision)
 > Changing nstlist from 10 to 50, rlist from 1 to 1.109
-> 
+> Using 1 MPI thread
 > Using 40 OpenMP threads 
 > 
 > starting mdrun 'LYSOZYME in water'
@@ -1250,14 +1254,27 @@ sample output:
 > [...]
 > ```
 
+This generates five files:
+
+```bash
+ls -l npt.cpt npt.gro npt.edr npt.trr npt.log  
+```
+
+sample output:
+
+> ```
+> -rw-rw-r-- 1 [CCRusername] nogroup    955600 Nov  6 18:17 npt.cpt
+> -rw-rw-r-- 1 [CCRusername] nogroup    307328 Nov  6 18:17 npt.edr
+> -rw-rw-r-- 1 [CCRusername] nogroup   2741563 Nov  6 18:17 npt.gro
+> -rw-rw-r-- 1 [CCRusername] nogroup    326363 Nov  6 18:17 npt.log
+> -rw-rw-r-- 1 [CCRusername] nogroup 477797688 Nov  6 18:17 npt.trr
+> ```
+
+
 Analyze the pressure progression
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx energy -f npt.edr -o pressure.xvg
+gmx energy -f npt.edr -o pressure.xvg
 ```
 
 Sample abridged output:
@@ -1278,22 +1295,20 @@ Sample abridged output:
 > End your selection with an empty line or a zero.
 > -------------------------------------------------------------------
 >   1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
->   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
->   9  Disper.-corr.   10  Coulomb-(SR)    11  Coul.-recip.    12  Position-Rest.
->  13  Potential       14  Kinetic-En.     15  Total-Energy    16  Conserved-En. 
->  17  Temperature     18  Pres.-DC        19  Pressure        20  Constr.-rmsd  
->  21  Box-X           22  Box-Y           23  Box-Z           24  Volume
+>   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR) 
+>   9  Coulomb-(SR)    10  Coul.-recip.    11  Position-Rest.  12  Potential
+>  13  Kinetic-En.     14  Total-Energy    15  Conserved-En.   16  Temperature
+>  17  Pressure        18  Constr.-rmsd    19  Box-X           20  Box-Y
 > [...]
->  49  Box-Vel-ZZ      50  T-Protein       51  T-non-Protein   52  Lamb-Protein  
->  53  Lamb-non-Protein                  
+>  45  T-System        46  Lamb-System 
 > 
 > ```
 
 
-Type "19 0" then [Enter] to select the pressure of the system (19); zero (0) terminate input
+Type "17 0" then [Enter] to select the pressure of the system (17); zero (0) terminate input
 
 ```
-19 0
+17 0
 ```
 
 sample output:
@@ -1357,17 +1372,18 @@ My test plot looks like this:
 Which is a little different to the sample output in the tutorial  
 ![GROMACS Pressures](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_pressure.png)
 
+Please exit the OnDemand session once you are done:
+[Applications] [Log Out] [Log Out]
+Then close the browser window
 
-...back on the "salloc" interactive terminal session
+
+...back on the "salloc" interactive terminal session at the "Apptainer> " prompt
+
 
 Examine the density using energy 
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx energy -f npt.edr -o density.xvg
+gmx energy -f npt.edr -o density.xvg
 ```
 
 Sample abridged output:
@@ -1388,36 +1404,34 @@ Sample abridged output:
 > End your selection with an empty line or a zero.
 > -------------------------------------------------------------------
 >   1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
->   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
->   9  Disper.-corr.   10  Coulomb-(SR)    11  Coul.-recip.    12  Position-Rest.
->  13  Potential       14  Kinetic-En.     15  Total-Energy    16  Conserved-En. 
->  17  Temperature     18  Pres.-DC        19  Pressure        20  Constr.-rmsd  
->  21  Box-X           22  Box-Y           23  Box-Z           24  Volume        
->  25  Density         26  pV              27  Enthalpy        28  Vir-XX        
+>   5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)
+>   9  Coulomb-(SR)    10  Coul.-recip.    11  Position-Rest.  12  Potential
+>  13  Kinetic-En.     14  Total-Energy    15  Conserved-En.   16  Temperature
+>  17  Pressure        18  Constr.-rmsd    19  Box-X           20  Box-Y
+>  21  Box-Z           22  Volume          23  Density         24  pV
 > [...]
->  49  Box-Vel-ZZ      50  T-Protein       51  T-non-Protein   52  Lamb-Protein  
->  53  Lamb-non-Protein                  
+>   45  T-System        46  Lamb-System
 > 
 > ```
 
 
-Type "25 0" then [Enter] to select the density of the system (25); zero (0) terminate input
+Type "23 0" then [Enter] to select the density of the system (23); zero (0) terminate input
 
 ```
-25 0
+23 0
 ```
 
 sample output:
 
 > ```
-> Last energy frame read 100 time  100.000          
+> Last energy frame read 500 time  500.000          
 > 
-> Statistics over 50001 steps [ 0.0000 through 100.0000 ps ], 1 data sets
-> All statistics are over 501 points
+> Statistics over 250001 steps [ 0.0000 through 500.0000 ps ], 1 data sets
+> All statistics are over 2501 points
 > 
 > Energy                      Average   Err.Est.       RMSD  Tot-Drift
 > -------------------------------------------------------------------------------
-> Density                     1032.07       0.23    6.16167  -0.847232  (kg/m^3)
+> Density                     996.782       0.31    2.27647    2.22393  (kg/m^3)
 > [...]
 > ```
 
@@ -1430,7 +1444,7 @@ ls -l density.xvg
 sample output:
 
 > ```
-> -rw-rw-r-- 1 [CCRusername] nogroup 3278 Nov 11 09:57 density.xvg
+> -rw-rw-r-- 1 [CCRusername] nogroup 13247 Nov 11 09:57 density.xvg
 > ```
 
 The data in density.xvg can be plotted, in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with
@@ -1467,6 +1481,13 @@ My test plot looks like this:
 Which is a little different to the sample output in the tutorial
 ![GROMACS Density](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_npt_density.png)
 
+Please exit the OnDemand session once you are done:
+[Applications] [Log Out] [Log Out]
+Then close the browser window
+
+
+...back on the "salloc" interactive terminal session at the "Apptainer> " prompt
+
 
 Now the system is equilibrated, release the position restraints and run
 production MD for data collection
@@ -1474,24 +1495,17 @@ production MD for data collection
 Download the 10-ns MD simulation file (md.mdp) file from
 http://www.mdtutorials.com/
 
-```bash
-curl -L -o "md.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/md.mdp"
-```
-
-...and move the file to an "inputs" direcory
+Note: The "curl" command is commented out, because the file is already 
+downloaded from the github repo
 
 ```bash
-mv md.mdp ./inputs/
+#curl -L -o "./input/md.mdp" "http://www.mdtutorials.com/gmx/lysozyme/Files/md.mdp"
 ```
 
 Generate the .tpr file for this simulation:
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
+gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
 ```
 
 Sample output:
@@ -1566,25 +1580,22 @@ Sample output:
 This generates one file, "md_0_10.tpr" and updates mdout.mdp
 
 ```bash
-ls -l md_0_10.tpr
+ls -l md_0_10.tpr mdout.mdp
 ```
 
 sample output:
 
 > ```
 > -rw-rw-r-- 1 [CCRusername] nogroup 1690984 Nov 11 14:42 md_0_10.tpr
+> -rw-rw-r-- 1 [CCRusername] nogroup   10656 Nov 11 14:42 mdout.mdp
 > ```
+
 
 Run the 10-ns MD simulation:
 This takes about 20 minutes to run on a node with 40 cores allocated:
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --sharens \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm md_0_10
+gmx mdrun -ntmpi ${SLURM_GPUS_ON_NODE} -deffnm md_0_10
 ```
 
 Sample output:
@@ -1600,7 +1611,7 @@ Sample output:
 > 
 > Reading file md_0_10.tpr, VERSION 2025.3 (single precision)
 > Changing nstlist from 10 to 50, rlist from 1 to 1.111
-> 
+> Using 1 MPI thread
 > Using 40 OpenMP threads 
 > 
 > starting mdrun 'LYSOZYME in water'
@@ -1639,11 +1650,7 @@ Reimage the trajectory
 
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
+gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
 ```
 
 Sample abridged output:
@@ -1728,11 +1735,7 @@ sample output:
 Root-Mean-Square Deviation
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
+gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
 ```
 
 
@@ -1821,11 +1824,7 @@ in CCR's [OnDemand portal](https://ondemand.ccr.buffalo.edu) with "xmgrace"
 Calculate RMSD relative to the crystal structure
 
 ```bash
-apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- --nv \
- "${CONTAINER_DIR}/${container_image}" \
- gmx rms -s em.tpr -f md_0_10_noPBC.xtc -o rmsd_xtal.xvg -tu ns
+gmx rms -s em.tpr -f md_0_10_noPBC.xtc -o rmsd_xtal.xvg -tu ns
 ```
 
 Sample abridged output:
@@ -1941,4 +1940,28 @@ My test plot looks like this:
 Which is a little different to the sample output in the tutorial
 ![GROMACS Root-Mean-Square Deviation](http://www.mdtutorials.com/gmx/lysozyme/Images/plot_lyso_md_rmsd.png)
 
+Please exit the OnDemand session once you are done:
+[Applications] [Log Out] [Log Out]
+Then close the browser window
+
+
+...back on the "salloc" interactive terminal session at the "Apptainer> " prompt
+
+Exit the container
+
+```bash
+exit
+```
+
+sample output:
+
+> ```bash
+> CCRusername@cpn-c04-33:/projects/academic/[YourGroupName]/GROMACS$ 
+> ``
+
+...then exit the slurm interactive session
+
+```bash
+exit
+```
 
