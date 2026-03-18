@@ -31,7 +31,7 @@
 #SBATCH --mem=0
 
 
-## CONTAINER_DIR == directory with the Quantum ESPRESSO container image
+## CONTAINER_DIR == directory with the GROMACS container image
 CONTAINER_DIR="/projects/academic/[CCRgroupname]/Containers"
 
 ## For the latest version of the nvidia GROMACS container see:
