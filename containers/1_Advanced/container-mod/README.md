@@ -50,9 +50,9 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 	module use ~/privatemodules
 	```
 	- Edit the `~/.ccr/modulepaths` file to include the full path
-	- Or add the module use command in your `~/.bashrc` so it gets executed at startup (use at your own risk) 
+	- Or add the above `module use` command in your `~/.bashrc` so it gets executed at startup (use at your own risk) 
 
-6. Once done, verify with commands like `echo $MODULEPATH`, `module avail`, `show`, `spider` etc. 
+6. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `show`, `spider` etc. 
 
 7. Load the module using `module load` and verify the software executables work as expected:
 ```
