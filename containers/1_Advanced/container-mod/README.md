@@ -1,6 +1,6 @@
 # container-mod Example Workflow
 
-In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with container-mod to generate a ready-to-use environment module. We will use personal mode, where all files are generated in user's `$HOME` directory. More details can be found in our [documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod).
+In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with container-mod to generate a ready-to-use environment module. We will use personal mode, where all files are generated in user's `$HOME` directory. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
 
 ## How to use
 
@@ -11,18 +11,18 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 - `repos/`: Stores all metadata for all software used by commands such as `module spider`
 - `profiles/`: Stores different profiles that define where generated files are placed, instead of the default personal mode (`$HOME`)
 
-**Generated Directories and Files (Personal Mode)**
-- `~/container-apps/`: Directory created in personal mode and contains all files and resources used by the generated module
-	a. `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)
-	b. `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
-	c. `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
-- `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
-
 **Subcommands used with the `container-mod` script**
 - `pull`: Pulls a container image into the desired directory
 - `module`: Generates the module file
 - `exec`: Generates wrapper scripts (subcommands for the software)
 - `pipe`: Important and most useful container-mod command; **runs pull, module and exec in sequence**
+
+**Generated Directories and Files (Personal Mode)**
+- `~/container-apps/`: Directory created in personal mode and contains all files and resources used by the generated module
+	- `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)
+	- `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
+	- `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
+- `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
 
 > [!IMPORTANT]
 > To use container-mod, first make sure to request an interactive job to utilize Apptainer.
@@ -38,26 +38,26 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 
 3. If there are no software-related files beforehand (module, metadata, executable files), it will ask the following info only once:
 
-- Application name, version, description, homepage URL 
-- Available programs: Software commands used to trigger certain behaviors (abaqus, OpenSees, etc.) 
+	- Application name, version, description, homepage URL 
+	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.) 
 
 4. Once the information is provided, `container-mod` will execute Apptainer commands on the image and generate module files if script finishes successfully.
 
 5. To use the generated modules, you will need to edit your `$MODULEPATH` to include the new path where your module has been generated. You can do this in a few ways:
 
-- Use the command (Only eligible for the current session): 
-```
-module use ~/privatemodules
-```
-- Edit the `~/.ccr/modulepaths` file to include the full path
-- Or add the module use command in your `~/.bashrc` so it gets executed at startup (use at your own risk) 
+	- Use the command (Only eligible for the current session): 
+	```
+	module use ~/privatemodules
+	```
+	- Edit the `~/.ccr/modulepaths` file to include the full path
+	- Or add the module use command in your `~/.bashrc` so it gets executed at startup (use at your own risk) 
 
-Once done, verify with commands like `echo $MODULEPATH`, `module avail`, `show`, `spider` etc. 
+6. Once done, verify with commands like `echo $MODULEPATH`, `module avail`, `show`, `spider` etc. 
 
-6. Load the module with module load and verify the software executables work as expected:
+7. Load the module using `module load` and verify the software executables work as expected:
 ```
-module show fds/6.7.9
 module load fds/6.7.9
+fds
 ```
 
 Congratulations! You've just built your own module!! 
