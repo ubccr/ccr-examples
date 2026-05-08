@@ -2,7 +2,7 @@
 
 ## How to use
 
-This directory contains complex containerized application setups and workflow examples. Currently, the directory includes an example workflow demonstrating how to use [`container-mod`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/README.md) at CCR. Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/) for more information
+This directory contains complex containerized application setups and workflow examples. Currently, the directory includes an example workflow demonstrating how to use [`container-mod`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/README.md) on the CCR software environment. Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/) for more information
 
 ## Additional Information
 
