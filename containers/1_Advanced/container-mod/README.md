@@ -17,12 +17,14 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 - `exec`: Generates wrapper scripts (subcommands for the software)
 - `pipe`: Important and most useful container-mod command; **runs pull, module and exec in sequence**
 
-**Generated Directories and Files (Personal Mode)**
+**Generated directories and files (Personal Mode)**
 - `~/container-apps/`: Directory created in personal mode and contains all files and resources used by the generated module
 	- `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)
 	- `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
 	- `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
 - `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
+
+For detailed information about the topics above and the available options for use, please refer to the [official documentation](https://github.com/TuftsRT/container-mod#usage).
 
 > [!IMPORTANT]
 > To use container-mod, first make sure to request an interactive job to utilize Apptainer.
@@ -34,16 +36,18 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 (You can also use local images (e.g. from /util/software/containers/); local images stay in their original location) 
 
 > [!NOTE]
-> If no profile is selected, `container-mod` will run in personal mode (all related files will get generated in user's `$HOME`).
+> If no profile is selected, `container-mod` will run in personal mode (all files will be generated in user's `$HOME`). For more information about profiles, please refer to the [official documentation](https://github.com/TuftsRT/container-mod#profiles).
 
-3. If there are no software-related files beforehand (module, metadata, executable files), it will ask the following info only once:
+3. If there are no software-related files beforehand (module, metadata, executable files), the script will ask the following info only once to create a new entry:
 
 	- Application name, version, description, homepage URL 
 	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.) 
 
-4. Once the information is provided, `container-mod` will execute Apptainer commands on the image and generate module files if script finishes successfully.
+For an example metadata file, please refern to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
 
-5. To use the generated modules, you will need to edit your `$MODULEPATH` to include the new path where your module has been generated. You can do this in a few ways:
+4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file if script finishes successfully.
+
+5. To use the generated module, you will need to edit your `$MODULEPATH` to include the new path where your module has been generated. You can do this in a few ways:
 
 	- Use the command (Only eligible for the current session): 
 	```
