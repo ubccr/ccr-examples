@@ -43,7 +43,7 @@ For detailed information about the topics above and the available options for us
 	- Application name, version, description, homepage URL 
 	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.) 
 
-For an example metadata file, please refern to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
+For an example metadata file, please refer to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
 
 4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file if script finishes successfully.
 
