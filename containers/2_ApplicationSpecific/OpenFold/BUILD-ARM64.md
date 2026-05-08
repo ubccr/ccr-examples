@@ -79,7 +79,8 @@ Note: Building the OpenFold container takes about ten minutes
 
 ```
 apptainer build --build-arg SLURMTMPDIR="${SLURMTMPDIR}" \
- --build-arg SLURM_NPROCS="${SLURM_NPROCS}" -B /scratch:/scratch \
+ --build-arg SLURM_NPROCS="${SLURM_NPROCS:-$(expr $(nproc) - 4)}" \
+ -B /scratch:/scratch \
  OpenFold-$(arch).sif OpenFold-aarch64.def
 ```
 
