@@ -1,6 +1,6 @@
 # container-mod Example Workflow
 
-In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with container-mod to generate a ready-to-use environment module. We will use personal mode, where all files are generated in user's `$HOME` directory. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
+In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with `container-mod` to generate a ready-to-use environment module. We will use personal mode, where all files are generated in the user's `$HOME` directory. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
 
 ## How to use
 
@@ -8,7 +8,7 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 
 **Important files and their descriptions**
 - `container-mod`: Main executable script
-- `repos/`: Stores all metadata for all software used by commands such as `module spider`
+- `repos/`: Stores metadata for all software used by commands such as `module spider`
 - `profiles/`: Stores different profiles that define where generated files are placed, instead of the default personal mode (`$HOME`)
 
 **Subcommands used with the `container-mod` script**
@@ -18,25 +18,25 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 - `pipe`: Important and most useful container-mod command; **runs pull, module and exec in sequence**
 
 **Generated directories and files (Personal Mode)**
+- `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
 - `~/container-apps/`: Directory created in personal mode and contains all files and resources used by the generated module
 	- `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)
 	- `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
 	- `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
-- `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
 
 For detailed information about the topics above and the available options for use, please refer to the [official documentation](https://github.com/TuftsRT/container-mod#usage).
 
 > [!IMPORTANT]
 > To use container-mod, first make sure to request an interactive job to utilize Apptainer.
 
-2. Run the `container-mod` script with one of the above Subcommands, followed by the image location. For Example:
+2. Run the `container-mod` script with one of the above Subcommands, followed by the image location. For example:
 ```
 ./container-mod pipe docker://satcomx00/fds:6.7.9
 ```
 (You can also use local images (e.g. from /util/software/containers/); local images stay in their original location) 
 
 > [!NOTE]
-> If no profile is selected, `container-mod` will run in personal mode (all files will be generated in user's `$HOME`). For more information about profiles, please refer to the [official documentation](https://github.com/TuftsRT/container-mod#profiles).
+> Currently, we only support personal mode and cannot guarantee functionality with profiles. If no profile is selected, `container-mod` will run in personal mode (all files will be generated in user's `$HOME`).
 
 3. If there are no software-related files beforehand (module, metadata, executable files), the script will ask the following info only once to create a new entry:
 
@@ -47,14 +47,13 @@ For an example metadata file, please refer to the official `container-mod` [READ
 
 4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file if script finishes successfully.
 
-5. To use the generated module, you will need to edit your `$MODULEPATH` to include the new path where your module has been generated. You can do this in a few ways:
+5. To use the generated module, you will need to edit your `$MODULEPATH` to include the new path: `/user/[CCRUsername]/privatemodules`. You can do this in a few ways:
 
 	- Use the command (Only eligible for the current session): 
 	```
 	module use ~/privatemodules
 	```
-	- Edit the `~/.ccr/modulepaths` file to include the full path
-	- Or add the above `module use` command in your `~/.bashrc` so it gets executed at startup (use at your own risk) 
+	- Edit the `~/.ccr/modulepaths` file to include `/user/[CCRUsername]/privatemodules`.
 
 6. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `show`, `spider` etc. 
 
@@ -64,4 +63,4 @@ module load fds/6.7.9
 fds
 ```
 
-Congratulations! You've just built your own module!! 
+Congratulations! You've just built your own container module!! 
