@@ -14,12 +14,12 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 **Subcommands used with the `container-mod` script**
 - `pull`: Pulls a container image into the desired directory
 - `module`: Generates the module file
-- `exec`: Generates wrapper scripts (subcommands for the software)
+- `exec`: Generates wrapper scripts (executables for specific software programs)
 - `pipe`: Important and most useful container-mod command; **runs pull, module and exec in sequence**
 
 **Generated directories and files (Personal Mode)**
 - `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
-- `~/container-apps/`: Directory created in personal mode and contains all files and resources used by the generated module
+- `~/container-apps/`: Contains all files and resources used by the generated module
 	- `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)
 	- `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
 	- `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
@@ -27,7 +27,7 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 For detailed information about the topics above and the available options for use, please refer to the [official documentation](https://github.com/TuftsRT/container-mod#usage).
 
 > [!IMPORTANT]
-> To use container-mod, first make sure to request an interactive job to utilize Apptainer.
+> To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer.
 
 2. Run the `container-mod` script with one of the above Subcommands, followed by the image location. For example:
 ```
@@ -45,7 +45,7 @@ For detailed information about the topics above and the available options for us
 
 For an example metadata file, please refer to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
 
-4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file if script finishes successfully.
+4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file and solicited wrapper scripts, if the main script finishes successfully.
 
 5. To use the newly generated module, you will need to edit your `$MODULEPATH` to include: `/user/[CCRUsername]/privatemodules`. You can do this in a few ways:
 
@@ -55,7 +55,7 @@ For an example metadata file, please refer to the official `container-mod` [READ
 	```
 	- Edit the `~/.ccr/modulepaths` file to include `/user/[CCRUsername]/privatemodules`.
 
-6. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `show`, `spider` etc. 
+6. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `module show`, etc. 
 
 7. Load the module using `module load` and verify the software executables work as expected:
 ```
