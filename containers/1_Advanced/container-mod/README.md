@@ -36,7 +36,7 @@ For detailed information about the topics above and the available options for us
 (You can also use local images (e.g. from /util/software/containers/); local images stay in their original location) 
 
 > [!NOTE]
-> Currently, we only support personal mode and cannot guarantee functionality with profiles. If no profile is selected, `container-mod` will run in personal mode (all files will be generated in user's `$HOME`).
+> Currently, CCR only supports personal mode and cannot guarantee functionality with profiles.
 
 3. If there are no software-related files beforehand (module, metadata, executable files), the script will ask the following info only once to create a new entry:
 
@@ -47,7 +47,7 @@ For an example metadata file, please refer to the official `container-mod` [READ
 
 4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file if script finishes successfully.
 
-5. To use the generated module, you will need to edit your `$MODULEPATH` to include the new path: `/user/[CCRUsername]/privatemodules`. You can do this in a few ways:
+5. To use the newly generated module, you will need to edit your `$MODULEPATH` to include: `/user/[CCRUsername]/privatemodules`. You can do this in a few ways:
 
 	- Use the command (Only eligible for the current session): 
 	```
