@@ -1,6 +1,6 @@
 # container-mod Personal Mode Example
 
-In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with `container-mod` to generate a ready-to-use environment module. We will use personal mode, where all files are generated in the user's `$HOME` directory. This example extends the [container-mod README](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/README.md). For more information, please refer to it.
+In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with `container-mod` to generate a ready-to-use environment module. We will use the default (`personal`) mode, where all files are generated in the user's `$HOME` directory. This example extends the [container-mod README](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/README.md). For more information, please refer to it.
 
 **Generated directories and files in Personal Mode**
 - `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
@@ -8,6 +8,8 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 	- `container-apps/images/`: Stores container images pulled from registries such as DockerHub.
 	- `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
 	- `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
+
+## Workflow
 
 2. To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer.
 

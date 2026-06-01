@@ -1,6 +1,6 @@
 # container-mod Example Workflows
 
-This directory contains two example workflows ([`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal) and [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project)). The `personal` workflow utilizes a container from DockerHub and runs in default (`personal`) mode. The `project` example is based on a locally stored `.sif` file and an example profile for `container-mod`. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
+This directory contains two example workflows ([`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal) and [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project)) for `container-mod`. The `personal` workflow utilizes a FDS container from DockerHub and runs in default (`personal`) mode. The `project` example is based on a locally stored `.sif` file and an example profile for `container-mod`. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
 
 ## How to use
 

@@ -5,12 +5,12 @@ In this example, we'll use the Abaqus 2024 container image stored locally at `/u
 ## Creating a Custom Profile
 
 Profiles are simple shell files stored in the `profiles/` directory. They define where `container-mod` stores generated output files and include the following:
--`MOD_EXISTING_DIR_DEF`: Directory to store the generated Lmod modulefile (`.lua`)
--`PUBLIC_IMAGEDIR`: Stores container images pulled from online registries. (Local images stay in their original location)
--`PUBLIC_EXECUTABLE_DIR`: Directory to store generated wrapper scripts
--`BIND_PATH`: Paths to bind into the container
+- `MOD_EXISTING_DIR_DEF`: Directory to store the generated Lmod modulefile (`.lua`)
+- `PUBLIC_IMAGEDIR`: Stores container images pulled from online registries. (Local images stay in their original location)
+- `PUBLIC_EXECUTABLE_DIR`: Directory to store generated wrapper scripts
+- `BIND_PATH`: Paths to bind into the container
 
-For example, to generate output files and create a usable module for your project group [YourGroupName], create a file named `project` in the `profiles/` directory:
+For example, to generate output files and create a usable module for your project group (`[YourGroupName]`), create a file named `project` in the `profiles/` directory, containing:
 ```
 MOD_EXISTING_DIR_DEF="/projects/academic/[YourGroupName]/privatemodules"
 PUBLIC_IMAGEDIR="/projects/academic/[YourGroupName]/images"
