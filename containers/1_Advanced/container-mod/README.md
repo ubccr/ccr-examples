@@ -1,66 +1,53 @@
-# container-mod Example Workflow
+# container-mod Example Workflows
 
-In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with `container-mod` to generate a ready-to-use environment module. We will use personal mode, where all files are generated in the user's `$HOME` directory. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
+This directory contains two example workflows ([`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal) and [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project)). The `personal` workflow utilizes a container from DockerHub and runs in default (`personal`) mode. The `project` example is based on a locally stored `.sif` file and an example profile for `container-mod`. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
 
 ## How to use
 
 1. Clone the [container-mod repository](https://github.com/TuftsRT/container-mod) into your working directory.
 
-**Important files and their descriptions**
+**Important files and directories**
 - `container-mod`: Main executable script
-- `repos/`: Stores metadata for all software used by commands such as `module spider`
-- `profiles/`: Stores different profiles that define where generated files are placed, instead of the default personal mode (`$HOME`)
+- `repos/`: Stores metadata for all software. Used by commands like `module spider`
+- `profiles/`: Stores different profiles that define where output files are generated (instead of the default `personal` mode)
 
 **Subcommands used with the `container-mod` script**
 - `pull`: Pulls a container image into the desired directory
 - `module`: Generates the module file
 - `exec`: Generates wrapper scripts (executables for specific software programs)
-- `pipe`: Important and most useful container-mod command; **runs pull, module and exec in sequence**
+- `pipe`: **Most useful container-mod command**; Runs pull, module and exec in sequence
 
-**Generated directories and files (Personal Mode)**
-- `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
-- `~/container-apps/`: Contains all files and resources used by the generated module
-	- `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)
-	- `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`
-	- `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs
+**Useful Options**
+- `--profile`: Loads the specified profile stored in `profiles/`
+- `--write-to-profile-dirs`: Writes output to the directories from the profile, rather than the profile defaults
+- `-c, --container-app`: Used to explicitly specify the container application, `apptainer` in our case
+- `-j, --jupyter`: Creates a Jupyter kernel for the containerized software, if compatible
+- `-h, --help`: For built-in help
 
-For detailed information about the topics above and the available options for use, please refer to the [official documentation](https://github.com/TuftsRT/container-mod#usage).
+For detailed information about the topics above and additional options, please refer to the official [`container-mod` README](https://github.com/TuftsRT/container-mod#usage).
+
+2. Start an interactive job
 
 > [!IMPORTANT]
-> To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer.
+> Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
+> See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission).
 
-2. Run the `container-mod` script with one of the above Subcommands, followed by the image location. For example:
 ```
-./container-mod pipe docker://satcomx00/fds:6.7.9
-```
-(You can also use local images (e.g. from /util/software/containers/); local images stay in their original location) 
-
-> [!NOTE]
-> Currently, CCR only supports personal mode and cannot guarantee functionality with profiles.
-
-3. If there are no software-related files beforehand (module, metadata, executable files), the script will ask the following info only once to create a new entry:
-
-	- Application name, version, description, homepage URL 
-	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.) 
-
-For an example metadata file, please refer to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
-
-4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file and solicited wrapper scripts, if the main script finishes successfully.
-
-5. To use the newly generated module, you will need to edit your `$MODULEPATH` to include: `/user/[CCRUsername]/privatemodules`. You can do this in a few ways:
-
-	- Use the command (Only eligible for the current session): 
-	```
-	module use ~/privatemodules
-	```
-	- Edit the `~/.ccr/modulepaths` file to include `/user/[CCRUsername]/privatemodules`.
-
-6. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `module show`, etc. 
-
-7. Load the module using `module load` and verify the software executables work as expected:
-```
-module load fds/6.7.9
-fds
+salloc --cluster=ub-hpc --partition=debug --qos=debug --exclusive --time=01:00:00
 ```
 
-Congratulations! You've just built your own container module!! 
+Sample output:
+```
+salloc: Pending job allocation [JobID]
+salloc: job [JobID] queued and waiting for resources
+salloc: job [JobID] has been allocated resources
+salloc: Granted job allocation [JobID]
+salloc: Nodes [NodeID] are ready for job
+CCRusername@[NodeID]:~$
+```
+
+3. Choose between one of the following workflows according to your use case:
+- [`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal)
+- [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project)
+
+Refer to the official `container-mod` [repository](https://github.com/TuftsRT/container-mod) for more information.
