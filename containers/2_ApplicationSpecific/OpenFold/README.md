@@ -107,8 +107,8 @@ cd /projects/academic/[YourGroupName]/OpenFold
 Create an output directory, and an empty tuning directory for triton
 
 ```
-mkdir -p ./output
-mkdir -p ${HOME}/.triton/autotune
+mkdir -p "./output"
+mkdir -p "${HOME}/.triton/autotune"
 ```
 
 ...then start the OpenFold container instance
@@ -254,7 +254,7 @@ Sample output:
 >                         Accumulate gradients over k batches before next optimizer step.
 > ```
 
-See the [EXAMPLE file](./EXAMPLE.md) for more info.
+See the [EXAMPLES file](./EXAMPLES.md) for more info.
 
 ## Sample Slurm scripts
 
