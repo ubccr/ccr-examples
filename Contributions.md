@@ -52,4 +52,4 @@ Keep examples organized in respective per example directories following the esta
 
 ## Reference Materials
 
-- For a nice overview of GitHub's markdown syntax [see here](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+- CCR uses[GitHub's markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax), a version of markdown that contains some extensions such as tables and nesting block content inside list elements.

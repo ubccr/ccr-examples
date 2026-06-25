@@ -1,12 +1,11 @@
 # Example AlphaFold 3 container
 
-NOTE:
-AlphaFold 3 requeres a model parameters file.  
-You must request the file with [this form](https://forms.gle/svvpY4u2jsHEwWYS6) and agree to the software [terms of use](https://github.com/google-deepmind/alphafold3/blob/main/WEIGHTS_TERMS_OF_USE.md)
+> [!NOTE]
+> AlphaFold 3 requires a model parameters file.  
+> You must request the file by completing the [AlphaFold 3 model parameter request form](https://forms.gle/svvpY4u2jsHEwWYS6) and agree to the software [terms of use](https://github.com/google-deepmind/alphafold3/blob/main/WEIGHTS_TERMS_OF_USE.md)
+> If you are granted access to the file, Google will email you a download link.
 
-If you are granted access to the file, Google will email you a download link.
-
-Here is an example to setup this file for use:
+Here is an example to setup the parameters file for use:
 
 Change to your AlphaFold-3 directory
 
@@ -32,13 +31,16 @@ chmod 550 ./models/
 A brief guide to building the AlphaFold container follows:<br/>
 Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/) for more detailed information on building and using Apptainer.
 
-NOTE: for building on the ARM64 platform see [BUILD-ARM64.md](./BUILD-ARM64.md)
+> [!NOTE] 
+> For building on the ARM64 platform see [BUILD-ARM64.md](./BUILD-ARM64.md)
 
 1. Start an interactive job
 
-Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
-Note: a GPU is NOT needed to build the AlphaFold container<br/>
-See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
+> [!IMPORTANT]
+> Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.
+
+A GPU is NOT needed to build the AlphaFold container.
+See CCR documentation for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
 
 ```
 salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=0 --exclusive --time=01:00:00
@@ -47,12 +49,12 @@ salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=0 --exclusive --time
 sample outout:
 
 > ```
-> salloc: Pending job allocation 19781052
-> salloc: job 19781052 queued and waiting for resources
-> salloc: job 19781052 has been allocated resources
+> salloc: Pending job allocation [JobID]
+> salloc: job [JobID] queued and waiting for resources
+> salloc: job [JobID] has been allocated resources
 > salloc: Granted job allocation 19781052
-> salloc: Nodes cpn-i14-39 are ready for job
-> CCRusername@cpn-i14-39:~$ 
+> salloc: Nodes [NodeID] are ready for job
+> CCRusername@[NodeID]:~$ 
 > ```
 
 2. Navigate to your build directory and use the Slurm job local temporary directory for cache
@@ -176,19 +178,19 @@ Abridged expected output:
 > [...]
 > ```
 
-See the [EXAMPLES file](./EXAMPLES.md) for more info.
+See the [EXAMPLES file](./EXAMPLES.md) for more information.
 
 ## Sample Slurm scripts
 
 Slurm script examples:
 
 ### x86_64 example
-[AlphaFold 3 Slurm Data Pipeline example](https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/AlphaFold-3/containers/2_ApplicationSpecific/AlphaFold-3/slurm_AlphaFold-3_Data_Pipeline_example.bash)  
-[AlphaFold 3 Slurm Inference example](https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/AlphaFold-3/containers/2_ApplicationSpecific/AlphaFold-3/slurm_AlphaFold-3_Inference_example.bash)
+[AlphaFold 3 Slurm Data Pipeline example](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/AlphaFold-3/slurm_AlphaFold-3_Data_Pipeline_example.bash)  
+[AlphaFold 3 Slurm Inference example](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/AlphaFold-3/slurm_AlphaFold-3_Inference_example.bash)
 
 ### Grace Hopper (GH200) GPU example
 [AlphaFold 3 Slurm (x86_64) Data Pipeline example](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/AlphaFold-3/slurm_GH200_AlphaFold-3_Data_Pipeline_example.bash)  
-[AlphaFold 3 Slurm Grace Hopper Inference example](hhttps://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/AlphaFold-3/slurm_GH200_AlphaFold-3_Inference_example.bash)
+[AlphaFold 3 Slurm Grace Hopper Inference example](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/AlphaFold-3/slurm_GH200_AlphaFold-3_Inference_example.bash)
 
 
 ## Documentation Resources

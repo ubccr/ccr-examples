@@ -1,0 +1,25 @@
+Bootstrap: docker
+From: rocker/tidyverse:latest
+
+%labels
+    Maintainer CCR
+    Version v1.0
+
+%post
+    ## Install dependencies and packages for your specific use case here.
+    apt-get update && apt-get install -y \
+        && apt-get clean
+
+    ## Install packages in R (from CRAN)
+    ## Rscript -e "install.packages(c('[packages]'))"
+
+    ## Install packages from other maintainers in R
+    ## Rscript -e "[PackageManager]::install(c('[packages]'))"
+    
+%environment
+    export R_LIBS_USER=/usr/local/lib/R/site-library
+    export PATH=/usr/local/bin:$PATH
+
+%runscript
+    echo "Launching R..."
+    exec R

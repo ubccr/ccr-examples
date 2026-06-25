@@ -8,7 +8,7 @@ Change to your AlphaFold-3 directory
 cd /projects/academic/[YourGroupName]/AlphaFold-3
 ```
 
-Then create the sample `fold_input.json` from [here](https://github.com/google-deepmind/alphafold3?tab=readme-ov-file#installation-and-running-your-first-prediction)
+Then create the sample `fold_input.json` from [the github example](https://github.com/google-deepmind/alphafold3?tab=readme-ov-file#installation-and-running-your-first-prediction)
 
 ```
 mkdir -p ./af_input ./af_input_inference ./af_output
