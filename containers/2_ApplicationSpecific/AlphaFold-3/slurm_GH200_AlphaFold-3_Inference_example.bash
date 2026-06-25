@@ -2,7 +2,7 @@
 
 ## This file is intended to serve as a template to be downloaded and modified for your use case.
 ## For more information, refer to the following resources whenever referenced in the script-
-## README- https://github.com/ubccr/ccr-examples/tree/main/slurm/README.md
+## README- https://github.com/ubccr/ccr-examples/tree/main/README.md
 ## DOCUMENTATION- https://docs.ccr.buffalo.edu/en/latest/hpc/jobs
 
 #SBATCH --cluster="ub-hpc"
@@ -12,8 +12,6 @@
 #SBATCH --constraint="GH200"
 
 ## Select the account that is appropriate for your use case
-## Available options and more details are provided in CCR's documentation:
-##   https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos
 #SBATCH --account="[SlurmAccountName]"
 
 ## NOTE: This is tested with the ccrsoft/2024.04 software release

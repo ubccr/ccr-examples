@@ -30,7 +30,7 @@ Here we update the name of the EB recipe from `SAMtools-1.18-GCC-12.3.0.eb` to `
 cp /cvmfs/soft.ccr.buffalo.edu/versions/2023.01/easybuild/software/Core/easybuild/4.9.4/easybuild/easyconfigs/s/SAMtools/SAMtools-1.18-GCC-12.3.0.eb SAMtools-1.18-GCC-11.2.0.eb
 ```
 
-The unmodified version of the file is available in this directory [here](./SAMtools-1.18-GCC-12.3.0.eb).
+The [unmodified version of the SAMtools EB recipe file](./SAMtools-1.18-GCC-12.3.0.eb) can be viewed for reference.
 
 3. Open the recipe file in your favorite editor. The first thing to change is the toolchain line - change from 12.3.0 to 11.2.0:
 
@@ -141,7 +141,7 @@ The above output indicates that the installation completed successfully and poin
 7. Now let's search for our module:
 
 > [!NOTE]
-> To make your custom modules appear in `module avail`, `module spider` etc., you can set the `$CCR_CUSTOM_BUILD_PATHS` environment variable following the instructions outlined [here](https://docs.ccr.buffalo.edu/en/latest/software/building/#building-modules-for-your-group).
+> To make your custom modules appear in `module avail`, `module spider` etc., you can set the `$CCR_CUSTOM_BUILD_PATHS` environment variable following the instructions outlined in [CCR's module building documentation](https://docs.ccr.buffalo.edu/en/latest/software/building/#building-modules-for-your-group).
 > To ensure the path gets picked up on login, point it to `~/.ccr/modulepaths`.
 
 ```

@@ -4,7 +4,7 @@
 
 NOTE:
 ALphaFold 3 requires a model parameters file.
-You must request the file with [this form](https://forms.gle/svvpY4u2jsHEwWYS6) and agree to the software [terms of use](https://github.com/google-deepmind/alphafold3/blob/main/WEIGHTS_TERMS_OF_USE.md)
+You must request the file by completing the [AlphaFold 3 model parameter request form](https://forms.gle/svvpY4u2jsHEwWYS6) and agree to the software [terms of use](https://github.com/google-deepmind/alphafold3/blob/main/WEIGHTS_TERMS_OF_USE.md)
 
 If you are granted access to the file, Google will email you a download link.
 
