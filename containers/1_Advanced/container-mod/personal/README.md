@@ -1,6 +1,6 @@
 # container-mod Personal Mode Example
 
-In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with `container-mod` to generate a ready-to-use environment module. We will use the default (`personal`) mode, where all files are generated in the user's `$HOME` directory. This example extends the [container-mod README](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/README.md). For more information, please refer to it.
+In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with `container-mod` to generate a ready-to-use environment module. We will use the default (`personal`) mode, where all files are generated in the user's `$HOME` directory. This example extends the [container-mod example README](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/README.md). For more information, please refer to it.
 
 **Generated directories and files in Personal Mode**
 - `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
@@ -11,31 +11,33 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 
 ## Workflow
 
-2. To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer.
+1. If you haven't already done so, follow the [Getting Started](../README) instructions.
 
-3. Run the `container-mod` script with the `pipe` subcommand, followed by the image location. For example:
+2. To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer as it is not installed on the login nodes.
+
+3. From the `container-mod` installation directory, run the `container-mod` script with the `pipe` subcommand, followed by the image location. For example:
 ```
 ./container-mod pipe docker://satcomx00/fds:6.7.9
 ```
-
-4. If there are no software-related files beforehand (module, metadata, executable files), the script will ask the following info only once to create a new entry:
+4. If there are no `container-mod` files previously created for the software you're setting up (e.g. module, metadata, executable files), the script will ask the following info to create a new entry:
 
 	- Application name, version, description, homepage URL 
-	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.) 
+	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.)
 
-For an example metadata file, please refer to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
+For this example, we use this information:
+ ```Initializing...
+'fds' not found in application info database.
+Let's create a new entry...
+Enter a simple description of the application: FDS
+Enter the application's homepage URL: https://pages.nist.gov/fds-smv/
+Enter the available programs (comma-separated): fds
+  ```
 
-4. Once the required information is provided, `container-mod` will execute the necessary Apptainer commands on the image and automatically generate the module file and requested wrapper scripts for programs, if the main script finishes successfully.
+For an example metadata file, please refer to the official `container-mod` [documentation](https://github.com/TuftsRT/container-mod#how-it-works).
 
-5. To use the newly generated module, you will need to edit the `$MODULEPATH` env. variable to include the full path to the modulefile (`/user/[CCRUsername]/privatemodules`). You can do this in a few ways:
+5. Once the required information is provided, `container-mod` will use Apptainer to pull the image from the website you provided and automatically generate the module file and requested wrapper scripts for the executables associated with the software application.
 
-	- Use the command (Only eligible for the current session): 
-	```
-	module use ~/privatemodules
-	```
-	- Edit the `~/.ccr/modulepaths` file to include `/user/[CCRUsername]/privatemodules`.
-
-6. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `module show`, etc. 
+6. In order to use the newly generated module, the path the modules are stored, must be in your environment.  Make sure you've completed step 3 in the [Getting Started](../README) instructions.
 
 7. Load the module using `module load` and verify the software executables work as expected:
 ```

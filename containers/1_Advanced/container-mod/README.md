@@ -1,10 +1,13 @@
 # container-mod Example Workflows
 
-This directory contains two example workflows ([`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal) and [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project)) for `container-mod`. The `personal` workflow utilizes a FDS container from DockerHub and runs in default (`personal`) mode. The `project` example is based on a locally stored `.sif` file and an example profile for `container-mod`. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
+This directory contains two example \`container-mod\` workflows: [`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal)  - with files saved in your home directory - and [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project) - with files saved in your group's projects directory. The example of the `personal` workflow utilizes an FDS container from DockerHub and runs in default (`--personal`) mode. The example of the `project` workflow is based on a locally stored `.sif` file and an example profile and uses the `--profile` mode for `container-mod`. More details can be found in [CCR's documentation](https://docs.ccr.buffalo.edu/en/latest/howto/containerization/#container-mod) for `container-mod`.
 
-## How to use
+## Getting Started
 
-1. Clone the [container-mod repository](https://github.com/TuftsRT/container-mod) into your working directory.
+1. If you choose to run `container-mod` in `personal` mode, change directory into your home directory.  If you choose to setup `container-mod` for your group to use, change directory into your group's project directory.  Then [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the [container-mod repository](https://github.com/TuftsRT/container-mod) into your working directory:
+```
+git clone https://github.com/TuftsRT/container-mod
+```
 
 **Important files and directories**
 - `container-mod`: Main executable script
@@ -24,30 +27,32 @@ This directory contains two example workflows ([`personal/`](https://github.com/
 - `-j, --jupyter`: Creates a Jupyter kernel for the containerized software, if compatible
 - `-h, --help`: For built-in help
 
-For detailed information about the topics above and additional options, please refer to the official [`container-mod` README](https://github.com/TuftsRT/container-mod#usage).
+For detailed information about the topics above and additional options, please refer to the official [`container-mod` documentation](https://github.com/TuftsRT/container-mod#usage).
 
-2. Start an interactive job
+2. Follow the example for the workflow that aligns with your use case:  
+- [`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal) - `--personal` mode
+- [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project) - `--profile` mode
 
-> [!IMPORTANT]
-> Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
-> See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission).
-
+3. Add your module path to your environment
+In order to see the modules you generate with `container-mod` you need to point your account to the path where the modules are stored.  You can do this each time you want to run these modules by first running this for `--personal` mode:	
 ```
-salloc --cluster=ub-hpc --partition=debug --qos=debug --exclusive --time=01:00:00
+module use ~/privatemodules
 ```
-
-Sample output:
+OR this for `--profile` mode:
 ```
-salloc: Pending job allocation [JobID]
-salloc: job [JobID] queued and waiting for resources
-salloc: job [JobID] has been allocated resources
-salloc: Granted job allocation [JobID]
-salloc: Nodes [NodeID] are ready for job
-CCRusername@[NodeID]:~$
+module use /projects/academic/[YourGroupName]/privatemodules
 ```
+However, this is forgotten on logout and you'd need to specify this in your Slurm batch scripts whenever you run jobs.
 
-3. Choose between one of the following workflows according to your use case:
-- [`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal)
-- [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project)
+To update the $PATH environment persistently and for each login & job submission, edit the `~/.ccr/modulepaths` file to include this for `--personal` mode:
+`/user/[CCRUsername]/privatemodules`
 
-Refer to the official `container-mod` [repository](https://github.com/TuftsRT/container-mod) for more information.
+OR this for `--profile` mode:
+```
+/projects/academic/[YourGroupName]/privatemodules
+```
+**With either option, make sure to LOGOUT and back in again to see the change.**
+
+4. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `module show`, etc.
+
+Refer to the official `container-mod` [documentation](https://github.com/TuftsRT/container-mod) for more information.
