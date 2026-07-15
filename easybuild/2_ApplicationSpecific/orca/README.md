@@ -4,67 +4,29 @@ This is an example of installing Orca with Easybuild on a CCR compile node.  Orc
 
 Prior to starting this installation, you should be familiar with CCR's [software environments](https://docs.ccr.buffalo.edu/en/latest/software/modules/) and how to use software modules.  Please read the instructions on [building your own software](https://docs.ccr.buffalo.edu/en/latest/software/building/) - specifically on [building software for your group](https://docs.ccr.buffalo.edu/en/latest/software/building/#building-modules-for-your-group).
 
-## Installation Steps  
+## Installation Steps
 
-The steps for this process are as follows:  
+> [!NOTE]
+> When using Easybuild, do NOT use the CCR login nodes. Always use a compile node or do this from a compute node in an OnDemand desktop session or interactive job. See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission). 
+> These installations can use a decent amount of disk space so we recommend you use your project directory for all software installations. You'll need to set the `$CCR_BUILD_PREFIX` [environment variable](https://docs.ccr.buffalo.edu/en/latest/software/building/#building-modules-for-your-group) to point to your project directory, or else it will default to installing in your home directory.
 
-If you've never installed software with Easybuild, you will need to create a directory in your group's project space and setup your environment to see your group's modules.  Complete the steps in #1.  If you've previously installed software and this is already configured, skip to step #2. 
-
-1. Login to CCR login node and setup your Easybuild installation environment.  This can be done with SSH (as shown here) or using the OnDemand terminal app.  
-
+1. Load the Easybuild module
 ```
-ssh vortex.ccr.buffalo.edu
-```
-
-If you don't already have an Easybuild directory for your group, create one:  
-NOTE: substitute YOURGROUPNAME for your PI group directory name
-
-```
-$ mkdir /projects/academic/YOURGROUPNAME/easybuild 
+module load easybuild
 ```
 
-If you've never installed software with Easybuild, you will need to setup your environment to see your group's modules by setting the `CCR_CUSTOM_BUILD_PATHS` env variable. Note: this only has to be done once per user account.  If the `~/.ccr/modulepaths` file already exists, please edit this file and add this new directory to the existing line and separate the directory names with a colon `:`  
+2. Upload your Orca software installation file to CCR and place in your home or project directory.  We recommend downloading the x86_64, `.tar.xv` archive version.  
 
-```
-$ export CCR_BUILD_PREFIX=/projects/academic/YOURGROUPNAME/easybuild
-$ export CCR_CUSTOM_BUILD_PATHS=$CCR_BUILD_PREFIX
-
-# To ensure this path gets picked up on login
-$ mkdir -p $HOME/.ccr
-$ echo $CCR_CUSTOM_BUILD_PATHS > ~/.ccr/modulepaths
-$ exit  (to log out of the vortex login node)
-```
-
-2. Login to a login node and then into a [compile node](https://docs.ccr.buffalo.edu/en/latest/hpc/clusters/#compile-nodes)   
-```
-ssh [CCRusername]@vortex.ccr.buffalo.edu
-$ ssh compile
-```
-
-3. Upload your Orca software installation file to CCR and place in your home or project directory.  We recommend downloading the x86_64, `.tar.xv` archive version.  
-
-4. Create Orca Easybuild recipe  
-In the folder that your Orca software was uploaded to, create a file called `ORCA-6.0.1-gompi-2021b.eb`  Copy the contents from [this example](ORCA-6.0.1-gompi-2021b.eb) Easybuild recipe and place them in your new recipe file.  Edit the file as described, save and exit the editor.  There are several things to be aware of with this recipe file:  
+3. Create Orca Easybuild recipe  
+In the folder that your Orca software was uploaded to, create a file called `ORCA-6.0.1-gompi-2021b.eb`  Copy the contents from [CCR's ORCA Easybuild recipe example](ORCA-6.0.1-gompi-2021b.eb) and place them in your new recipe file.  Edit the file as described, save and exit the editor.  There are several things to be aware of with this recipe file:  
 - You MUST name the file in the same way that CCR provides in this example
 - If you're installing a different version of Orca, you must update the Easybuild recipe name with the updated version number AND change the version number within your Easybuild recipe on line 7.  
 - You will need to update the checksum value on line 20 to match the checksum of your software installation media.  To get the checksum of a file, run:  `sha256sum filename`  
 
-5. Prepare to install the software
-
-Load the Easybuild module: 
-```
-$ module load easybuild
-```
-
-Set your installation path location to match your group's easybuild directory:  
-```
-$ export CCR_BUILD_PREFIX=/projects/academic/YOURGROUPNAME/easybuild
-```
-
-6. Install the software
+4. Install the software
 
 ```
-$ eb ORCA-6.0.1-gompi-2021b.eb
+eb ORCA-6.0.1-gompi-2021b.eb
 ```
 
 ## Using your module  
@@ -72,8 +34,10 @@ $ eb ORCA-6.0.1-gompi-2021b.eb
 Once the installation completes successfully, when you search for the module you should see it listed in a section at the top with your group's installation path listed.  For example:  
 
 ```
-$ module spider orca
-
+module spider orca
+```
+Expected output:
+```
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   orca: orca/6.0.1
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -105,8 +69,6 @@ $ module spider orca
        - Homepage: https://orcaforum.kofo.mpg.de
 
 ```
-
-If you're not seeing your module, make sure you've setup your custom module paths correctly, as described [here](https://docs.ccr.buffalo.edu/en/latest/software/building/#building-modules-for-your-group) and demonstrated in step 1 above.  
 
 To load the orca module, load it's dependencies as listed in the `module spider` output and the orca module:  
 

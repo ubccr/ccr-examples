@@ -127,23 +127,10 @@ from the Data Pipeline automatically
 sbatch ./slurm_AlphaFold-3_Data_Pipeline_example.bash
 ```
 
-sample output:
+The Slurm output file should look something like this:
 
 > ```
-> Submitted batch job 20805694 on cluster ub-hpc
-> ```
-
-The Slurm output file in this case is slurm-20805694.out
-Once this Slurm job completed:
-
-```
-cat slurm-20805694.out
-```
-
-sample output:
-
-> ```
-> Running the Data Pipeline on compute node: cpn-q09-32-01
+> Running the Data Pipeline on compute node: [NodeID]
 > 
 > No GPU detected - run Data Pipeline only
 > 
@@ -200,7 +187,7 @@ The output file for this job will be slurm-20805762.out
 Once that job completes
 
 ```
-cat slurm-20805762.out
+cat slurm-[JobID].out
 ```
 
 sample output:

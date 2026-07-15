@@ -76,4 +76,5 @@ scancel [JobID]
 
 ## Additional Information
 
-- The [Placeholders](../README.md#placeholders) section lists the available options for each placeholder used in the example scripts.
+- The [Placeholders](../../README.md#placeholders) section lists the available options for each placeholder used in the examples.
+- The [Slurm README](../../slurm/README.md) provides details on general Slurm usage.

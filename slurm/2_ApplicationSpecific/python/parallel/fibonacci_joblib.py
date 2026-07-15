@@ -22,4 +22,5 @@ if __name__ == "__main__":
         start = time.time()
         results = Parallel(n_jobs=n_jobs)(delayed(fib)(n) for n in my_values)
         end = time.time()
-        print("Joblib execution time with n_jobs = " n_jobs: end-start)
+
+        print(f"Joblib execution time with n_jobs = {n_jobs}: {end-start}")

@@ -18,21 +18,21 @@ This repository uses placeholders denoted by square brackets for values that nee
 |-------------------------|-------------------------------------------|
 | `[cluster]`             | ub-hpc, faculty |
 | `[partition]`           | general-compute, debug, industry, scavenger, ub-laser, [other available options](https://docs.ccr.buffalo.edu/en/latest/hpc/clusters/#ub-hpc-compute-cluster) |
-| `[qos]`                 | Typically the same as `[partition]` - refer to [CCR docs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos) for more information. |
+| `[qos]`                 | Typically the same as `[partition]` - refer to [CCR documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos) for more information. |
 | `[SlurmAccountName]`    | Use the `slimits` command to see what accounts you have access to. If not specified, your default account will be used. |
 | `[CCRUsername]`         | Your CCR username |
 | `[YourGroupName]`       | Your project's group name (often PI username or company name) |
 | `[JobID]`               | Slurm JobID |
 | `[NodeID]`              | Compute NodeID |
 
-## Getting Started ([0_Introductory/](./0_Introductory/README.md))
+## Getting Started ([Introductory/](./0_Introductory/README.md))
 
 This directory is designed to introduce new users to the fundamentals of submitting jobs on CCR's HPC clusters using Slurm. It provides simple, well-documented examples to help users understand key Slurm concepts and serves as a foundation before progressing to more advanced workflows. The example Slurm script [BasicExample.bash](./0_Introductory/BasicExample.bash) provides a minimalist template for submitting a job in an HPC environment. It demonstrates essential Slurm directives, such as cluster, partition, memory requirements, and more.
 
-## Advanced Slurm Examples ([1_Advanced/](./1_Advanced/README.md))
+## Advanced Slurm Examples ([Advanced/](./1_Advanced/README.md))
 
 This directory includes Slurm scripts for more complex use cases such as job arrays, parallel computing, and using the scavenger partition.
 
-## Application Specific Scripts ([2_ApplicationSpecific/](./2_ApplicationSpecific/README.md))
+## Application Specific Scripts ([ApplicationSpecific/](./2_ApplicationSpecific/README.md))
 
-This directory contains Slurm job scripts tailored for specific applications that have specific setup requirements like Alphafold, MATLAB, Python, etc. Note that not every piece of software installed on CCR's systems has an example script in this directory. A [table](./2_ApplicationSpecific/README.md#table-of-topics) of available scripts for  applications is provided for easier navigation and reference.
+This directory contains Slurm job scripts tailored for specific applications that have specific setup requirements like Alphafold, MATLAB, Python, etc. Note that not every piece of software installed on CCR's systems has an example script in this directory. A [table of available scripts for applications](./2_ApplicationSpecific/README.md#table-of-topics) is provided for easier navigation and reference.

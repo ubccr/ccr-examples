@@ -9,8 +9,8 @@ Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/
 
 1. Start an interactive job
 
-Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
-See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
+> [!IMPORTANT]
+> Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/> See CCR documentation for more information on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
 
 ```
 salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=64GB --time=01:00:00
@@ -18,14 +18,14 @@ salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=64GB --time=01:00:00
 
 sample outout:
 
-> ```
-> salloc: Pending job allocation 19781052
-> salloc: job 19781052 queued and waiting for resources
-> salloc: job 19781052 has been allocated resources
-> salloc: Granted job allocation 19781052
-> salloc: Nodes cpn-i14-39 are ready for job
-> CCRusername@cpn-i14-39:~$ 
-> ```
+```
+salloc: Pending job allocation [JobID]
+salloc: job [JobID] queued and waiting for resources
+salloc: job [JobID] has been allocated resources
+salloc: Granted job allocation [JobID]
+salloc: Nodes [NodeID] are ready for job
+CCRusername@[NodeID]:~$
+```
 
 2. Navigate to your build directory and use the Slurm job local temporary directory for cache
 
@@ -85,7 +85,7 @@ sample output:
 > Apptainer>
 > ```
 
-All the following commands are run from the "Apptainer> " prompt
+All the following commands are run from the `Apptainer> ` prompt
 
 Copy the line from above to use OpenFOAM
 
@@ -131,4 +131,4 @@ Slurm script examples:
 
 [OpenFOAM with "srun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenFOAM/slurm_OpenFOAM_example.bash)
 
-See the [OpenFOAM website][https://openfoam.org) and the [OpenFOAM version 13 User Guide](https://doc.cfd.direct/openfoam/user-guide-v13/index) for more information on OpenFOAM
+See the [OpenFOAM website](https://openfoam.org) and the [OpenFOAM version 13 User Guide](https://doc.cfd.direct/openfoam/user-guide-v13/index) for more information on OpenFOAM

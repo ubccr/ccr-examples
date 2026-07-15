@@ -10,7 +10,7 @@ This directory contains examples for more complex use cases, such as job arrays,
 |--------------------------------|-------------|
 | [Scavenger](./Scavenger)       | Example of submitting a job to the scavenger partition, with additional context and usage details in the [README](./Scavenger/README.md) |
 | [GPUs](./GPUs)                 | Example job script demonstrating how to request and use GPUs on CCR's clusters |
-| [JobArrays](./JobArrays)       | Example of running a Slurm job array with additional information in the [README](./JobArrays/README.md) |
+| [Job Arrays](./JobArrays)      | Example of running a Slurm job array with additional information in the [README](./JobArrays/README.md) |
 
 ## Additional Information
 

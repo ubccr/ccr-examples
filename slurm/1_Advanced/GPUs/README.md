@@ -5,14 +5,14 @@ This directory includes a [basic example](./BasicGPUExample.bash) that shows how
 ## How to use
 
 CCR's academic cluster has a mix of compute nodes from various generations of hardware with a variety of GPU types in them. Most of these compute nodes have either 1 or 2 GPUs, while one node has 12 
-A16 GPUs.  The faculty cluster has a variety of GPU nodes that are available when idle through the `scavenger` partition.  Use the `snodes` command to search for details on both clusters.  See [here](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#node-features) for more info.  Use the [Slurm dashboard](https://dashboard.ccr.buffalo.edu/slurm/ubhpc) to see what types of GPU nodes are currently available in the UB-HPC cluster.
+A16 GPUs.  The faculty cluster has a variety of GPU nodes that are available when idle through the `scavenger` partition.  Use the `snodes` command to search for details on both clusters.  See [CCR's Node Features documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#node-features) for more information.  Use the [Slurm dashboard](https://dashboard.ccr.buffalo.edu/slurm/ubhpc) to see what types of GPU nodes are currently available in the UB-HPC cluster.
 
 The provided [script](./BasicGPUExample.bash) is a minimal Slurm example that requests a GPU. Make sure to modify parts of the script to suit your GPU requirements and specific needs. For 
 more details, refer to the [Advanced README](../README.md).
 
 If you need more than the default, you can specify hardware requirements using the Slurm `--constraint` directive in the batch script. Supported GPU types include `A16`, `A40`, `A100`, `H100`, `GH200`, and `V100`.
 
-For an example, see the [slurm-options.bash](../../slurm-options.bash) file. For additional options and details refer to our [documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos).
+For an example, see the [slurm-options.bash](../../slurm-options.bash) file. For additional options and details refer to our [Slurm documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#slurm-directives-partitions-qos).
 
 ## Monitoring GPU Usage
 
@@ -71,7 +71,7 @@ this to your script:
 ```
 #SBATCH --gres-flags=disable-binding
 ```
-More information can be found [here](https://docs.ccr.buffalo.edu/en/latest/faq/#how-do-i-request-all-cpus-on-a-node-with-more-than-one-gpu).
+More information can be found in [CCR's GPU to CPU binding documentation](https://docs.ccr.buffalo.edu/en/latest/faq/#how-do-i-request-all-cpus-on-a-node-with-more-than-one-gpu).
 
 ### GH200 GPU Nodes
 
