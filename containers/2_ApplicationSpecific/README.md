@@ -16,6 +16,7 @@ Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/
 | [CONDA](./conda)                     | Example CONDA container with steps for building and running via Apptainer |
 | [FDS](./fds)                         | FDS container example with an interactive job and a bash script |
 | [Juicer](./juicer)                   | Example of running the containerized version of Juicer at CCR using Apptainer |
+| MATLAB(./MATLAB)                     | MALTAB container with steps for building and running via Apptainer and Slurm |
 | [Micro-C](./Micro-C)                 | Micro-C Pipeline container with steps for building and running via Apptainer |
 | [OpenFF-Toolkit](./Open_Force_Field_toolkit)  | Open Force Field toolkit container with steps for building and running via Apptainer |
 | [OpenFOAM](./OpenFOAM)               | OpenFOAM container with steps for building and running via Apptainer and Slurm |
