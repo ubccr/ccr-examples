@@ -17,7 +17,10 @@ cp vasp.6.3.0.tgz .
    For GPU support, we suggest using the one included in this repo which is
    this one: [makefile.include.nvhpc_acc](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_acc)
 
-3. Build container:
+> [!IMPORTANT]
+> The VASP definition file contains commands that cannot be executed during an Apptainer build by an unprivileged user. Build the container on a system where you have administrator (root) privileges, then copy the resulting `vasp.sif` container image to CCR before running it.
+
+3. On the system where you have administrator (root) privileges, build the container:
 
 ```
 export APPTAINER_CACHEDIR=/projects/academic/[YourGroupName]/[CCRusername]/cache
