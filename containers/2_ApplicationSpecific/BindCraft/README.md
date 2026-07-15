@@ -11,7 +11,7 @@ NOTE: for building on the ARM64 platform see [BUILD-ARM64.md](./BUILD-ARM64.md)
 
 Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
 Note: a GPU is NOT needed to build the BindCraft container<br/>
-See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
+See CCR documentation for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
 
 ```
 salloc --cluster=ub-hpc --partition=debug --qos=debug --account="[SlurmAccountName]" \
@@ -43,7 +43,7 @@ There are two sample .def files, [FreeBindCraft.def](./FreeBindCraft.def) and [F
 The former does not install PyRosetta, the latter does.
 To build and use the PyRosetta version you must have a PyRosetta license.
 You must either complete the application for a non commercial license or purchase
-a commercial license - see [PyRosetta Licensing](https://els2.comotion.uw.edu/product/pyrosetta) for more info.
+a commercial license - see the [PyRosetta Licensing](https://els2.comotion.uw.edu/product/pyrosetta) for more information.
 
 The following example uses the non PyRosetta version.
 To build with PyRosetta see [Build with PyRosetta](./BUILD_with_PyRosetta.md)
@@ -192,7 +192,7 @@ Sample output:
 >   --interactive         Force interactive mode to collect target settings and options
 > ```
 
-See the [EXAMPLE file](./EXAMPLES.md) for more info.
+See the [EXAMPLE file](./EXAMPLES.md) for more information.
 
 ## Sample Slurm scripts
 

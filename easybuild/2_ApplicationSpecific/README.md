@@ -15,5 +15,5 @@ Please refer to the official EasyBuild [documentation](https://docs.easybuild.io
 ## Additional Information
 
 - The [Slurm README](../../slurm/README.md) provides details on general Slurm usage.
-- The [Placeholders](../../slurm/README.md#placeholders) section lists the available options for each placeholder used in the example scripts.
-- The [slurm-options.sh](../../slurm/slurm-options.sh) file outlines commonly used `#SBATCH` directives with their descriptions.
+- The [Placeholders](../../README.md#placeholders) section lists the available options for each placeholder used in the example scripts.
+- The [slurm-options.bash](../../slurm/slurm-options.bash) file outlines commonly used `#SBATCH` directives with their descriptions.

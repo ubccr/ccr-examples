@@ -1,19 +1,21 @@
 #!/bin/bash -l
 ##
-## How long do you want to reserve the node(s) for?  By default, if you don't specify,
-## you will get 24 hours.  Referred to as walltime, this is how long the job will be
-## scheduled to run for once it begins. If your program runs longer than what is
-## requested here, the job will be cancelled by Slurm when time runs out.
+## How long do you want to reserve the node(s) for?  By default, if you don't
+## specify, you will get 24 hours.  Referred to as walltime, this is how long
+## the job will be scheduled to run for once it begins.  If your program runs
+## longer than what is requested here, the job will be cancelled by Slurm when
+## time runs out.
 ## If you make the expected time too long, it may take longer for resources to 
 ## become available and for the job to start.  The various partitions in CCR's
-## clusters have various maximum walltimes.  Refer to the documentation for more info.
+## clusters have various maximum walltimes.  Refer to the documentation for more
+## information
 ## Walltime Format: dd:hh:mm:ss
 #SBATCH --time=00:01:00
 
 ## Define how many nodes you need. We ask for 1 node
 #SBATCH --nodes=1
 
-## Refer to docs on proper usage of next 3 Slurm directives https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#requesting-cores-and-nodes  
+## Refer to the documentation on proper usage of next 3 Slurm directives https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#requesting-cores-and-nodes  
 ## Number of "tasks" (use with distributed parallelism)
 #SBATCH --ntasks=12
 

@@ -2,7 +2,7 @@
 
 To build and use the PyRosetta version you must have a PyRosetta license.
 You must either complete the application for a non commercial license or purchase
-a commercial license - see [PyRosetta Licensing](https://els2.comotion.uw.edu/product/pyrosetta) for more info.
+a commercial license - see the [PyRosetta Licensing](https://els2.comotion.uw.edu/product/pyrosetta) for more information.
 
 ## Building the container
 
