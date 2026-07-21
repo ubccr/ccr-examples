@@ -56,15 +56,15 @@ Select ONE of the following:
 ### Parallel MATLAB minimal install
 
 ```
-curl -LO https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/MATLAB/containers/2_ApplicationSpecific/MATLAB/matlab_lmutil_x86_64
-curl -LO https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/MATLAB/containers/2_ApplicationSpecific/MATLAB/MATLAB-R2025b.def 
+curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab_lmutil_x86_64
+curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/MATLAB-R2025b.def
 ```
 
 ### MATLAB maximal install
 
 ```
-curl -LO https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/MATLAB/containers/2_ApplicationSpecific/MATLAB/matlab_lmutil_x86_64
-curl -L -o MATLAB-R2025b.def https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/MATLAB/containers/2_ApplicationSpecific/MATLAB/MATLAB-R2025b-all_licenced_products.def
+curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab_lmutil_x86_64
+curl -L -o MATLAB-R2025b.def https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/MATLAB-R2025b-all_licenced_products.def
 ```
 
 3. Build your container
@@ -221,10 +221,10 @@ See the [EXAMPLES file](./EXAMPLES.md) for more info.
 ## Sample Slurm scripts
 
 ### Parallel example:
-[MATLAB parallel Slurm example script](https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/MATLAB/containers/2_ApplicationSpecific/MATLAB/matlab-mp.bash)  
+[MATLAB parallel Slurm example script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab-mp.bash)  
 
 ### GPU example:
-[MATLAB GPU Slurm example script](https://raw.githubusercontent.com/tonykew/ccr-examples/refs/heads/MATLAB/containers/2_ApplicationSpecific/MATLAB/matlab-gpu.bash)  
+[MATLAB GPU Slurm example script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab-gpu.bash)  
 
 ## Documentation Resources
 
