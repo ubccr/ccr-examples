@@ -44,10 +44,12 @@ module use /projects/academic/[YourGroupName]/privatemodules
 ```
 However, this is forgotten on logout and you'd need to specify this in your Slurm batch scripts whenever you run jobs.
 
-To update the $PATH environment persistently and for each login & job submission, edit the `~/.ccr/modulepaths` file to include this for `--personal` mode:
+To update the $PATH environment persistently and for each login & job submission, edit the `~/.ccr/modulepaths` file:  
+
+For `--personal` mode:  
 `/user/[CCRUsername]/privatemodules`
 
-OR this for `--profile` mode:
+For `--profile` mode, add the following:
 ```
 /projects/academic/[YourGroupName]/privatemodules
 ```
@@ -55,4 +57,4 @@ OR this for `--profile` mode:
 
 4. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `module show`, etc.
 
-Refer to the official `container-mod` [documentation](https://github.com/TuftsRT/container-mod) for more information.
+Refer to the official [container-mod documentation](https://tuftsrtcontainer-mod.readthedocs.io/en/latest/index.html) for more information.

@@ -17,7 +17,7 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 
 3. From the `container-mod` installation directory, run the `container-mod` script with the `pipe` subcommand, followed by the image location. For example:
 ```
-./container-mod pipe docker://satcomx00/fds:6.7.9
+./container-mod pipe --container-app apptainer docker://satcomx00/fds:6.7.9
 ```
 4. If there are no `container-mod` files previously created for the software you're setting up (e.g. module, metadata, executable files), the script will ask the following info to create a new entry:
 
@@ -25,12 +25,14 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.)
 
 For this example, we use this information:
- ```Initializing...
+ ```
+ No profile specified. Running in personal mode.
+ Initializing...
 'fds' not found in application info database.
 Let's create a new entry...
-Enter a simple description of the application: FDS
+Enter a simple description of the application: Fire Dynamics Simulator
 Enter the application's homepage URL: https://pages.nist.gov/fds-smv/
-Enter the available programs (comma-separated): fds
+Enter the available programs (comma-separated): fds, fds.sh, fds_openmp, fds2ascii, test_mpi
   ```
 
 For an example metadata file, please refer to the official `container-mod` [documentation](https://github.com/TuftsRT/container-mod#how-it-works).
