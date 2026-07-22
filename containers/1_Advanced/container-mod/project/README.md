@@ -15,7 +15,7 @@ For example, to generate output files and create a usable module for your projec
 MOD_EXISTING_DIR_DEF="/projects/academic/[YourGroupName]/privatemodules"
 PUBLIC_IMAGEDIR="/projects/academic/[YourGroupName]/images"
 PUBLIC_EXECUTABLE_DIR="/projects/academic/[YourGroupName]/executables"
-BIND_PATH="/vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName],/projects/academic/[YourGroupName]:/projects/academic/[YourGroupName],/scratch:/scratch,/util:/util,"
+BIND_PATH="/vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName],/projects/academic/[YourGroupName]:/projects/academic/[YourGroupName],/scratch:/scratch,/util:/util"
 ```
 NOTE: Not all project directories are in `/projects/academic`  Please refer to our [documentation](https://docs.ccr.buffalo.edu/en/latest/hpc/storage/#enterprise-level-network-attached-storage) for a list of all storage options.
 

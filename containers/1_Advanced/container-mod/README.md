@@ -38,7 +38,7 @@ In order to see the modules you generate with `container-mod` you need to point 
 ```
 module use ~/privatemodules
 ```
-OR this for `--profile` mode:
+or this for `--profile` mode:
 ```
 module use /projects/academic/[YourGroupName]/privatemodules
 ```
@@ -46,8 +46,10 @@ However, this is forgotten on logout and you'd need to specify this in your Slur
 
 To update the $PATH environment persistently and for each login & job submission, edit the `~/.ccr/modulepaths` file:  
 
-For `--personal` mode:  
-`/user/[CCRUsername]/privatemodules`
+For `--personal` mode, add the following:  
+```
+/user/[CCRUsername]/privatemodules
+```
 
 For `--profile` mode, add the following:
 ```
