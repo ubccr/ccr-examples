@@ -11,7 +11,7 @@ In this example, we'll use the FDS container image from [DockerHub](https://hub.
 
 ## Workflow
 
-1. If you haven't already done so, follow the [Getting Started](../README) instructions.
+1. If you haven't already done so, follow the [Getting Started](../README.md) instructions.
 
 2. To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer as it is not installed on the login nodes.
 
@@ -39,10 +39,10 @@ For an example metadata file, please refer to the official `container-mod` [docu
 
 5. Once the required information is provided, `container-mod` will use Apptainer to pull the image from the website you provided and automatically generate the module file and requested wrapper scripts for the executables associated with the software application.
 
-6. In order to use the newly generated module, the path the modules are stored, must be in your environment.  Make sure you've completed step 3 in the [Getting Started](../README) instructions.
+6. In order to use the newly generated module, the path the modules are stored, must be in your environment.  Make sure you've completed step 3 in the [Getting Started](../README.md) instructions.
 
-7. Load the module using `module load` and verify the software executables work as expected:
+7. Load the module using `module load` and verify the software executable works as expected:
 ```
 module load fds/6.7.9
-fds
+fds_openmp
 ```

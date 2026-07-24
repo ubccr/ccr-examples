@@ -21,7 +21,7 @@ NOTE: Not all project directories are in `/projects/academic`  Please refer to o
 
 ## Workflow
 
-1. If you haven't already done so, follow the [Getting Started](../README) instructions.
+1. If you haven't already done so, follow the [Getting Started](../README.md) instructions.
 
 2. To use container-mod, first make sure to request an [interactive job](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission) to utilize Apptainer as it isn't installed on the login nodes.
 
@@ -39,21 +39,21 @@ NOTE: Not all project directories are in `/projects/academic`  Please refer to o
 	- Available programs: Software commands used to trigger certain behaviors (E.g., fds, abaqus, OpenSees, etc.)
 For this example, we use this information:
 ```
+Loading system profile: project
 Initializing...
 'abaqus' not found in application info database.
 Let's create a new entry...
-Enter a simple description of the application: Abaqus
+Enter a simple description of the application: Abaqus Finite Element Analysis Suite
 Enter the application's homepage URL: https://discover.3ds.com/
-Enter the available programs (comma-separated): abaqus, abaqus cae -mesa
+Enter the available programs (comma-separated): abaqus, abq2024
 Local image file detected: /util/software/containers/x86_64/abaqus-2024.sif
--> Enter the application name: abaqus
--> Enter the application version: 2024
+[...]
 ```
-For an example metadata file, please refer to the official `container-mod` [README](https://github.com/TuftsRT/container-mod#how-it-works).
+For an example metadata file, please refer to the official `container-mod` [documentation](https://github.com/TuftsRT/container-mod#how-it-works).
 
 5. Once the required information is provided, `container-mod` will automatically generate the module file and solicited wrapper scripts into the directories specified in your `project` profile file.
 
-6. In order to use the newly generated module, the path the modules are stored, must be in your environment.  Make sure you've completed step 3 in the [Getting Started](../README) instructions.
+6. In order to use the newly generated module, the path the modules are stored, must be in your environment.  Make sure you've completed step 3 in the [Getting Started](../README.md) instructions.
 
 7. Load the module using `module load` and verify the software executables work as expected:
 ```
