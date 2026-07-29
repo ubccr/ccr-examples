@@ -40,7 +40,7 @@ Note that the AlphaFold 2 params files are mounted on /app/params inside the con
 
 ```
 apptainer shell \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
  -B /util/software/data/alphafold/params:/app/params \
  -B ./input:/work/input,./output:/work/output \
  --nv \
@@ -213,7 +213,7 @@ Start the container:
 
 ```
 apptainer shell \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
  -B /util/software/data/alphafold/params:/app/params \
  -B ./input:/work/input,./output:/work/output \
  --nv \
