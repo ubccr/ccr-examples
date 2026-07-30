@@ -21,7 +21,7 @@
 
 #SBATCH --nodes=1                       # one node
 #SBATCH --tasks-per-node=1              # one task
-#SBATCH --cpus-per-task=16              # one core per task
+#SBATCH --cpus-per-task=16              # sixteen cores per task
 #SBATCH --mem=64G                       # 64GB RAM
 
 ## change to the MATLAB directory
