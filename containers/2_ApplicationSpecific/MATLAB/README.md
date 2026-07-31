@@ -24,7 +24,7 @@ salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=0 --exclusive \
  --time=01:00:00
 ```
 
-sample outout:
+Sample outout:
 
 > ```
 > salloc: Granted job allocation 25260020
@@ -48,7 +48,7 @@ A parallel minimal install with only the "MATLAB" and "Parallel Computing Toolbo
 A maximal install, with all the products for which CCR currenlty has a license
 
 If you wish to install a specific subset of products, download the maximal
-install example and remove the products you do not need from the "
+install example and remove the products you do not need from the "MATLAB-R2025b.def" file
 
 
 Select ONE of the following:

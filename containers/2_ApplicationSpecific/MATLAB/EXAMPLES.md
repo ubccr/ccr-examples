@@ -79,7 +79,7 @@ Expected output
 > >> 
 > ```
 
-Create a a parallel work pool, saving 4 cores for apptainer threads
+Create a parallel work pool, saving 4 cores for apptainer threads
 
 ```
 poolobj = parpool(str2double(getenv('SLURM_CPUS_PER_TASK')) - 4);
@@ -108,7 +108,7 @@ toc
 
 ```
 
-Sample Output:
+Sample output:
 
 > ```
 > >> tic
@@ -379,7 +379,7 @@ matlab
 The MATLAB GUI will launch
 
 The above Parallel and GPU examples can be run in the GUI's "Command Window",  
-but note that you must subsitiue `SLURM_TASKS_PER_NODE` for `SLURM_CPUS_PER_TASK`  
+but note that you must substitute `SLURM_TASKS_PER_NODE` for `SLURM_CPUS_PER_TASK`  
 in the parallel example because the "Number of Cores" are allocated as Slurm  
 tasks, rather than cores (cpus) per task.
 
