@@ -8,13 +8,13 @@ CCR provides two pre-built MATLAB containers:
 
 MATLAB with (only) the "Parallel Computing Toolbox"
 
-```
+```bash
 /util/software/containers/x86_64/MATLAB-R2025b-x86_64.sif 
 ```
 
 MATLAB with all the MATLAB programs CCR has licenses for:
 
-```
+```bash
 /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
 ```
 
@@ -33,11 +33,11 @@ Apptainer is not available on the CCR login nodes and the compile nodes may not 
 Note: a GPU is NOT needed to build the MATLAB container  
 See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission)
 
-```
+```bash
 export SBATCH_ACCOUNT="[SlurmAccountName]"
 ```
 
-```
+```bash
 salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=0 --exclusive \
  --time=01:00:00
 ```
@@ -57,7 +57,7 @@ In this example we're using our project directory for our build directory.
 
 Change to your MATLAB directory
 
-```
+```bash
 cd /projects/academic/[YourGroupName]/MATLAB
 ```
 
@@ -73,14 +73,14 @@ Select ONE of the following:
 
 ### Parallel MATLAB minimal install
 
-```
+```bash
 curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab_lmutil_x86_64
 curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/MATLAB-R2025b.def
 ```
 
 ### MATLAB maximal install
 
-```
+```bash
 curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab_lmutil_x86_64
 curl -L -o MATLAB-R2025b.def https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/MATLAB-R2025b-all_licenced_products.def
 ```
@@ -89,13 +89,13 @@ curl -L -o MATLAB-R2025b.def https://raw.githubusercontent.com/ubccr/ccr-example
 
 Set the apptainer cache dir:
 
-```
+```bash
 export APPTAINER_CACHEDIR="${SLURMTMPDIR}"
 ```
 
 Building the MATLAB container takes about half an hour...
 
-```
+```bash
 apptainer build \
  --build-arg SLURMTMPDIR="${SLURMTMPDIR}" \
  --bind /scratch:/scratch \
@@ -115,11 +115,11 @@ Sample truncated output:
 
 Start an interactive job e.g.
 
-```
+```bash
 export SBATCH_ACCOUNT="[SlurmAccountName]"
 ```
 
-```
+```bash
 salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
  --mem=128GB --nodes=1 --tasks-per-node=1 --cpus-per-task=16 \
  --time=01:00:00
@@ -127,13 +127,13 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
 
 Change to your MATLAB directory
 
-```
+```bash
 cd /projects/academic/[YourGroupName]/MATLAB
 ```
 
 Start the MATLAB container instance
 
-```
+```bash
 apptainer shell \
  --no-env=XDG_DATA_DIRS \
  --writable-tmpfs \
@@ -148,7 +148,7 @@ All the following commands are run from the "Apptainer> " prompt
 
 Verify MATLAB is installed:
 
-```
+```bash
 matlab -h
 ```
 
@@ -170,7 +170,7 @@ run the container as above, then, from the "Apptainer> " prompt, run "matlab"
 
 You can also check the status of the license server
 
-```
+```bash
 lmstat
 ```
 
@@ -193,7 +193,7 @@ Sample output:
 
 ...and the status of all the individually licensed MATLAB products
 
-```
+```bash
 lmstat -a
 ```
 

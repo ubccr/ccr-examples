@@ -4,13 +4,13 @@ CCR provides two pre-built MATLAB containers:
 
 MATLAB with (only) the "Parallel Computing Toolbox"
 
-```
+```bash
 /util/software/containers/x86_64/MATLAB-R2025b-x86_64.sif
 ```
 
 MATLAB with all the MATLAB programs CCR has licenses for:
 
-```
+```bash
 /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
 ```
 
@@ -21,7 +21,7 @@ The examples use the "MATLAB-R2025b-all_licenced_products-x86_64.sif" container,
 but you can subsitiue the full path to the .sif file of your choice.
 For example:
 
-```
+```bash
 /projects/academic/[YourGroupName]/MATLAB/MATLAB-R2025b-$(arch).sif
 ```
 
@@ -30,11 +30,11 @@ For example:
 
 Start an interactive job e.g.
 
-```
+```bash
 export SBATCH_ACCOUNT="[SlurmAccountName]"
 ```
 
-```
+```bash
 salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
  --mem=64GB --nodes=1 --tasks-per-node=1 --cpus-per-task=16 \
  --time=01:00:00
@@ -42,13 +42,13 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
 
 Change to your MATLAB directory
 
-```
+```bash
 cd /projects/academic/[YourGroupName]/MATLAB
 ```
 
 Start the MATLAB container instance
 
-```
+```bash
 apptainer shell \
  --no-env=XDG_DATA_DIRS \
  --writable-tmpfs \
@@ -61,7 +61,7 @@ apptainer shell \
 
 The following commands are run from the "Apptainer> " prompt
 
-```
+```bash
 matlab -nojvm -nodisplay -nosplash
 ```
 
@@ -165,13 +165,13 @@ Expected output:
 
 From tthe "Apptainer> " prompt, exit apptainer
 
-```
+```bash
 exit
 ```
 
 From the terminal prompt exit the interactive job
 
-```
+```bash
 exit
 ```
 
@@ -179,11 +179,11 @@ exit
 
 Start an interactive job with a GPU e.g.
 
-```
+```bash
 export SBATCH_ACCOUNT="[SlurmAccountName]"
 ```
 
-```
+```bash
 salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
  --mem=32GB --nodes=1 --tasks-per-node=1 --cpus-per-task=8 \
  --gpus-per-node=1 --time=01:00:00
@@ -191,13 +191,13 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
 
 Change to your MATLAB directory
 
-```
+```bash
 cd /projects/academic/[YourGroupName]/MATLAB
 ```
 
 Start the MATLAB container instance, with nvidia GPU support
 
-```
+```bash
 apptainer shell \
  --nv \
  --no-env=XDG_DATA_DIRS \
@@ -215,7 +215,7 @@ The following commands are run from the "Apptainer> " prompt
 Start MATLAB in text mode, with a single computation thread (the work on the
 GPU is still in parallel)
 
-```
+```bash
 matlab -nojvm -nodisplay -nosplash -singleCompThread
 ```
 
@@ -338,13 +338,13 @@ Expected output:
 
 From tthe "Apptainer> " prompt, exit apptainer
 
-```
+```bash
 exit
 ```
 
 From the terminal prompt exit the interactive job
 
-```
+```bash
 exit
 ```
 
@@ -378,13 +378,13 @@ Open a terminal with:
 
 cd to your MATLAB directory
 
-```
+```bash
 cd /projects/academic/[YourGroupName]/MALTAB
 ```
 
 Start the MATLAB container instance
 
-```
+```bash
 apptainer shell \
  --nv \
  --no-env=XDG_DATA_DIRS \
@@ -398,7 +398,7 @@ apptainer shell \
 
 The following command is run from the "Apptainer> " prompt
 
-```
+```bash
 matlab 
 ```
 
