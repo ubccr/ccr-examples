@@ -4,6 +4,24 @@ MATLAB is a suite of commercial prorgams from [MathWorks](https://www.mathworks.
 CCR has a license for academic use of serveral MATLAB programs, but you MUST meet MathWorks eligability contraints to use the CCR license.  
 
 
+CCR provides two pre-built MATLAB containers:
+
+MATLAB with (only) the "Parallel Computing Toolbox"
+
+```
+/util/software/containers/x86_64/MATLAB-R2025b-x86_64.sif 
+```
+
+MATLAB with all the MATLAB programs CCR has licenses for:
+
+```
+/util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
+```
+
+If neither of these two containers fit your needs, you can use the instructions
+that follow to build a MATLAB container.
+
+
 ## Building the container
 
 A brief guide to building the MATLAB container follows:  

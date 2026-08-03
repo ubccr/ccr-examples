@@ -1,5 +1,31 @@
 # MATLAB Examples
 
+CCR provides two pre-built MATLAB containers:
+
+MATLAB with (only) the "Parallel Computing Toolbox"
+
+```
+/util/software/containers/x86_64/MATLAB-R2025b-x86_64.sif
+```
+
+MATLAB with all the MATLAB programs CCR has licenses for:
+
+```
+/util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
+```
+
+You can use either of these, or a MATLAB container of your own making, (following
+our [README file](./README.md,) that includes the MATLAB "Parallel Computing Toolbox",) for
+the following examples.
+The examples use the "MATLAB-R2025b-all_licenced_products-x86_64.sif" container,
+but you can subsitiue the full path to the .sif file of your choice.
+For example:
+
+```
+/projects/academic/[YourGroupName]/MATLAB/MATLAB-R2025b-$(arch).sif
+```
+
+
 ## Parallel Example
 
 Start an interactive job e.g.
@@ -30,7 +56,7 @@ apptainer shell \
  --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /util/software/licenses/matlab.lic:/MATLAB/licenses/licenses.lic:ro \
- MATLAB-R2025b-$(arch).sif
+ /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
 ```
 
 The following commands are run from the "Apptainer> " prompt
@@ -180,7 +206,7 @@ apptainer shell \
  --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /util/software/licenses/matlab.lic:/MATLAB/licenses/licenses.lic:ro \
- MATLAB-R2025b-$(arch).sif
+ /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
 ```
 
 The following commands are run from the "Apptainer> " prompt
@@ -367,7 +393,7 @@ apptainer shell \
  --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /util/software/licenses/matlab.lic:/MATLAB/licenses/licenses.lic:ro \
- MATLAB-R2025b-$(arch).sif
+ /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
 ```
 
 The following command is run from the "Apptainer> " prompt
