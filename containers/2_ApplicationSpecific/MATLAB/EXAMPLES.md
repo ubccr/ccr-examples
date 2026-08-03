@@ -8,17 +8,17 @@ MATLAB with (only) the "Parallel Computing Toolbox"
 /util/software/containers/x86_64/MATLAB-R2025b-x86_64.sif
 ```
 
-MATLAB with all the MATLAB programs CCR has licenses for:
+MATLAB with all the MATLAB programs UB has licenses for:
 
 ```bash
 /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif
 ```
 
 You can use either of these, or a MATLAB container of your own making, (following
-our [README file](./README.md,) that includes the MATLAB "Parallel Computing Toolbox",) for
+our [README file](./README.md) that includes the MATLAB "Parallel Computing Toolbox",) for
 the following examples.
 The examples use the "MATLAB-R2025b-all_licenced_products-x86_64.sif" container,
-but you can subsitiue the full path to the .sif file of your choice.
+but you can substitute the full path to the .sif file of your choice.
 For example:
 
 ```bash
@@ -88,7 +88,7 @@ The following commands are run from the MATLAB ">> " prompt:
 
 Report the number of Slurm cores in the interactive job
 
-NOTE: In an [OnDemand portal](https://ondemand.ccr.buffalo.edu) session, the requested "Number of Cores" are  
+NOTE: In an [OnDemand portal](https://docs.ccr.buffalo.edu/en/latest/portals/ood/) session, the requested "Number of Cores" are  
 allocated as Slurm tasks, rather than cores (cpus) per task.  
 Hence, in an OnDemand session, subsititue the Slurm variable  
 `SLURM_TASKS_PER_NODE` for `SLURM_CPUS_PER_TASK` in the following commands.
@@ -350,7 +350,7 @@ exit
 
 ## Running the MATLAB GUI
 
-The MATLAB GUI will only run in an [OnDemand portal](https://ondemand.ccr.buffalo.edu) session  
+The MATLAB GUI will only run in an [OnDemand portal](https://docs.ccr.buffalo.edu/en/latest/portals/ood/) session  
 For example:
 
 Open a browser window to our [OnDemand portal](https://ondemand.ccr.buffalo.edu)
@@ -379,7 +379,7 @@ Open a terminal with:
 cd to your MATLAB directory
 
 ```bash
-cd /projects/academic/[YourGroupName]/MALTAB
+cd /projects/academic/[YourGroupName]/MATLAB
 ```
 
 Start the MATLAB container instance

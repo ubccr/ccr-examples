@@ -1,7 +1,8 @@
 # Example MATLAB containers
 
 MATLAB is a suite of commercial prorgams from [MathWorks](https://www.mathworks.com/products/matlab.html)  
-CCR has a license for academic use of serveral MATLAB programs, but you MUST meet MathWorks eligability contraints to use the CCR license.  
+> [!WARNING]
+> UB has a license for academic use of several MATLAB programs, but you MUST meet MathWorks eligibility constraints to use the UB license.  Academic use is restricted to non-commercial teaching, learning, and academic research and cannot be used for any commercial or revenue-generating work.  This license is NOT for use by Roswell Park researchers or any commercial business or start-up utilizing CCR's industry cluster.
 
 
 CCR provides two pre-built MATLAB containers:
@@ -239,10 +240,10 @@ See the [EXAMPLES file](./EXAMPLES.md) for more info.
 ## Sample Slurm scripts
 
 ### Parallel example:
-[MATLAB parallel Slurm example script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab-mp.bash)  
+[MATLAB parallel Slurm example script](matlab-mp.bash)  
 
 ### GPU example:
-[MATLAB GPU Slurm example script](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/MATLAB/matlab-gpu.bash)  
+[MATLAB GPU Slurm example script](matlab-gpu.bash)  
 
 ## Documentation Resources
 
