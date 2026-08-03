@@ -25,6 +25,9 @@ For example:
 /projects/academic/[YourGroupName]/MATLAB/MATLAB-R2025b-$(arch).sif
 ```
 
+> [!WARNING]
+> UB's MATLAB licenses is for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
+
 
 ## Parallel Example
 
