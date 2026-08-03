@@ -63,7 +63,7 @@ cd /projects/academic/[YourGroupName]/MATLAB
 
 We have provided two different build examples:  
 A parallel minimal install with only the "MATLAB" and "Parallel Computing Toolbox" products  
-A maximal install, with all the products for which CCR currenlty has a license
+A maximal install, with all the products for which CCR currenlty has a license.
 
 If you wish to install a specific subset of products, download the maximal
 install example and remove the products you do not need from the "MATLAB-R2025b.def" file
@@ -180,12 +180,12 @@ Sample output:
 > lmstat - Copyright (c) 1989-2024 Flexera. All Rights Reserved.
 > Flexible License Manager status on Fri 7/17/2026 13:31
 > 
-> License server status: 27000@license1.ccr.buffalo.edu
->     License file(s) on license1.ccr.buffalo.edu: /opt/licenses/MATLAB/license/license.lic:
+> License server status: [port]@license.server.host
+>     License file(s) on license.server.host: /opt/licenses/MATLAB/license/license.lic:
 > 
-> license1.ccr.buffalo.edu: license server UP (MASTER) v11.19.6
+> license.server.host: license server UP (MASTER) v11.19.6
 > 
-> Vendor daemon status (on license1.ccr.buffalo.edu):
+> Vendor daemon status (on license.server.host):
 > 
 >        MLM: UP v11.19.6
 > 
@@ -203,12 +203,12 @@ Sample truncated output:
 > lmstat - Copyright (c) 1989-2024 Flexera. All Rights Reserved.
 > Flexible License Manager status on Fri 7/17/2026 13:34
 > 
-> License server status: 27000@license1.ccr.buffalo.edu
->     License file(s) on license1.ccr.buffalo.edu: /opt/licenses/MATLAB/license/license.lic:
+> License server status: [port]@license.server.host
+>     License file(s) on license.server.host: /opt/licenses/MATLAB/license/license.lic:
 > 
-> license1.ccr.buffalo.edu: license server UP (MASTER) v11.19.6
+> license.server.host: license server UP (MASTER) v11.19.6
 > 
-> Vendor daemon status (on license1.ccr.buffalo.edu):
+> Vendor daemon status (on license.server.host):
 > 
 >        MLM: UP v11.19.6
 > Feature usage info:
@@ -219,12 +219,12 @@ Sample truncated output:
 > 
 >   
 > "MATLAB" v54, vendor: MLM, expiry: 30-oct-2026
->   vendor_string: vi=0:at=200:ae=1:lu=200:lo=TH:ei=1233456:lr=1:ep=7:
+>   vendor_string: [...]:
 >   floating license
 > 
->     user1 cpn-b01-08-02.core.ccr.buffalo.edu /dev/pts/0 (v50) (license1.ccr.buffalo.edu/27000 16636), start Tue 7/14 23:35, PID: 3278807 
->     user2 cpn-d01-32.core.ccr.buffalo.edu /dev/pts/0 (v50) (license1.ccr.buffalo.edu/27000 40623), start Fri 7/17 10:20, PID: 2636405 
->     user2 cpn-d02-13.core.ccr.buffalo.edu /dev/pts/0 (v50) (license1.ccr.buffalo.edu/27000 17527), start Fri 7/17 10:58, PID: 56371 
+>     user1 cpn-b01-08-02.core.ccr.buffalo.edu /dev/pts/0 (v50) (license.server.host/[port]), start Tue 7/14 23:35, PID: 3278807 
+>     user2 cpn-d01-32.core.ccr.buffalo.edu /dev/pts/0 (v50) (license.server.host/[port]), start Fri 7/17 10:20, PID: 2636405 
+>     user2 cpn-d02-13.core.ccr.buffalo.edu /dev/pts/0 (v50) (license.server.host/[port]), start Fri 7/17 10:58, PID: 56371 
 > 
 > Users of SIMULINK:  (Total of 10000 licenses issued;  Total of 0 licenses in use)
 > 
