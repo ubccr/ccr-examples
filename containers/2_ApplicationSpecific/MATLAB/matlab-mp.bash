@@ -32,6 +32,6 @@ apptainer run --no-env=XDG_DATA_DIRS --writable-tmpfs \
  --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /util/software/licenses/matlab.lic:/MATLAB/licenses/licenses.lic:ro \
- MATLAB-R2025b-$(arch).sif \
+ /util/software/containers/x86_64/MATLAB-R2025b-all_licenced_products-x86_64.sif \
  matlab -nojvm -nodisplay -nosplash -r for_loop
 
