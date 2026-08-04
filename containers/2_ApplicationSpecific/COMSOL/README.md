@@ -99,7 +99,7 @@ We have provided three different build examples:
 
 Select ONE of the following:
 
-### COMSOL (without NMATLAB)
+### COMSOL (without MATLAB)
 
 ```bash
 curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/COMSOL/matlab_lmutil_x86_64
@@ -192,7 +192,7 @@ apptainer shell \
  --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /projects/academic/[YourGroupName]/COMSOL/COMSOL-SENS-license.dat:/COMSOL/license/license.dat:ro \
- COMSOL-R2025b-$(arch).sif
+ COMSOL64-$(arch).sif
 ```
 
 For COMSOL with MATLAB, using the UB MATLAB license file
@@ -206,7 +206,7 @@ apptainer shell \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /util/software/licenses/matlab.lic:/MATLAB/licenses/licenses.lic:ro \
  --bind /projects/academic/[YourGroupName]/COMSOL/COMSOL-SENS-license.dat:/COMSOL/license/license.dat:ro \
- COMSOL-R2025b-$(arch).sif
+ COMSOL64-$(arch).sif
 ```
 
 All the following commands are run from the "Apptainer> " prompt
