@@ -143,7 +143,7 @@ comsol -usebatchlic batch \
 Sample output:
 
 > ```
-*******************************************
+> *******************************************
 > ***COMSOL 6.4.0.343 progress output file***
 > *******************************************
 > Tue Aug 04 15:23:31 EDT 2026
@@ -212,6 +212,19 @@ Sample output:
 > Total time: 12 s.
 > ---------- Current Progress: 100 % - Done
 > Memory: 980/980 10532/10532
+> ```
+
+This run generated three files:
+
+```bash
+ls -l ./output/
+```
+
+> ```
+> total 1754
+> -rw-rw-r-- 1 [CCRusername] nogroup 1794416 Aug  4 19:19 hi_batch_reactor_output.mph
+> -rw-rw-r-- 1 [CCRusername] nogroup       1 Aug  4 19:19 hi_batch_reactor_output.mph.recovery
+> -rw-rw-r-- 1 [CCRusername] nogroup      18 Aug  4 19:19 hi_batch_reactor_output.mph.status
 > ```
 
 From tthe "Apptainer> " prompt, exit apptainer
