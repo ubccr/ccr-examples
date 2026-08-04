@@ -9,7 +9,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --excl
 ...and started the container like this:
 
 ```
-apptainer shell -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects Micro-C-$(arch).sif
+apptainer shell -B /util:/util,/scratch:/scratch,/vscratch/grp-[YourGroupName]:/vscratch,/projects/academic/[YourGroupName]:/projects Micro-C-$(arch).sif
 ```
 
 Note: /util is mounted because there are datafiles already downloaded in the

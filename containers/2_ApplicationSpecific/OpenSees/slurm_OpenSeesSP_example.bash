@@ -52,7 +52,7 @@ srun --mpi=pmix \
  --nodes=${SLURM_NNODES} \
  --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
  apptainer exec \
- -B /util:/util,/scratch:/scratch,/projects:/projects \
+ -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects \
  --sharens \
  /path/to/OpenSees-$(arch).sif \
  OpenSeesSP Example.tcl
