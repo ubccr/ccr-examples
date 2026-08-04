@@ -1,4 +1,4 @@
-# MATLAB Examples
+# COMSOLE Example
 
 [COMSOL](https://www.comsol.com/products) Multiphysics&reg; is a commercial general-purpose simulation software suite
 
