@@ -10,7 +10,7 @@ UB software purchases (including software licenses) must go through a [UB-mandat
 Contact [Science and Engineering Node Services (SENS)](https://www.buffalo.edu/sens/documentation/purchasing-software.html) for assistance in purcasing COMSOL licenses.
 
 SENS will host the COMSOL license for you, and provide the information
-neede to create a client licenses file.
+neede to create a client license file.
 
 The license file will be something like this:
 
@@ -27,7 +27,7 @@ choose will depend on whether you need to use MATLAB with COMSOL,
 and if so, which MATLAB products you need.
 
 > [!WARNING]
-> UB's MATLAB licenses is for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
+> UB's MATLAB licenses are for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
 
 COMSOL (without MATLAB)"
 
@@ -194,7 +194,7 @@ apptainer shell \
  COMSOL-R2025b-$(arch).sif
 ```
 
-For COMSOL with MATLAB, using the UB MATLAB license
+For COMSOL with MATLAB, using the UB MATLAB license file
 
 ```bash
 apptainer shell \

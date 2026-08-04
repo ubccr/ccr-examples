@@ -14,7 +14,7 @@ choose will depend on whether you need to use MATLAB with COMSOL,
 and if so, which MATLAB products you need.
 
 > [!WARNING]
-> UB's MATLAB licenses is for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
+> UB's MATLAB licenses are for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
 
 COMSOL (without MATLAB)"
 
@@ -37,7 +37,7 @@ COMSOL with MATLAB including all the UB licensed MATLAB products
 The examples use the COMSOL container without MATLAB "COMSOL64-x86_64.sif"
 but you can substitute the full path to the .sif file of your choice.
 If the container you choose includes MATLAB you will have to bind mount the
-MATLAB licenses file, for example the UB academic MATLAB license:
+MATLAB license file, for example the UB academic MATLAB license:
 
 ```bash
 [...]
@@ -46,7 +46,7 @@ MATLAB licenses file, for example the UB academic MATLAB license:
 ```
 
 > [!WARNING]
-> UB's MATLAB licenses is for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
+> UB's MATLAB licenses are for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
 
 
 ## COMSOL batch Example
