@@ -1,6 +1,6 @@
 # Example COMSOL containers
 
-[COMSOL](https://www.comsol.com/products) Multiphysics:registered: is a commercial general-purpose simulation software suite
+[COMSOL](https://www.comsol.com/products) Multiphysics&reg; is a commercial general-purpose simulation software suite
 
 > [!WARNING]
 > COMSOL is a suite of commercial programs.
