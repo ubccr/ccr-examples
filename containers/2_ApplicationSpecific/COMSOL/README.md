@@ -48,8 +48,8 @@ COMSOL with MATLAB including all the UB licensed MATLAB products
 ```
 
 
-If these containers don't fit your needs, you can use the instructions that
-follow to build a COMSOL container.
+If these containers don't fit your needs, you can use the following
+instructions to build a COMSOL container.
 
 
 ## Building the container
@@ -123,6 +123,13 @@ curl -LO https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/co
 curl -L -o COMSOL64.def https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/COMSOL/COMSOL64-MATLAB-R2025b-all_licenced_products.def
 ```
 
+You will need two additional files in this directory:
+
+Your COMSOL license file named "COMSOL-SENS-license.dat" - COMSOL will NOT
+install without this.
+
+The install zip file "COMSOL64_lnx.zip" which is available from SENS.
+
 
 3. Build your container
 
@@ -133,12 +140,6 @@ export APPTAINER_CACHEDIR="${SLURMTMPDIR}"
 ```
 
 Building the COMSOL container takes about half an hour...
-
-NOTE: COMSOL will not install without a license file.
-Your license file must be in the current directory, named: "COMSOL-SENS-license.dat"
-
-The current directory must also contain the install tarball "COMSOL64_lnx.zip"
-which is available from SENS
 
 ```bash
  apptainer build \
