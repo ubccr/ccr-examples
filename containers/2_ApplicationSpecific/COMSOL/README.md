@@ -305,7 +305,7 @@ See the [EXAMPLES file](./EXAMPLES.md) for more info.
 
 ## Sample Slurm scripts
 
-[COMSOL batch example script](slurm_COMSOL.bash)  
+[COMSOL batch example script](slurm_COMSOL_example.bash)  
 
 ## Documentation Resources
 
