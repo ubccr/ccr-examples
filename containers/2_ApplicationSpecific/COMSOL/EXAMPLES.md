@@ -104,7 +104,7 @@ mkdir -p ./output/
 This example will use two COMSOLE product licenses:
 
 ```bash
-comsol batch -checklicense "hi_batch_reactor.mph"
+comsol -tmpdir "${SLURMTMPDIR}" batch -checklicense "hi_batch_reactor.mph"
 ```
 
 Expected output:
@@ -134,7 +134,7 @@ Since at lease one of each of the licenses we need is available, we can run the
 simulation in batch mode:
 
 ```bash
-comsol -usebatchlic batch \
+comsol -tmpdir "${SLURMTMPDIR}" -usebatchlic batch \
  -np $(expr ${SLURM_CPUS_PER_TASK:-${SLURM_TASKS_PER_NODE}} - 4) \
  -inputfile "hi_batch_reactor.mph" \
  -outputfile "./output/hi_batch_reactor_output.mph"
@@ -304,7 +304,7 @@ apptainer shell \
 The following command is run from the "Apptainer> " prompt
 
 ```bash
-comsol -3drend sw -np $(expr ${SLURM_NTASKS} - 4)
+comsol -tmpdir "${SLURMTMPDIR}" -3drend sw -np $(expr ${SLURM_NTASKS} - 4)
 ```
 
 The COMSOL GUI will launch
