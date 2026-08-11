@@ -50,7 +50,7 @@ export OMPI_MCA_btl="self,vader,ofi"
 mpirun --mca pml ucx --mca btl self,vader,ofi --map-by core \
  --mca orte_base_help_aggregate 0 \
  -np ${SLURM_NTASKS} apptainer exec \
- -B /util:/util,/scratch:/scratch,/projects:/projects \
+ -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects \
  --sharens \
  /path/to/OpenSees-$(arch).sif \
  OpenSeesMP Example.tcl

@@ -15,7 +15,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --excl
 ...and started the container like this:
 
 ```
-apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects /path/to/OpenSees-$(arch).sif 
+apptainer shell -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects /path/to/OpenSees-$(arch).sif
 Apptainer>
 ```
 
@@ -40,17 +40,17 @@ OpenSees ECP_example.tcl
 expected output:
 
 > ```
-> 
-> 
+>
+>
 >          OpenSees -- Open System For Earthquake Engineering Simulation
 >                  Pacific Earthquake Engineering Research Center
 >                         Version 3.7.2 64-Bit
-> 
+>
 >       (c) Copyright 1999-2016 The Regents of the University of California
 >                               All Rights Reserved
 >   (Copyright and Disclaimer @ http://www.berkeley.edu/OpenSees/copyright.html)
-> 
-> 
+>
+>
 > Done!
 > ```
 
@@ -111,16 +111,16 @@ OpenSees pushover_concentrated.tcl
 sample output:
 
 > ```
-> 
+>
 >          OpenSees -- Open System For Earthquake Engineering Simulation
 >                  Pacific Earthquake Engineering Research Center
 >                         Version 3.7.2 64-Bit
-> 
+>
 >       (c) Copyright 1999-2016 The Regents of the University of California
 >                               All Rights Reserved
 >   (Copyright and Disclaimer @ http://www.berkeley.edu/OpenSees/copyright.html)
-> 
-> 
+>
+>
 > WARNING: DO NOT USE THE "Bilin" MATERIAL, IT HAS BEEN REPLACED. Use "IMKBilin" or "HystereticSM" INSTEAD.
 > ProfileSPDLinDirectSolver::solve() -  aii < 0 (i, aii): (9, 0)
 > T1 = 0.8198074473990256 s
@@ -163,16 +163,16 @@ OpenSees pushover_distributed.tcl
 sample output:
 
 > ```
-> 
+>
 >          OpenSees -- Open System For Earthquake Engineering Simulation
 >                  Pacific Earthquake Engineering Research Center
 >                         Version 3.7.2 64-Bit
-> 
+>
 >       (c) Copyright 1999-2016 The Regents of the University of California
 >                               All Rights Reserved
 >   (Copyright and Disclaimer @ http://www.berkeley.edu/OpenSees/copyright.html)
-> 
-> 
+>
+>
 > WARNING: DO NOT USE THE "Bilin" MATERIAL, IT HAS BEEN REPLACED. Use "IMKBilin" or "HystereticSM" INSTEAD.
 > ProfileSPDLinDirectSolver::solve() -  aii < minDiagTol (i, aii): (6, -6.82121e-13)
 > T1 = 0.8199912211464974 s
@@ -218,7 +218,7 @@ curl -o ElasticTruss.py  https://openseespydoc.readthedocs.io/en/latest/_downloa
 Run the python script:
 
 ```
-python ElasticTruss.py 
+python ElasticTruss.py
 ```
 
 expected output:
