@@ -42,7 +42,7 @@ mkdir -p ./af_input_inference ./af_output
 
 ## Run the Data Pipeline
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
  ./AlphaFold-3-$(arch).sif \
  python3 "/app/alphafold/run_alphafold.py" \
  --db_dir="/util/software/data/alphafold3/" \
@@ -60,7 +60,7 @@ then
 fi
 
 ## get the output directory name for the Inference run
-AlphaFold_Inference_Input_Dir="$(apptainer exec -B ,/projects:/projects ./AlphaFold-3-$(arch).sif python3 -c "exec(open('/app/alphafold/src/alphafold3/common/folding_input.py', 'r').read()); inference_input_dir = Input(name=\"$(jq -r '.name' "${input_dir}/"*.json)\", chains=[], rng_seeds=[0]); print ('./af_input_inference/' + inference_input_dir.sanitised_name())" 2>&1 | tail -1)"
+AlphaFold_Inference_Input_Dir="$(apptainer exec -B /projects/academic/[YourGroupName]:/projects ./AlphaFold-3-$(arch).sif python3 -c "exec(open('/app/alphafold/src/alphafold3/common/folding_input.py', 'r').read()); inference_input_dir = Input(name=\"$(jq -r '.name' "${input_dir}/"*.json)\", chains=[], rng_seeds=[0]); print ('./af_input_inference/' + inference_input_dir.sanitised_name())" 2>&1 | tail -1)"
 
 ## submit an Inference job with the output from this Data Pipeline run
 echo "Submitting Inference job with the input directory \"${AlphaFold_Inference_Input_Dir}\""
