@@ -64,7 +64,7 @@ exit
 sample output:
 
 > ```
-> CCRusername@login1$ 
+> CCRusername@login1$
 > ```
 
 End the Slurm job
@@ -96,13 +96,13 @@ cd /projects/academic/[YourGroupName]/OpenSees
 ...then start the OpenSees container instance
 
 ```
-apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects OpenSees-$(arch).sif 
+apptainer shell -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects OpenSees-$(arch).sif
 ```
 
 expected output:
 
 > ```
-> Apptainer> 
+> Apptainer>
 > ```
 
 The following command is run from the "Apptainer> " prompt
@@ -114,18 +114,18 @@ OpenSees
 expected output:
 
 > ```
-> 
-> 
+>
+>
 >          OpenSees -- Open System For Earthquake Engineering Simulation
 >                  Pacific Earthquake Engineering Research Center
 >                         Version 3.7.2 64-Bit
-> 
+>
 >       (c) Copyright 1999-2016 The Regents of the University of California
 >                               All Rights Reserved
 >   (Copyright and Disclaimer @ http://www.berkeley.edu/OpenSees/copyright.html)
-> 
-> 
-> OpenSees > 
+>
+>
+> OpenSees >
 > ```
 
 Exit OpenSees
@@ -137,7 +137,7 @@ exit
 expected output:
 
 > ```
-> Apptainer> 
+> Apptainer>
 > ```
 
 Exit the Apptainer container instance
@@ -149,7 +149,7 @@ exit
 sample outout:
 
 > ```
-> CCRusername@cpn-v14-19$ 
+> CCRusername@cpn-v14-19$
 > ```
 
 Exit the Slurm interactive session
@@ -161,7 +161,7 @@ exit
 sample output:
 
 > ```
-> CCRusername@login1$ 
+> CCRusername@login1$
 > ```
 
 End the Slurm job

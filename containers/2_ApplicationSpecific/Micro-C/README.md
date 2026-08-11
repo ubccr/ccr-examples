@@ -62,7 +62,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --mem=
 
 ```
 cd /projects/academic/[YourGroupName]/[CCRusername]
-apptainer shell -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects Micro-C-$(arch).sif
+apptainer shell -B /util:/util,/scratch:/scratch,/vscratch/grp-[YourGroupName]:/vscratch,/projects/academic/[YourGroupName]:/projects Micro-C-$(arch).sif
 ```
 Expected prompt:
 ```

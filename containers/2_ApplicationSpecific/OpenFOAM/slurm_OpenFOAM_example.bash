@@ -33,7 +33,7 @@
 if [ "${APPTAINER_NAME}" = "" ]
 then
   # Launch the container with this script
-  exec apptainer exec -B /util:/util,/scratch:/scratch,/vscratch:/vscratch,/projects:/projects \
+  exec apptainer exec -B /util:/util,/scratch:/scratch,/vscratch/grp-[YourGroupName]:/vscratch,/projects/academic/[YourGroupName]:/projects \
    /projects/academic/[YourGroupName]/OpenFOAM/OpenFOAM-13-$(arch).sif \
    bash "$(scontrol show job $SLURM_JOB_ID | awk -F= '/Command=/{print $2}')"
 fi

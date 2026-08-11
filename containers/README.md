@@ -10,7 +10,7 @@ Here we present a minimalist example of container usage in CCR's HPC environment
 
 ## Advanced Topics ([Advanced/](./1_Advanced/README.md))
 
-Coming Soon
+This directory contains complex containerized application setups and workflow examples.
 
 ## Application Specific Containers ([ApplicationSpecific/](./2_ApplicationSpecific/README.md))
 
