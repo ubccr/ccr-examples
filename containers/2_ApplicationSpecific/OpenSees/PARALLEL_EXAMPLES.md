@@ -69,7 +69,7 @@ command output:
 >  --nodes=${SLURM_NNODES} \
 >  --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
 >  apptainer exec \
->  -B /util:/util,/scratch:/scratch,/projects:/projects \
+>  -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects \
 >  --sharens \
 >  /projects/academic/ccradmintest/tkewtest/OpenSees/OpenSees-$(arch).sif \
 >  OpenSeesSP Example.tcl
@@ -211,7 +211,7 @@ command output:
 >  --nodes=${SLURM_NNODES} \
 >  --ntasks-per-node=${SLURM_NTASKS_PER_NODE} \
 >  apptainer exec \
->  -B /util:/util,/scratch:/scratch,/projects:/projects \
+>  -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects \
 >  --sharens \
 >  /projects/academic/ccradmintest/tkewtest/OpenSees/OpenSees-$(arch).sif \
 >  OpenSeesMP Example.tcl

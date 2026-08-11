@@ -114,7 +114,7 @@ mkdir -p ./af_input ./af_input_inference ./af_output
 
 ```
 apptainer shell \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
  --nv \
  ./AlphaFold-3-$(arch).sif
 ```

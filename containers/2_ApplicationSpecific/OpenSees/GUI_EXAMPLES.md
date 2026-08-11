@@ -38,7 +38,7 @@ cd /projects/academic/[YourGroupName]/OpenSees/test-x86_64
 (change the path to your OpenSees .sif file)
 
 ```
-apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects \
+apptainer shell -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects \
  /projects/academic/[YourGroupName]/OpenSees/OpenSees-$(arch).sif
 ```
 

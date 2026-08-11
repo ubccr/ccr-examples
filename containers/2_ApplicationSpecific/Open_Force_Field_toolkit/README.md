@@ -63,7 +63,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --mem=
 
 ```
 cd /projects/academic/[YourGroupName]/[CCRusername]
-apptainer exec -B /scratch:/scratch,/projects:/projects openff-toolkit-$(arch).sif python
+apptainer exec -B /scratch:/scratch,/projects/academic/[YourGroupName]:/projects openff-toolkit-$(arch).sif python
 ```
 Expected output:
 ```
@@ -75,7 +75,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 Alternatively, you can first get shell access into the container, as shown here:
 
 ```
-apptainer shell -B /scratch:/scratch,/projects:/projects openff-toolkit-$(arch).sif
+apptainer shell -B /scratch:/scratch,/projects/academic/[YourGroupName]:/projects openff-toolkit-$(arch).sif
 ```
 And then run Python from the "Apptainer>" prompt:
 ```

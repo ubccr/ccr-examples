@@ -44,7 +44,7 @@ echo "Running Inference with the input directory \"${AlphaFold_Inference_Input_D
 
 ## Run the Inference
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
  --nv \
  ./AlphaFold-3-$(arch).sif \
  python3 "/app/alphafold/run_alphafold.py" \
