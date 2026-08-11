@@ -1,0 +1,283 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+# Build wirh:
+#
+#    apptainer build --build-arg SLURMTMPDIR="${SLURMTMPDIR}" \
+#     MATLAB-R2025b-$(arch).sif MATLAB-R2025b-all_licenced_products.def
+#
+
+%files
+  matlab_lmutil_x86_64 "/MATLAB/sbin/lmutil"
+
+%arguments
+    SLURMTMPDIR=""
+
+%setup 
+  mkdir -p "${APPTAINER_ROOTFS}/MATLAB/licenses" \
+   "${APPTAINER_ROOTFS}/MATLAB/sbin"
+  touch "${APPTAINER_ROOTFS}/MATLAB/licenses/licenses.lic"
+  # create mountpoint for /scratch during the build (for ${SLURMTMPDIR})
+  mkdir "${APPTAINER_ROOTFS}/scratch"
+
+%post -c /bin/bash
+
+  # NOTE: the MATLAB license file is not needed for the build
+
+  MATLAB_VERSION="R2025b"
+  #UBUNTU_RELEASE="$(/bin/lsb_release -sr 2>/dev/null)"
+  UBUNTU_RELEASE="24.04"
+
+  # Make sure the environment variable TMPDIR is set and that the directory
+  # exists
+  export SLURMTMPDIR="{{ SLURMTMPDIR }}"
+  uid="$(head -1 /proc/self/uid_map | awk '{print $2}')"
+  export TMPDIR="${SLURMTMPDIR:-/var/tmp}/tmp_${uid}"
+  mkdir -p "${TMPDIR}"
+
+  # Set the timezone, if unset
+  test -h /etc/localtime || ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+
+  cp /etc/apt/sources.list /etc/apt/sources.list~
+  sed -E -i 's/^# deb-src /deb-src /' /etc/apt/sources.list
+  apt-get -y update
+
+  # Install man & man pages - this section can be removed if not needed
+  # NOTE: Do this before installing anything else so their man pages are installed
+  sed -e '\|/usr/share/man|s|^#*|#|g' -i /etc/dpkg/dpkg.cfg.d/excludes
+  DEBIAN_FRONTEND=noninteractive apt-get -y install apt-utils groff dialog man-db manpages manpages-posix manpages-dev
+  rm -f /usr/bin/man
+  dpkg-divert --quiet --remove --rename /usr/bin/man
+
+  # O/S package updates:
+  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+
+  DEBIAN_FRONTEND=noninteractive apt-get -y install \
+   tzdata \
+   locales \
+   unzip \
+   wget \
+   gawk \
+   build-essential \
+   autoconf \
+   automake \
+   pkg-config \
+   gfortran \
+   python3 \
+   python3-pip \
+   python3-setuptools \
+   python3-sphinx \
+   python3-sphinx-rtd-theme \
+   python-is-python3 \
+   zstd \
+   gnulib \
+   libssl-dev \
+   zlib1g-dev \
+   libbz2-dev \
+   libncurses5-dev \
+   libncursesw5-dev \
+   liblzma-dev \
+   liblz4-tool \
+   libcurl4-gnutls-dev \
+   libdeflate-dev \
+   pax-utils \
+   libmpfr-dev \
+   libgmp3-dev \
+   libmpc-dev \
+   x11-apps \
+   xdg-utils \
+   libgtk-4-dev \
+   libxrender1 \
+   libxtst6 \
+   libxi6 \
+   libswt-gtk-4-java \
+   libwebkit2gtk-4.1-0 \
+   libwebkitgtk-6.0-4 \
+   libatomic1 \
+   libopengl0 \
+   less \
+   curl \
+   jq \
+   nano \
+   vim \
+   apt-file
+
+  # NOTE: apt-file is generally not needed to run, but can be useful during development
+  apt-file update
+
+  # These steps are necessary to configure Perl and can cause issues with Python if omitted
+  sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+  dpkg-reconfigure --frontend=noninteractive locales
+  update-locale LANG=en_US.UTF-8
+
+  # Install MATLAB dependencies
+  curl -L -o "${TMPDIR}/base-dependencies.txt" \
+   "https://raw.githubusercontent.com/mathworks-ref-arch/container-images/refs/heads/main/matlab-deps/$(echo "${MATLAB_VERSION}" | tr '[:upper:]' '[:lower:]')/ubuntu${UBUNTU_RELEASE}/base-dependencies.txt"
+  apt-get install --no-install-recommends -y $(cat "${TMPDIR}/base-dependencies.txt")
+  mkdir -p /usr/share/X11/xkb
+  # Install MATLAB
+  cd "/MATLAB/sbin"
+  curl -L -O https://www.mathworks.com/mpm/glnxa64/mpm
+  chmod +x mpm
+  # add link for MATLAB's lmstat
+  chmod 555 "/MATLAB/sbin/lmutil"
+  mkdir -p "/MATLAB/bin"
+  ln -s "/MATLAB/sbin/lmutil" "/MATLAB/bin/lmstat"
+  export MLM_LICENSE_FILE="/MATLAB/licenses/licenses.lic"
+  #
+  # MATLAB install options
+  #
+  # MATLAB minimal install
+  #./mpm install --release="${MATLAB_VERSION}" --accept-vendor-licenses --destination=/MATLAB --products=MATLAB
+  #
+  # Parallel MATLAB minimal install
+  #./mpm install --release="${MATLAB_VERSION}" --accept-vendor-licenses --destination=/MATLAB --products=MATLAB Parallel_Computing_Toolbox
+  #
+  # Intall all packages - based on a list from:
+  #   /MATLAB/bin/lmstat -a | grep -E "^Users[[:space:]]+of" | awk '{print $3}' | sed 's/:$//'
+  #
+  ./mpm install --release="${MATLAB_VERSION}" \
+   --destination=/MATLAB \
+   --accept-vendor-licenses \
+   --products=MATLAB \
+   5G_Toolbox \
+   AUTOSAR_Blockset \
+   Aerospace_Blockset \
+   Aerospace_Toolbox \
+   Antenna_Toolbox \
+   Audio_Toolbox \
+   Automated_Driving_Toolbox \
+   Bioinformatics_Toolbox \
+   Bluetooth_Toolbox \
+   C2000_Microcontroller_Blockset \
+   Communications_Toolbox \
+   Computer_Vision_Toolbox \
+   Control_System_Toolbox \
+   Curve_Fitting_Toolbox \
+   DDS_Blockset \
+   DSP_HDL_Toolbox \
+   Database_Toolbox \
+   Datafeed_Toolbox \
+   Deep_Learning_Toolbox \
+   Deep_Learning_HDL_Toolbox \
+   Econometrics_Toolbox \
+   Embedded_Coder \
+   Financial_Instruments_Toolbox \
+   Fixed-Point_Designer \
+   Fuzzy_Logic_Toolbox \
+   Financial_Toolbox \
+   Global_Optimization_Toolbox \
+   GPU_Coder \
+   HDL_Coder \
+   HDL_Verifier \
+   Image_Acquisition_Toolbox \
+   Image_Processing_Toolbox \
+   Industrial_Communication_Toolbox \
+   Instrument_Control_Toolbox \
+   LTE_Toolbox \
+   Lidar_Toolbox \
+   Mapping_Toolbox \
+   MATLAB_Coder \
+   MATLAB_Compiler \
+   MATLAB_Compiler_SDK \
+   MATLAB_Report_Generator \
+   MATLAB_Test \
+   Medical_Imaging_Toolbox \
+   Mixed-Signal_Blockset \
+   Model_Predictive_Control_Toolbox \
+   Motor_Control_Blockset \
+   Navigation_Toolbox \
+   Optimization_Toolbox \
+   Parallel_Computing_Toolbox \
+   Partial_Differential_Equation_Toolbox \
+   Phased_Array_System_Toolbox \
+   Powertrain_Blockset \
+   Predictive_Maintenance_Toolbox \
+   Reinforcement_Learning_Toolbox \
+   Requirements_Toolbox \
+   RF_Blockset \
+   RF_PCB_Toolbox \
+   RF_Toolbox \
+   Robotics_System_Toolbox \
+   Robust_Control_Toolbox \
+   ROS_Toolbox \
+   Radar_Toolbox \
+   Risk_Management_Toolbox \
+   Robotics_System_Toolbox \
+   Satellite_Communications_Toolbox \
+   Sensor_Fusion_and_Tracking_Toolbox \
+   SerDes_Toolbox \
+   Signal_Integrity_Toolbox \
+   Signal_Processing_Toolbox \
+   SimBiology \
+   SimEvents \
+   Simscape \
+   Simscape_Battery \
+   Simscape_Driveline \
+   Simscape_Fluids \
+   Simscape_Multibody \
+   Simulink \
+   Simulink_3D_Animation \
+   Simulink_Check \
+   Simulink_Coder \
+   Simulink_Compiler \
+   Simulink_Control_Design \
+   Simulink_Coverage \
+   Simulink_Design_Optimization \
+   Simulink_Design_Verifier \
+   Simulink_Desktop_Real-Time \
+   Simscape_Electrical \
+   Simulink_Fault_Analyzer \
+   Simulink_PLC_Coder \
+   Simulink_Real-Time \
+   Simulink_Report_Generator \
+   Simulink_Test \
+   SoC_Blockset \
+   Stateflow \
+   Statistics_and_Machine_Learning_Toolbox \
+   Symbolic_Math_Toolbox \
+   System_Composer \
+   System_Identification_Toolbox \
+   Text_Analytics_Toolbox \
+   UAV_Toolbox \
+   Vehicle_Dynamics_Blockset \
+   Vehicle_Network_Toolbox \
+   Vision_HDL_Toolbox \
+   WLAN_Toolbox \
+   Wavelet_Toolbox \
+   Wireless_HDL_Toolbox \
+   Wireless_Testbench
+
+  apt-get -y update
+  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+
+%environment
+  #
+  # The SLURMTMPDIR environment variable is not available in this script, so
+  # grab SLURMTMPDIR if it is in /proc/$$/environ
+  grep -aq '\"SLURMTMPDIR=' /proc/$$/environ && export SLURMTMPDIR="$(grep -a '\"SLURMTMPDIR=' /proc/$$/environ | sed -E -e 's|^.*\"SLURMTMPDIR=||' -e 's|\".*$||' )"
+  #
+  # Make sure TMPDIR exists and is a directory
+  uid="$(head -1 /proc/self/uid_map | awk '{print $2}')"
+  export TMPDIR="${SLURMTMPDIR:-/var/tmp}/tmp_${uid}"
+  mkdir -p "${TMPDIR}"
+  #
+  export LC_ALL=C
+  #
+  export EDITOR=vim
+  #
+  # MATLAB license (bindmount)
+  export MLM_LICENSE_FILE="/MATLAB/licenses/licenses.lic"
+  if ! [ -s "${MLM_LICENSE_FILE}"  ]
+  then
+    echo "WARNING: to use MATLAB you must bind mount the MATLAB license file with e.g." >&2
+    echo "apptainer build --bind \$(pwd)/matlab.lic:/MATLAB/licenses/licenses.lic:ro [...]" >&2
+  fi
+  export PATH=/MATLAB/bin:$PATH
+
+%runscript
+  #!/bin/bash
+  export PS1="MATLAB$ "
+  # Exec passed command (required for Modal ENTRYPOINT compatibility)
+  exec "$@"
+

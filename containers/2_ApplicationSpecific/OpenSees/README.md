@@ -77,7 +77,7 @@ salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute --mem=
 
 ```
 cd /projects/academic/[YourGroupName]/
-apptainer shell -B /util:/util,/scratch:/scratch,/projects:/projects OpenSees-$(arch).sif 
+apptainer shell -B /util:/util,/scratch:/scratch,/projects/academic/[YourGroupName]:/projects OpenSees-$(arch).sif
 Apptainer> OpenSees
 
 
@@ -90,7 +90,7 @@ Apptainer> OpenSees
   (Copyright and Disclaimer @ http://www.berkeley.edu/OpenSees/copyright.html)
 
 
-OpenSees > 
+OpenSees >
 ```
 
 ## Parallel OpenSees
@@ -105,18 +105,18 @@ Parallel MPI jobs can be run with OpenSeesSP or OpenSeesMP
 
 Parallel Slurm script examples (X86_64):
 
-[mainSP with "srun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_OpenSeesSP_example.bash)  
+[mainSP with "srun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_OpenSeesSP_example.bash)
 [mainSP with "mpirun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_OpenSeesSP_mpirun_example.bash)
 
-[mainMP with "srun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_OpenSeesMP_example.bash)  
+[mainMP with "srun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_OpenSeesMP_example.bash)
 [mainMP with "mpirun"](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_OpenSeesMP_mpirun_example.bash)
 
 Parallel ARM64 Slurm script examples:
 
-[mainSP](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_ARM64_OpenSeesSP_example.bash)  
+[mainSP](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_ARM64_OpenSeesSP_example.bash)
 [mainMP](https://raw.githubusercontent.com/ubccr/ccr-examples/refs/heads/main/containers/2_ApplicationSpecific/OpenSees/slurm_ARM64_OpenSeesMP_example.bash)
 
 
-See the [OpenSees Documentation](https://opensees.github.io/OpenSeesDocumentation) website and the [OpenSees Parallel](https://opensees.berkeley.edu/OpenSees/parallel/parallel.php) website for more info on OpenSees  
+See the [OpenSees Documentation](https://opensees.github.io/OpenSeesDocumentation) website and the [OpenSees Parallel](https://opensees.berkeley.edu/OpenSees/parallel/parallel.php) website for more info on OpenSees
 For the Python documentation see the [OpenSeesPy](https://openseespydoc.readthedocs.io) website
 
