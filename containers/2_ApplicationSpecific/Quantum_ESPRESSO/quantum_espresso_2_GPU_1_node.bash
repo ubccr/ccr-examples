@@ -124,7 +124,9 @@ export PMIX_MCA_psec=native && export PMIX_MCA_gds=hash
 srun --mpi=pmix \
  --export=ALL \
  apptainer exec \
-  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
