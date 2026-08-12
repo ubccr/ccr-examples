@@ -120,7 +120,9 @@ tar xzf "charmm36-jul2022.ff.tgz"
 ##   A post-processed structure file.
 ## "gmx pdb2gmx" is run as a single task:
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx pdb2gmx -f ./inputs/1AKI_clean.pdb -o 1AKI_processed.gro -water tip3p -ff charmm36-jul2022
@@ -133,7 +135,9 @@ echo
 
 ## Define the box dimensions using the editconf module:
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx editconf -f 1AKI_processed.gro -o 1AKI_newbox.gro -c -d 1.2 -bt cubic
@@ -146,7 +150,9 @@ echo
 
 ## Fill the box with solvent (water) using the solvate module
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
@@ -168,7 +174,9 @@ fi
 
 ## Generate an atomic-level input file (.tpr)
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx grompp -f inputs/ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
@@ -181,7 +189,9 @@ echo
 
 ## Replace water molecules with the ions
 echo "SOL" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx genion -s ions.tpr -o 1AKI_solv_ions.gro -p topol.top -pname NA -nname CL -neutral
@@ -202,7 +212,9 @@ fi
 
 ## Run the energy minimization
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx grompp -f inputs/minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
@@ -215,7 +227,9 @@ echo
 
 ## Run the energy minimization
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
@@ -229,7 +243,9 @@ echo
 
 ## Analyze the .edr file "em.edr"
 echo "Potential" |apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx energy -f em.edr -o potential.xvg
@@ -251,7 +267,9 @@ then
 fi
 
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx grompp -f inputs/nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
@@ -263,7 +281,9 @@ echo
 
 ## Run the NVT simulation
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
@@ -277,7 +297,9 @@ echo
 
 ## Analyze the temperature progression
 echo "Temperature" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx energy -f nvt.edr -o temperature.xvg
@@ -299,7 +321,9 @@ then
 fi
 
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx grompp -f inputs/npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
@@ -312,7 +336,9 @@ echo
 
 ## Run the NPT simulation
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
@@ -321,7 +347,9 @@ apptainer run \
 
 ## Analyze the pressure progression
 echo "Pressure" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx energy -f npt.edr -o pressure.xvg
@@ -334,7 +362,9 @@ echo
 
 ## Examine the density using energy
 echo "Density" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx energy -f npt.edr -o density.xvg
@@ -357,7 +387,9 @@ fi
 
 ## Generate the .tpr file for this simulation:
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx grompp -f inputs/md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_10.tpr
@@ -370,7 +402,9 @@ echo
 
 ## Run the 10-ns MD simulation:
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
@@ -385,7 +419,9 @@ echo
 ## Correcting for Periodicity Effects
 ## Reimage the trajectory
 echo -e "Protein\nSystem" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx trjconv -s md_0_10.tpr -f md_0_10.xtc -o md_0_10_noPBC.xtc -pbc mol -center
@@ -398,7 +434,9 @@ echo
 
 # Root-Mean-Square Deviation
 echo -e "Backbone\nBackbone" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx rms -s md_0_10.tpr -f md_0_10_noPBC.xtc -o rmsd.xvg -tu ns
@@ -411,7 +449,9 @@ echo
 
 ## Calculate RMSD relative to the crystal structure
 echo -e "Backbone\nBackbone" | apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx rms -s em.tpr -f md_0_10_noPBC.xtc -o rmsd_xtal.xvg -tu ns

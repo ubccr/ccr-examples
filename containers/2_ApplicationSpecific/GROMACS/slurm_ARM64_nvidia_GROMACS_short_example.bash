@@ -91,13 +91,17 @@ gzip -dc water_GMX50_bare.tar.gz | tar xf -
 cd water-cut1.0_GMX50_bare/0000.96/
 
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \
  gmx grompp -f pme.mdp -o bench.tpr
 
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --sharens \
  --nv \
  "${CONTAINER_DIR}/${container_image}" \

@@ -66,7 +66,9 @@ Verify that the build was successful
 
 ```bash
 apptainer run \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --nv \
  "${CONTAINER_DIR}/grace-$(arch).sif" \
  grace -version
