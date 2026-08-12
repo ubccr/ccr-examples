@@ -80,7 +80,7 @@ Note: Building the OpenFold container takes about ten minutes
 ```
 apptainer build --build-arg SLURMTMPDIR="${SLURMTMPDIR}" \
  --build-arg SLURM_NPROCS="${SLURM_NPROCS:-$(expr $(nproc) - 4)}" \
- -B /scratch:/scratch \
+ --bind /scratch:/scratch \
  OpenFold-$(arch).sif OpenFold-aarch64.def
 ```
 
@@ -159,12 +159,14 @@ mkdir -p ${HOME}/.triton/autotune
 ```
 apptainer shell \
  --writable-tmpfs \
- -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
- -B /util/software/data/OpenFold:/data \
- -B /util/software/data/alphafold:/database \
- -B /util/software/data/OpenFold/openfold_params:/opt/openfold/openfold/resources/openfold_params \
- -B /util/software/data/alphafold/params:/opt/openfold/openfold/resources/params \
- -B $(pwd)/output:/output \
+ --bind /util:/util,/scratch:/scratch \
+ --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+ --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
+ --bind /util/software/data/OpenFold:/data \
+ --bind /util/software/data/alphafold:/database \
+ --bind /util/software/data/OpenFold/openfold_params:/opt/openfold/openfold/resources/openfold_params \
+ --bind /util/software/data/alphafold/params:/opt/openfold/openfold/resources/params \
+ --bind $(pwd)/output:/output \
  --nv \
  OpenFold-$(arch).sif
 ```

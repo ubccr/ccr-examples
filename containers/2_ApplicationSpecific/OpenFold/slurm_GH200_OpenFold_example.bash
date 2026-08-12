@@ -44,15 +44,17 @@ then
   # Launch the container with this script
   exec apptainer run \
    --writable-tmpfs \
-  -B /projects:/projects,/scratch:/scratch,/util:/util,/vscratch:/vscratch \
-  -B /util/software/data/OpenFold:/data \
-  -B /util/software/data/alphafold:/database \
-  -B /util/software/data/OpenFold/openfold_params:/opt/openfold/openfold/resources/openfold_params \
-  -B /util/software/data/alphafold/params:/opt/openfold/openfold/resources/params \
-  -B "$(pwd)/output":/output \
-  --nv \
-  OpenFold-$(arch).sif \
-   bash "$(scontrol show job $SLURM_JOB_ID | awk -F= '/Command=/{print $2}')"
+   --bind /util:/util,/scratch:/scratch \
+   --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
+   --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
+   --bind /util/software/data/OpenFold:/data \
+   --bind /util/software/data/alphafold:/database \
+   --bind /util/software/data/OpenFold/openfold_params:/opt/openfold/openfold/resources/openfold_params \
+   --bind /util/software/data/alphafold/params:/opt/openfold/openfold/resources/params \
+   --bind "$(pwd)/output":/output \
+   --nv \
+   OpenFold-$(arch).sif \
+    bash "$(scontrol show job $SLURM_JOB_ID | awk -F= '/Command=/{print $2}')"
 fi
 # Inside the container - OpenFold setup:
 export TRITON_CACHE_DIR="${SLURMTMPDIR}"
