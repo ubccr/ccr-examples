@@ -51,7 +51,6 @@ module list
 ## If SLURM_CPUS_PER_TASK is not defined, use one thread.
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-1}
 
-<<<<<<< HEAD
 ## Print the Slurm environment variables to the job output.
 export | grep SLURM
 
