@@ -60,9 +60,3 @@ srun lmp -nocite -screen none -in in.lammps \
     -log lammps-example-$SLURM_JOBID.log
 
 echo "All Done!"
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 582f45c (Update LAMMPS Slurm example
