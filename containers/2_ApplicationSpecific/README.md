@@ -20,6 +20,7 @@ Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/
 | [Micro-C](./Micro-C)                 | Micro-C Pipeline container with steps for building and running via Apptainer |
 | [OpenFF-Toolkit](./Open_Force_Field_toolkit)  | Open Force Field toolkit container with steps for building and running via Apptainer |
 | [OpenFOAM](./OpenFOAM)               | OpenFOAM container with steps for building and running via Apptainer and Slurm |
+| [OpenFold](./OpenFold)               | OpenFold container with steps for building and running Inference (one GPU) & Training (minimum two GPUs) via Apptainer and Slurm |
 | [OpenSees](./OpenSees)               | OpenSees container with steps for building and running via Apptainer |
 | [Rocker](./Rocker)                   | Rocker container with steps for building and running R environments via Apptainer |
 | [SAS](./sas)                         | Guide for running SAS using Apptainer via Slurm batch script, command line, and GUI access |
