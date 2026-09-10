@@ -12,35 +12,38 @@
 #SBATCH --qos=[qos]
 #SBATCH --account=[SlurmAccountName]
 
-##   Job runtime limit. Format- dd:hh:mm
-#SBATCH --time=00:01:00
+##   Job runtime limit. Format- dd-hh:mm:ss
+#SBATCH --time=08:00:00
 
 ##   Refer to DOCUMENTATION for details on the next three directives
 
 ##   Number of nodes
 #SBATCH --nodes=1
 
-##   Allocate CPUs per task
-#SBATCH --cpus-per-task=1
+##   Allocate CPUs per task (number of threads)
+#SBATCH --cpus-per-task=24
 
-##   Number of "tasks" per node (use with distributed parallelism)
-#SBATCH --ntasks-per-node=24
+##   Single task for a shared memory job
+#SBATCH --ntasks-per-node=1
 
 ##   Specify real memory required per node. Default units are megabytes
 #SBATCH --mem=64000
 
+module load ccrsoft/2023.01
 module load ansys
 export LSTC_LICENSE=ansys
-echo $SLURM_NPROCS
+echo "LS-DYNA running on ${SLURM_CPUS_PER_TASK} cores"
+
+cd VM-LSDYNA-EMAG-001
 
 ##   Replace with your model file name
-MODEL=ball_and_plate.k
+MODEL=i_team3_richardson.k
 
 ##   For single precision use this
-$EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_sp.e ncpus=$SLURM_NPROCS i=$MODEL
+#"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_sp.e" ncpu=-${SLURM_CPUS_PER_TASK} i=$MODEL
 
 ##   For double precision use this, uncommenting the next line and commenting out the line above
-#$EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_dp.e ncpus=$SLURM_NPROCS i=$MODEL
+"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_dp.e" ncpu=-${SLURM_CPUS_PER_TASK} i=$MODEL
 
 echo 'all done'
 exit
