@@ -17,10 +17,10 @@ LS-DYNA is now part of the Ansys software bundle. To load the module, use `modul
 
 The LS-DYNA executables do not show up in the path any longer. To use them properly, you'll need to use these commands:
 
-- Single Precision - SMP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_sp.e"`
-- Double Precision - SMP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_dp.e"`
-- Single precision - MPP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_sp_mpp.e"`
-- Double precision - MPP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_dp_mpp.e"`
+- Single Precision - OpenMP - SMP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_sp.e"`
+- Double Precision - OpenMP - SMP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_dp.e"`
+- Single precision - MPI - MPP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_sp_mpp.e"`
+- Double precision - MPI - MPP: `"${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_dp_mpp.e"`
 
 ## Memory Specification
 
