@@ -31,7 +31,8 @@
 ## Memory requested per node, in megabytes.
 #SBATCH --mem=4000
 
-## Job name and output file.
+## Job name and output file. Slurm will automatically replace the %j in the
+## output file name with the job ID.
 #SBATCH --job-name=lammps-example
 #SBATCH --output=lammps-example-%j.out
 
@@ -45,17 +46,14 @@ echo "working directory="$SLURM_SUBMIT_DIR
 ## Load the required software modules.
 module load gcc/11.2.0 openmpi/4.1.1
 module load lammps/23Jun2022-kokkos
-module list
 
 ## Set the number of OpenMP threads to the number of CPUs assigned per task.
 ## If SLURM_CPUS_PER_TASK is not defined, use one thread.
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-1}
 
-## Print the Slurm environment variables to the job output.
-export | grep SLURM
-
 ## Run LAMMPS using the included input file.
 ## Replace in.lammps with the name or path of your own input file as needed.
+## Slurm will automatically replace $SLURM_JOBID in the log file name with the job ID.
 srun lmp -nocite -screen none -in in.lammps \
     -log lammps-example-$SLURM_JOBID.log
 
