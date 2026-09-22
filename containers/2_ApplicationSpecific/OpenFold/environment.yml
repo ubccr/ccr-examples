@@ -1,0 +1,53 @@
+name: openfold-env
+channels:
+  - conda-forge
+  - bioconda
+  - pytorch
+  - nvidia
+dependencies:
+  - cuda
+  - gcc=12.4
+  - python=3.10
+  - setuptools=59.5.0
+  - pip
+  - openmm
+  - pdbfixer
+  - pytorch-lightning
+  - biopython
+  - numpy
+  - pandas
+  - PyYAML
+  - requests
+  - scipy
+  - tqdm
+  - typing-extensions
+  # W&B Automations API is experimental and it is recommend pinning the package
+  # version to reduce the risk of disruption
+  - wandb==0.23.1
+  - modelcif==0.7
+  - awscli
+  - ml-collections
+  - aria2
+  - mkl
+  - git
+  - bioconda::hmmer
+  # install libopenblas as a fix for https://github.com/bioconda/bioconda-recipes/issues/56856
+  - libopenblas
+  - libaio
+  - bioconda::hhsuite
+  - bioconda::kalign2
+  - mmseqs2
+  - pytorch::pytorch=2.5
+  - pytorch::pytorch-cuda=12.4
+  - lightning
+  - torchvision
+  - pip:
+      - wandb[workspaces]
+      - cuda-python
+      - deepspeed==0.14.5
+      - dm-tree==0.1.6
+      - git+https://github.com/NVIDIA/dllogger.git
+      - jsonargparse[signatures]
+      - einops
+# Have to mainually install flash-attn
+#      - flash-attn

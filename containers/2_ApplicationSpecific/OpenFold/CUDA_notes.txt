@@ -1,0 +1,31 @@
+Open MPI is built with CUDA awareness but this support is disabled by default.
+To enable it, please set the environment variable "OMPI_MCA_opal_cuda_support"
+to "true"
+
+  export OMPI_MCA_opal_cuda_support=true
+
+before launching your MPI processes.  Equivalently, you can set the MCA
+parameter in the command line:
+
+  mpiexec --mca opal_cuda_support 1 ...
+ 
+
+In addition, the UCX support is also built but disabled by default.
+To enable it, first install UCX (conda install -c conda-forge ucx). Then, set
+the environment variables OMPI_MCA_pml and OMPI_MCA_osc to "ucx"
+
+  export OMPI_MCA_pml="ucx"
+  export OMPI_MCA_osc="ucx"
+
+before launching your MPI processes.  Equivalently, you can set the MCA
+parameters in the command line:
+
+  mpiexec --mca pml ucx --mca osc ucx ...
+
+Note that you might also need to set the environment variable
+"UCX_MEMTYPE_CACHE" to "n" for CUDA awareness via UCX.
+
+  export UCX_MEMTYPE_CACHE="n"
+
+Please consult UCX's documentation for details.
+
