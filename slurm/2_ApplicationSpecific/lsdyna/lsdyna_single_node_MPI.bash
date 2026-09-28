@@ -12,50 +12,42 @@
 #SBATCH --qos=[qos]
 #SBATCH --account=[SlurmAccountName]
 
-##   Job runtime limit. Format- dd:hh:mm
-#SBATCH --time=00:01:00
+##   Job runtime limit. Format- dd-hh:mm:ss
+#SBATCH --time=06:00:00
 
 ##   Refer to DOCUMENTATION for details on the next three directives
 
 ##   Number of nodes
 #SBATCH --nodes=1
 
-##   Allocate CPUs per task
+##   Allocate CPUs per task (1 thread per MPI process)
 #SBATCH --cpus-per-task=1
 
-##   Number of "tasks" per node (use with distributed parallelism)
+##   Number of "tasks" per node (MPI processeses per node)
 #SBATCH --ntasks-per-node=24
 
 ##   Specify real memory required per node. Default units are megabytes
 #SBATCH --mem=64000
 
+##   Intel MPI
+export I_MPI_PMI_LIBRARY=/opt/software/slurm/lib64/libpmi2.so
+
+module load ccrsoft/2023.01
 module load ansys
 module load intel
 export LSTC_LICENSE=ansys
-. $EBROOTIMPI/mpi/latest/env/vars.sh
+source "${EBROOTIMPI}/mpi/latest/env/vars.sh" -i_mpi_library_kind=release
 
-##  Replace with your model file name
-MODEL=ball_and_plate.k
+cd VM-LSDYNA-EMAG-001
 
-##  Construct a Slurm nodefile
-SLURM_NODEFILE=my_slurm_nodes.$$
-mpiexec hostname -s | sort > $SLURM_NODEFILE
+##   Replace with your model file name
+MODEL=i_team3_richardson.k
 
-##  Calculate number of processors
-np=`cat $SLURM_NODEFILE | wc -l`
-nnodes=`cat $SLURM_NODEFILE | sort -u | wc -l`
-ppn=`expr $np / $nnodes`
-nodelist=`cat $SLURM_NODEFILE | sort -u | tr '\n' ' '`
+##   For single precision use this
+#mpiexec -ppn ${SLURM_NTASKS_PER_NODE} -np ${SLURM_NTASKS} "${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_sp_mpp.e" ncpu=-${SLURM_CPUS_PER_TASK} i=$MODEL
 
-export OMP_NUM_THREADS=$np
-
-##  For single precision use this
-mpiexec -n $SLURM_NPROCS $EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_sp_mpp.e ncpus=$SLURM_NPROCS i=$MODEL
-
-##  For double precision use this, uncommenting the next line and commenting out the line above
-#mpiexec -n $SLURM_NPROCS $EBROOTANSYS/v231/ansys/bin/linx64/lsdyna_dp_mpp.e ncpus=$SLURM_NPROCS i=$MODEL
+##   For double precision use this, uncommenting the next line and commenting out the line above
+mpiexec -ppn ${SLURM_NTASKS_PER_NODE} -np ${SLURM_NTASKS} "${EBROOTANSYS}/v231/ansys/bin/linx64/lsdyna_dp_mpp.e" ncpu=-${SLURM_CPUS_PER_TASK} i=$MODEL
 
 echo 'all done'
-exit
-
 

@@ -84,7 +84,7 @@ sample output:
 > 
 > 
 > Running fold job 2PV7...
-> Output will be written in ./af_output/2PV7
+> Output will be written in ./af_input_inference/2PV7
 > Running data pipeline...
 > Running data pipeline for chain A...
 > I0801 11:56:02.812026 12994031186688 pipeline.py:82] Getting protein MSAs for sequence GMRESYANENQFGFKTINSDIHKIVIVGGYGKLGGLFARYLRASGYPISILDREDWAVAESILANADVVIVSVPINLTLETIERLKPYLTENMLLADLTSVKREPLAKMLEVHTGAVLGLHPMFGADIASMAKQVVVRCDGRFPERYEWLLEQIQIWGAKIYQTNATEHDHNMTYIQALRHFSTFANGLHLSKQPINLANLLALSSPIYRLELAMIGRLFAQDAELYADIIMDKSENLAVIETLKQTYDEALTFFENNDRQGFIDAFHKVRDWFGDYSEQFLKESRQLLQQANDLKQG
@@ -119,19 +119,19 @@ sample output:
 > Done running 1 fold jobs.
 > ```
 
-The JSON output file (as seen in the above output) is `./af_output/2PV7/2PV7_data.json`
+The JSON output file (as seen in the above output) is `./af_input_inference/2PV7/2PV7_data.json`
 
 ```
-ls -l ./af_output/2PV7/2PV7_data.json
+ls -l ./af_input_inference/2PV7/2PV7_data.json
 ```
 
 sample output:
 
 > ```
-> -rw-rw-r-- 1 [CCRusername] nogroup 7301275 Aug  1 11:12 ./af_output/2PV7/2PV7_data.json
+> -rw-rw-r-- 1 [CCRusername] nogroup 7301275 Aug  1 11:12 ./af_input_inference/2PV7/2PV7_data.json
 > ```
 
-The `./af_output/2PV7` directory will be used as the input directory for the Inference run
+The `./af_input_inference/2PV7` directory will be used as the input directory for the Inference run
 
 exit the container and exit the interactive Slurm job
 
