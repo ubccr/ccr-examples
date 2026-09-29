@@ -102,7 +102,7 @@ mkdir -p ./input ./output
 
 ```
 apptainer shell \
- -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util \
  -B /util/software/data/alphafold/params:/app/params \
  -B ./input:/work/input,./output:/work/output \
  --nv \
