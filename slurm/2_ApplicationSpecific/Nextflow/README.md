@@ -68,6 +68,12 @@ process CONTAINER_TEST {
 }
 ```
 
+## Launch Location Testing
+
+Nextflow was successfully tested from within a Slurm compute allocation and was able to submit additional workflow processes as separate Slurm jobs.
+
+CCR's recommended launch location for Nextflow is still being reviewed, so this example does not currently prescribe whether Nextflow itself should be launched from a login node or a compute node.
+
 Container images should be prepared in a location accessible from the compute nodes. Make sure the container includes the shell and software required by the Nextflow process.
 
 For more detailed information about writing Nextflow workflows, process directives, channels, executors, and container support, refer to the official Nextflow documentation.
