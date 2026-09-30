@@ -23,4 +23,51 @@ The included configuration uses the Slurm executor so that Nextflow processes ar
 
 Before running the example, replace the placeholder Slurm account, partition, and QOS values in `nextflow.config` with values appropriate for your CCR account.
 
-Additional examples for using CCR software modules and containers with Nextflow will be added as this example is developed.
+Run the workflow with:
+
+```bash
+nextflow run main.nf
+```
+
+## Using CCR Software Modules
+
+CCR software modules can be loaded directly within a Nextflow process using the `module` directive.
+
+For example:
+
+```nextflow
+process PYTHON_VERSION {
+    module 'gcccore/11.3.0'
+    module 'python/3.10.4-bare'
+
+    script:
+    """
+    python --version
+    """
+}
+```
+
+Some software modules require prerequisite modules to be loaded first. Use `module spider [software/version]` to check module dependencies before adding them to a Nextflow process.
+
+## Running Containerized Processes
+
+Nextflow can also run processes inside containers on CCR compute nodes.
+
+Container runtimes such as Apptainer are available on CCR compute nodes. A Nextflow process can specify a local container image using the `container` directive.
+
+For example:
+
+```nextflow
+process CONTAINER_TEST {
+    container '/path/to/container.sif'
+
+    script:
+    """
+    echo "Hello from inside the container"
+    """
+}
+```
+
+Container images should be prepared in a location accessible from the compute nodes. Make sure the container includes the shell and software required by the Nextflow process.
+
+For more detailed information about writing Nextflow workflows, process directives, channels, executors, and container support, refer to the official Nextflow documentation.
