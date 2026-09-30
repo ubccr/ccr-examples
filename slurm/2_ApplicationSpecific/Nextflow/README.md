@@ -53,7 +53,7 @@ Some software modules require prerequisite modules to be loaded first. Use `modu
 
 Nextflow can also run processes inside containers on CCR compute nodes.
 
-Container runtimes such as Apptainer are available on CCR compute nodes. A Nextflow process can specify a local container image using the `container` directive.
+Containerized Nextflow processes can run on CCR compute nodes using Apptainer. A Nextflow process can specify a local container image using the `container` directive.
 
 For example:
 
