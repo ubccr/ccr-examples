@@ -77,7 +77,7 @@ export APPTAINER_CACHEDIR=${SLURMTMPDIR}
 Building the BindCraft container takes about half an hour...
 
 ```
-apptainer build BindCraft-$(arch).sif FreeBindCraft.def
+apptainer build BindCraft-$(arch).sif BindCraft.def
 ```
 
 Sample truncated output:
