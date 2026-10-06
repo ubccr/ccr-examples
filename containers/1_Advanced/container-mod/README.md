@@ -34,6 +34,7 @@ For detailed information about the topics above and additional options, please r
 - [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project) - `--profile` mode
 
 3. Add your module path to your environment. 
+
 In order to see the modules you generate with `container-mod` you need to point your account to the path where the modules are stored.  You can do this each time you want to run these modules by first running this for `--personal` mode:	
 ```
 module use ~/privatemodules
