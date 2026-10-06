@@ -77,7 +77,7 @@ export APPTAINER_CACHEDIR=${SLURMTMPDIR}
 Building the BindCraft container takes about half an hour...
 
 ```
-apptainer build BindCraft-$(arch).sif FreeBindCraft.def
+apptainer build BindCraft-$(arch).sif BindCraft.def
 ```
 
 Sample truncated output:
@@ -131,7 +131,7 @@ mkdir -p ./input ./output
 
 ```
 apptainer shell \
- -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util \
  -B /util/software/data/alphafold/params:/app/params \
  -B ./input:/work/input,./output:/work/output \
  --nv \

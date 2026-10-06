@@ -46,7 +46,7 @@ Then run the AlphaFold-3 container:
 
 ```
 apptainer shell \
- -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util \
  ./AlphaFold-3-$(arch).sif
 ```
 
@@ -157,7 +157,7 @@ Then run the AlphaFold-3 container (with nvidia GPU support):
 
 ```
 apptainer shell \
- -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util \
  --nv \
  ./AlphaFold-3-$(arch).sif
 ```

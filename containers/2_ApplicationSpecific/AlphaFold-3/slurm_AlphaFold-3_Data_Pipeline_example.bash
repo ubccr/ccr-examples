@@ -42,7 +42,7 @@ mkdir -p ./af_input_inference ./af_output
 
 ## Run the Data Pipeline
 apptainer run \
- -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util,/vscratch/grp-[YourGroupName]:/vscratch \
+ -B /projects/academic/[YourGroupName]:/projects,/scratch:/scratch,/util:/util \
  ./AlphaFold-3-$(arch).sif \
  python3 "/app/alphafold/run_alphafold.py" \
  --db_dir="/util/software/data/alphafold3/" \
