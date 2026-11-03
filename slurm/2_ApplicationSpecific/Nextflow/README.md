@@ -53,9 +53,7 @@ Some software modules require prerequisite modules to be loaded first. Use `modu
 
 ## Running Containerized Processes
 
-Nextflow can also run processes inside containers on CCR compute nodes.
-
-Containerized Nextflow processes can run on CCR compute nodes using Apptainer. A Nextflow process can specify a local container image using the `container` directive.
+Nextflow can also run processes inside Apptainer containers on CCR compute nodes. A Nextflow process can specify a local container image using the `container` directive.
 
 For example:
 
@@ -76,6 +74,7 @@ Nextflow was successfully tested from within a Slurm compute allocation and was 
 
 CCR's recommended launch location for Nextflow is still being reviewed, so this example does not currently prescribe whether Nextflow itself should be launched from a login node or a compute node.
 
-Container images should be prepared in a location accessible from the compute nodes. Make sure the container includes the shell and software required by the Nextflow process.
+Container images should be prepared in a location accessible from the compute nodes, preferably your project space. Make sure the container includes the shell and software required by the Nextflow process.
 
 For more detailed information about writing Nextflow workflows, process directives, channels, executors, and container support, refer to the official Nextflow documentation.
+````
