@@ -139,7 +139,6 @@ apptainer shell \
  --no-env=XDG_DATA_DIRS \
  --writable-tmpfs \
  --bind /util:/util,/scratch:/scratch \
- --bind /vscratch/grp-[YourGroupName]:/vscratch/grp-[YourGroupName] \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /util/software/licenses/matlab.lic:/MATLAB/licenses/licenses.lic:ro \
  MATLAB-R2025b-$(arch).sif
