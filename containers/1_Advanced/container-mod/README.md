@@ -33,7 +33,8 @@ For detailed information about the topics above and additional options, please r
 - [`personal/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/personal) - `--personal` mode
 - [`project/`](https://github.com/ubccr/ccr-examples/tree/main/containers/1_Advanced/container-mod/project) - `--profile` mode
 
-3. Add your module path to your environment
+3. Add your module path to your environment. 
+
 In order to see the modules you generate with `container-mod` you need to point your account to the path where the modules are stored.  You can do this each time you want to run these modules by first running this for `--personal` mode:	
 ```
 module use ~/privatemodules
@@ -44,18 +45,7 @@ module use /projects/academic/[YourGroupName]/privatemodules
 ```
 However, this is forgotten on logout and you'd need to specify this in your Slurm batch scripts whenever you run jobs.
 
-To update the $PATH environment persistently and for each login & job submission, edit the `~/.ccr/modulepaths` file:  
-
-For `--personal` mode, add the following:  
-```
-/user/[CCRUsername]/privatemodules
-```
-
-For `--profile` mode, add the following:
-```
-/projects/academic/[YourGroupName]/privatemodules
-```
-**With either option, make sure to LOGOUT and back in again to see the change.**
+**Make sure to LOGOUT and back in again to see the change.**
 
 4. Once done, verify `Lmod` recognizes the new module with commands like `echo $MODULEPATH`, `module avail`, `module show`, etc.
 
