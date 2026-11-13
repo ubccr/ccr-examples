@@ -16,7 +16,7 @@ and if so, which MATLAB products you need.
 > [!WARNING]
 > UB's MATLAB licenses are for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
 
-COMSOL (without MATLAB)"
+COMSOL (without MATLAB):"
 
 ```bash
 /util/software/containers/x86_64/COMSOL64-x86_64.sif
@@ -70,7 +70,7 @@ e.g.
 export PROJECTS_DIR="/projects/academic/[YourGroupName]"
 ```
 
-You will need yor COMSOL license file here:
+You will need your COMSOL license file here:
 `${PROJECTS_DIR}/COMSOL/COMSOL-SENS-license.dat`
 
 Start the COMSOL container instance
@@ -104,7 +104,7 @@ curl -LO "https://www.comsol.com/model/download/1528281/hi_batch_reactor_variabl
 mkdir -p ./output/
 ```
 
-This example will use two COMSOLE product licenses:
+This example will use two COMSOL product licenses:
 
 ```bash
 comsol -tmpdir "${SLURMTMPDIR}" batch -checklicense "hi_batch_reactor.mph"
@@ -133,7 +133,7 @@ Sample output:
 > Users of COMSOLUSER:  (Total of 3 licenses issued;  Total of 1 license in use)
 > ```
 
-Since at lease one of each of the licenses we need is available, we can run the
+Since at least one of each of the licenses we need is available, we can run the
 simulation in batch mode:
 
 ```bash
@@ -230,7 +230,7 @@ ls -l ./output/
 > -rw-rw-r-- 1 [CCRusername] nogroup      18 Aug  4 19:19 hi_batch_reactor_output.mph.status
 > ```
 
-From tthe "Apptainer> " prompt, exit apptainer
+From the "Apptainer> " prompt, exit apptainer
 
 ```bash
 exit

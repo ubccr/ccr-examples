@@ -7,10 +7,10 @@
 > You MUST have appropriate licenses for every COMSOL product you use
 
 UB software purchases (including software licenses) must go through a [UB-mandated approval process for software](https://www.buffalo.edu/sens/documentation/purchasing-software.html)  
-Contact [Science and Engineering Node Services (SENS)](https://www.buffalo.edu/sens/documentation/purchasing-software.html) for assistance in purcasing COMSOL licenses.
+Contact [Science and Engineering Node Services (SENS)](https://www.buffalo.edu/sens/documentation/purchasing-software.html) for assistance in purchasing COMSOL licenses.
 
 SENS will host the COMSOL license for you, and provide the information
-neede to create a client license file.
+needed to create a client license file.
 
 The license file will be something like this:
 
@@ -29,7 +29,7 @@ and if so, which MATLAB products you need.
 > [!WARNING]
 > UB's MATLAB licenses are for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
 
-COMSOL (without MATLAB)"
+COMSOL (without MATLAB):"
 
 ```bash
 /util/software/containers/x86_64/COMSOL64-x86_64.sif
@@ -69,7 +69,7 @@ e.g.
 export PROJECTS_DIR="/projects/academic/[YourGroupName]"
 ```
 
-You will need yor COMSOL license file here:
+You will need your COMSOL license file here:
 `${PROJECTS_DIR}/COMSOL/COMSOL-SENS-license.dat`
 
 Pick one of the three following options:  
@@ -78,7 +78,7 @@ Pick one of the three following options:
 [COMSOL with MATLAB including all the UB licensed MATLAB products[(#comsols-with-matlab-including-all-the-UB-licensed-matlab-products)
 
 
-## COMSOL without MALTAB
+## COMSOL without MATLAB
 
 ```bash
 apptainer shell \
