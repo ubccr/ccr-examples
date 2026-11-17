@@ -10,10 +10,11 @@ Please refer to CCR's [container documentation](https://docs.ccr.buffalo.edu/en/
 
 > [!IMPORTANT]
 > Apptainer is not available on the CCR login nodes and the compile nodes may not provide enough resources for you to build a container.  We recommend requesting an interactive job on a compute node to conduct this build process.<br/>
-> See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission).
+> See CCR docs for more info on [running jobs](https://docs.ccr.buffalo.edu/en/latest/hpc/jobs/#interactive-job-submission). Before running the example, replace the placeholder Slurm cluster, account, partition, and QOS placeholders with values appropriate for your CCR account.  Refer to the [placeholder section](https://github.com/ubccr/ccr-examples#placeholders) of this repository for more information.
 
 ```
-salloc --cluster=ub-hpc --partition=debug --qos=debug --mem=16GB --exclusive --time=01:00:00
+Using the debug partition is a quick way to get a compute node for less than 1 hour:  
+salloc --cluster=ub-hpc --partition=debug --qos=debug --account=[SlurmAccountName] --mem=16GB --time=01:00:00
 ```
 
 Sample output:
