@@ -4,8 +4,8 @@
 
 > [!WARNING]
 > ANSYS is a suite of commercial programs.
-> You MUST have appropriate licenses for every ANSYS product you use
-> Roswell Park researchers and other commercial users should utilize their own license with ANSYS products
+> You MUST have appropriate licenses for every ANSYS product you use.
+> Roswell Park researchers and other commercial users should utilize their own license with ANSYS products.
 
 UB provides an educational license for ANSYS.  The license is for **academic purposes only**
 All the examples use the academic license file.
@@ -36,7 +36,8 @@ Polyflow Classic     == /opt/ansys_inc/v261/polyflow/bin/polyflow
 Workbench (GUI)      == /opt/ansys_inc/v261/Framework/bin/Linux64/runwb2
 ```
 
-NOTE: for "icepak" use the non GUI "icepak_batch"
+> [!NOTE] 
+> For `icepak` use the non GUI `icepak_batch`
 
 
 ## GUI ANSYS Applications
@@ -48,7 +49,8 @@ shown in the example below.
 Open a browser window to our [OnDemand portal](https://ondemand.ccr.buffalo.edu)
 and start a session with at least one GPU requested.  The first GPU will be
 used for VirtualGL graohics acceleration.  
-Note: If you request more than one GUI see the [CUDA section below](#graphics-acceleration-and-cuda-with-multiple-gpus
+> [!NOTE]
+> If you request more than one GUI see the [CUDA section below](#graphics-acceleration-and-cuda-with-multiple-gpus)
 
 For example:
 
@@ -80,8 +82,8 @@ module load gcc virtualgl
 export VGL_DISPLAY="$(ls -d /sys/bus/pci/devices/$(nvidia-smi --query-gpu=gpu_bus_id --format=csv,noheader | tail -1 | sed 's/^0000//' | tr '[:upper:]' '[:lower:]')/drm/card* | sed -E 's|^.*(card[0-9]+)$|/dev/dri/\1|')"
 ```
 
-Note: If you want to verify that the VirtualGL acceleration is working, running
-"glxspheres64" unaccelerated should generate 30 to 40 frames per second:
+> [!NOTE]
+> If you want to verify that the VirtualGL acceleration is working, running "glxspheres64" unaccelerated should generate 30 to 40 frames per second:
 
 ```bash
 glxspheres64
@@ -126,10 +128,11 @@ If you start an OnDemand job with multiple GPUs and use VirtualGL for graphical
 acceleration (as our examples above do) you will likely want to use the last
 GPU exclusively for VirtualGL acceleration, and the other(s) for CUDA
 acceleration.  
-Note: Not all ANSYS applications support CUDA acceleration.  
+> [!NOTE]
+> Not all ANSYS applications support CUDA acceleration.  
 
-By default the CUDA_VISIBLE_DEVICES environment variable is set to list all the
-availabnle GPUs, for example:
+By default the `CUDA_VISIBLE_DEVICES` environment variable is set to list all the
+available GPUs, for example:
 
 ```bash
 echo ${CUDA_VISIBLE_DEVICES}
@@ -142,7 +145,7 @@ Sample output for a two GPU job:
 > ```
 
 In our examples, the "export VGL_DISPLAY=[...]" line configures VirtualGL to
-use the last GPU, that is GPU numnber 1 in this case.  We will want to use the
+use the last GPU, that is GPU number 1 in this case.  We will want to use the
 other GPU(s) for CUDA, in this case GPU number 0  
 For this example:
 
@@ -150,10 +153,10 @@ For this example:
 export CUDA_VISIBLE_DEVICES=0
 ```
 
-Note that, unfortunately, not all programs resepct this value, but generally
-the programs that don't will have command line option to secify the usable
-GPUs.  Also GPU 0 is the default first CUDA device, so this will still work for
-single CUDA GPU workloads that ignore CUDA_VISIBLE_DEVICES
+Note that, unfortunately, not all programs respect this value, but generally
+the programs that don't will have command line option to specify the usable
+GPUs.  Also, GPU 0 is the default first CUDA device, so this will still work for
+single CUDA GPU workloads that ignore `CUDA_VISIBLE_DEVICES`
 
 
 ## Non GUI ANSYS Applications

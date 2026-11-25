@@ -4,8 +4,8 @@
 
 > [!WARNING]
 > ANSYS is a suite of commercial programs.
-> You MUST have appropriate licenses for every ANSYS product you use
-> Roswell Park researchers and other commercial users should utilize their own license with ANSYS products
+> You MUST have appropriate licenses for every ANSYS product you use.
+> Roswell Park researchers and other commercial users should utilize their own license with ANSYS products.
 
 UB provides an educational license for ANSYS.  The license is for
 **academic purposes only**  
