@@ -42,7 +42,7 @@ Workbench (GUI)      == /opt/ansys_inc/v261/Framework/bin/Linux64/runwb2
 
 ## GUI ANSYS Applications
 
-To run the GUI version of an application, use the [CCR OnDemand portal](https://ondemand.ccr.buffalo.edu)
+To run the GUI version of an application, use the [CCR OnDemand portal](https://ondemand.ccr.buffalo.edu).  
 Most of the GUI applications require a GPU to proveide GLX graphic support, as
 shown in the example below.  
 
