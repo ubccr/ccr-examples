@@ -36,7 +36,7 @@ curl -LO --no-progress-meter --fail-with-body "https://www.comsol.com/model/down
 
 # Show the currently allocated license usage for the licenses we need to
 # run this simulation in batch mode
-echo "Liceses in use before the run:"
+echo "Licenses in use before the run:"
 apptainer run \
  --bind /projects/academic/[YourGroupName]/COMSOL/COMSOL-SENS-license.dat:/COMSOL/license/license.dat:ro \
  --bind "${SLURMTMPDIR}":"${SLURMTMPDIR}" \
@@ -58,7 +58,6 @@ mkdir -p ./output/
 # Run the simulation
 apptainer run --nv --writable-tmpfs \
  --bind /util:/util,/scratch:/scratch \
- --bind /vscratch/grp-ccradmintest:/vscratch/grp-ccradmintest \
  --bind /projects/academic/[YourGroupName]:/projects/academic/[YourGroupName] \
  --bind /projects/academic/[YourGroupName]/COMSOL/COMSOL-SENS-license.dat:/COMSOL/license/license.dat:ro \
  /util/software/containers/x86_64/COMSOL64-x86_64.sif \

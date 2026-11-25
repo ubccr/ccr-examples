@@ -52,12 +52,9 @@ COMSOL with MATLAB including all the UB licensed MATLAB products
 
 Start an interactive job e.g.
 
-```bash
-export SBATCH_ACCOUNT="[SlurmAccountName]"
-```
 
 ```bash
-salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
+salloc --cluster=[Cluster] --partition=[Partition] --qos=[QOS] --account=[SlurmAccountName] \
  --mem=128GB --nodes=1 --tasks-per-node=1 --cpus-per-task=16 \
  --time=01:00:00
 ```
@@ -99,7 +96,6 @@ apptainer shell \
  --no-env=XDG_DATA_DIRS \
  --writable-tmpfs \
  --bind /util:/util,/scratch:/scratch \
- --bind "/util":"/util","/scratch":"/scratch" \
  --bind "${PROJECTS_DIR}":"${PROJECTS_DIR}" \
  --bind "/util/software/licenses/matlab.lic":"/MATLAB/licenses/licenses.lic":ro \
  --bind "${PROJECTS_DIR}/COMSOL/COMSOL-SENS-license.dat":"/COMSOL/license/license.dat":ro \
@@ -113,7 +109,6 @@ apptainer shell \
  --no-env=XDG_DATA_DIRS \
  --writable-tmpfs \
  --bind /util:/util,/scratch:/scratch \
- --bind "/util":"/util","/scratch":"/scratch" \
  --bind "${PROJECTS_DIR}":"${PROJECTS_DIR}" \
  --bind "/util/software/licenses/matlab.lic":"/MATLAB/licenses/licenses.lic":ro \
  --bind "${PROJECTS_DIR}/COMSOL/COMSOL-SENS-license.dat":"/COMSOL/license/license.dat":ro \
@@ -148,8 +143,7 @@ Sample truncated output:
 > [...]
 > ```
 
-NOTE: To run the COMSOL GUI, start a [CCR OnDemand](https://ondemand.ccr.buffalo.edu/) session, open a terminal, then  
-run the container as above, then, from the "Apptainer> " prompt, run "comsol"  
+NOTE: To run the COMSOL GUI, you must use an interactive desktop in [OnDemand].  Refer to the [COMSOL Examples](EXAMPLES.md#running-the-comsol-gui) for more information.
 
 You can also check the status of the license server
 

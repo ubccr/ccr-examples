@@ -49,16 +49,13 @@ MATLAB license file, for example the UB academic MATLAB license:
 > UB's MATLAB licenses are for **academic purposes only** and can not be used by commercial users or researchers doing commercial work.  Roswell Park researchers and other commercial users should utilize their own license with MATLAB.
 
 
-## COMSOL batch Example
+## COMSOL Batch Example
 
 Start an interactive job e.g.
 
-```bash
-export SBATCH_ACCOUNT="[SlurmAccountName]"
-```
 
 ```bash
-salloc --cluster=ub-hpc --partition=general-compute --qos=general-compute \
+salloc --cluster=[Cluster] --partition=[Partition] --qos=[QOS] --account=[SlurmAccountName] \
  --mem=64GB --nodes=1 --tasks-per-node=1 --cpus-per-task=16 \
  --time=01:00:00
 ```
@@ -98,7 +95,7 @@ curl -LO "https://www.comsol.com/model/download/1528271/hi_batch_reactor_paramet
 curl -LO "https://www.comsol.com/model/download/1528281/hi_batch_reactor_variables.txt"
 ```
 
-# create the output directory
+### Create the output directory
 
 ```bash
 mkdir -p ./output/
@@ -250,6 +247,7 @@ For example:
 Open a browser window to our [OnDemand portal](https://ondemand.ccr.buffalo.edu)
 
 [UB-HPC & Faculty Cluster Desktop]
+Select the cluster, partition, QOS, and account as desired
 
 Cluster: UB-HPC  
 Slurm Account: [Your Slurm account]  
